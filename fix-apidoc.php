@@ -5,7 +5,7 @@
  * 
  */
 
-$apiDir = dirname(__DIR__) . '/docs/api';
+$apiDir = __DIR__ . '/docs/api';
 
 if (file_exists($apiDir . '/README.md')) {
 	rename($apiDir . '/README.md', $apiDir . '/index.md');
