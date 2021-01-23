@@ -13,7 +13,7 @@ git init
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:ilhooq/piko-framework/piko-framework.github.io.git master:main
+git push -f git@github.com:piko-framework/piko-framework.github.io.git master:main
 
 cd -
 
