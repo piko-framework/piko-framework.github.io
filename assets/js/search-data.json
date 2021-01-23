@@ -1,0 +1,902 @@
+{"0": {
+    "doc": "Application",
+    "title": "\\piko\\Application",
+    "content": "The Web application class . ",
+    "url": "/docs/api/Application.html#pikoapplication",
+    "relUrl": "/docs/api/Application.html#pikoapplication"
+  },"1": {
+    "doc": "Application",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $basePath | The absolute base path of the application. | . | public $bootstrap | List of modules that should be run during the appl… | . | public $charset | The charset encoding used in the application. | . | public $config | The configuration loaded on application instantiat… | . | public $defaultLayout | The default layout name without file extension. | . | public $defaultLayoutPath | The default layout path. An alias could be used. | . | public $errorRoute | The Error route to display exceptions in a friendl… | . | public $language | The language that is meant to be used for end user… | . ",
+    "url": "/docs/api/Application.html#properties",
+    "relUrl": "/docs/api/Application.html#properties"
+  },"2": {
+    "doc": "Application",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/Application.html#inherited-properties",
+    "relUrl": "/docs/api/Application.html#inherited-properties"
+  },"3": {
+    "doc": "Application",
+    "title": "Methods",
+    "content": "| Name | Description | . | public __construct | Constructor | . | public dispatch | Dispatch a route and return the output result. | . | public redirect | Redirect the application to another url. | . | public run | Run the application. | . ",
+    "url": "/docs/api/Application.html#methods",
+    "relUrl": "/docs/api/Application.html#methods"
+  },"4": {
+    "doc": "Application",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/Application.html#inherited-methods",
+    "relUrl": "/docs/api/Application.html#inherited-methods"
+  },"5": {
+    "doc": "Application",
+    "title": "Properties",
+    "content": ". public $basePath : string . The absolute base path of the application. public $bootstrap : array . List of modules that should be run during the application bootstrapping process. Each module may be specified with a module ID as specified via [[modules]]. During the bootstrapping process, each module will be instantiated. If the module class implements the bootstrap() method, this method will be also be called. public $charset : string . The charset encoding used in the application. public $config : array . The configuration loaded on application instantiation. public $defaultLayout : string . The default layout name without file extension. public $defaultLayoutPath : string . The default layout path. An alias could be used. public $errorRoute : string . The Error route to display exceptions in a friendly way. If not set, Exceptions catched will be thrown and stop the script execution. public $language : string . The language that is meant to be used for end users. ",
+    "url": "/docs/api/Application.html#properties-1",
+    "relUrl": "/docs/api/Application.html#properties-1"
+  },"6": {
+    "doc": "Application",
+    "title": "Methods",
+    "content": ". public __construct(): void . public __construct(array $config): void . Constructor . Parameters . $config : The application configuration. public dispatch(): string . public dispatch(string $route): string . Dispatch a route and return the output result. Parameters . $route : The route to dispatch. The route format is one of the following : . '{moduleId}/{controllerId}/{actionId}' '{moduleId}/{controllerId}' '{moduleId}' . throws \\RuntimeException . Return: . string The output result. public redirect(): void . public redirect(string $url): void . Redirect the application to another url. Parameters . $url : . public run(): void . public run(): void . Run the application. ",
+    "url": "/docs/api/Application.html#methods-1",
+    "relUrl": "/docs/api/Application.html#methods-1"
+  },"7": {
+    "doc": "Application",
+    "title": "Application",
+    "content": " ",
+    "url": "/docs/api/Application.html",
+    "relUrl": "/docs/api/Application.html"
+  },"8": {
+    "doc": "AssetBundle",
+    "title": "\\piko\\AssetBundle",
+    "content": "AssetBundle represents a collection of CSS files and JS files to publish inside the public path. ",
+    "url": "/docs/api/AssetBundle.html#pikoassetbundle",
+    "relUrl": "/docs/api/AssetBundle.html#pikoassetbundle"
+  },"9": {
+    "doc": "AssetBundle",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $css | List of CSS files that this bundle contains. | . | public $dependencies | Bundle dependencies. | . | public $js | List of JavaScript files that this bundle contains… | . | public $jsPosition | Position of the js file in the generated view. | . | public $name | The bundle name. (eg. jquery, bootstrap, etc.) | . | public $publishedBasePath | The root directory storing the published asset fil… | . | public $publishedBaseUrl | The base URL through which the published asset fil… | . | public $sourcePath | The directory that contains the source asset files… | . | protected $assetBundles | list of the registered asset bundles. The keys are… | . ",
+    "url": "/docs/api/AssetBundle.html#properties",
+    "relUrl": "/docs/api/AssetBundle.html#properties"
+  },"10": {
+    "doc": "AssetBundle",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/AssetBundle.html#inherited-properties",
+    "relUrl": "/docs/api/AssetBundle.html#inherited-properties"
+  },"11": {
+    "doc": "AssetBundle",
+    "title": "Methods",
+    "content": "| Name | Description | . | public publish | Publish assets into public path | . | public register | Registers this asset bundle with a view. | . | protected copy | Copy recursively a folder into another one. | . ",
+    "url": "/docs/api/AssetBundle.html#methods",
+    "relUrl": "/docs/api/AssetBundle.html#methods"
+  },"12": {
+    "doc": "AssetBundle",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/AssetBundle.html#inherited-methods",
+    "relUrl": "/docs/api/AssetBundle.html#inherited-methods"
+  },"13": {
+    "doc": "AssetBundle",
+    "title": "Properties",
+    "content": ". public $css : array . List of CSS files that this bundle contains. public $dependencies : array . Bundle dependencies. public $js : array . List of JavaScript files that this bundle contains. public $jsPosition : int . Position of the js file in the generated view. see \\piko\\View . public $name : string . The bundle name. (eg. jquery, bootstrap, etc.) . public $publishedBasePath : string . The root directory storing the published asset files. public $publishedBaseUrl : string . The base URL through which the published asset files can be accessed. public $sourcePath : string . The directory that contains the source asset files for this asset bundle. You can use either a directory or an alias of the directory. protected $assetBundles : \\piko\\AssetBundle[] . list of the registered asset bundles. The keys are the bundle names and the values are the registered AssetBundle objects. see \\piko\\AssetBundle::register() . ",
+    "url": "/docs/api/AssetBundle.html#properties-1",
+    "relUrl": "/docs/api/AssetBundle.html#properties-1"
+  },"14": {
+    "doc": "AssetBundle",
+    "title": "Methods",
+    "content": ". public publish(): void . public publish(): void . Publish assets into public path . public register(): \\piko\\AssetBundle . public static register(\\piko\\View $view): \\piko\\AssetBundle . Registers this asset bundle with a view. Parameters . $view : the view to be registered with . Return: . \\piko\\AssetBundle the registered asset bundle instance . protected copy(): void . protected copy(string $src, string $dest): void . Copy recursively a folder into another one. Parameters . $src : The source directory to copy . $dest : The destination directory to copy . ",
+    "url": "/docs/api/AssetBundle.html#methods-1",
+    "relUrl": "/docs/api/AssetBundle.html#methods-1"
+  },"15": {
+    "doc": "AssetBundle",
+    "title": "AssetBundle",
+    "content": " ",
+    "url": "/docs/api/AssetBundle.html",
+    "relUrl": "/docs/api/AssetBundle.html"
+  },"16": {
+    "doc": "Component",
+    "title": "\\piko\\Component",
+    "content": "Component class implements events and behaviors features. Also component public properties can be initialized with an array of configuration during instantiation. Events offer the possibility to inject custom code when they are triggered. Behaviors offer the possibility to add custom methods without extending the class. ",
+    "url": "/docs/api/Component.html#pikocomponent",
+    "relUrl": "/docs/api/Component.html#pikocomponent"
+  },"17": {
+    "doc": "Component",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/Component.html#properties",
+    "relUrl": "/docs/api/Component.html#properties"
+  },"18": {
+    "doc": "Component",
+    "title": "Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/Component.html#methods",
+    "relUrl": "/docs/api/Component.html#methods"
+  },"19": {
+    "doc": "Component",
+    "title": "Properties",
+    "content": ". public $behaviors : array . Behaviors container. public $events : array . Event handlers container. public $events2 : array . Static event handlers container. ",
+    "url": "/docs/api/Component.html#properties-1",
+    "relUrl": "/docs/api/Component.html#properties-1"
+  },"20": {
+    "doc": "Component",
+    "title": "Methods",
+    "content": ". public __call(): mixed . public __call(string $name, array $args): mixed . Magic method to call a behavior. Parameters . $name : The name of the behavior. $args : The behavior arguments. throws \\RuntimeException . Return: . mixed . public __construct(): void . public __construct(array $config = []): void . Constructor . Parameters . $config (default: []): A configuration array to set public properties of the class. public attachBehavior(): void . public attachBehavior(string $name = '', mixed $callback = null): void . Attach a behavior to the component instance. Parameters . $name (default: ‘’): The behavior name. $callback (default: null): The behavior implementation. Must be one of the following: . | A Closure (function(){ … }) | An object method ([$object, ‘methodName’]) | A static class method (‘MyClass::myMethod’) | A global function (‘myFunction’) | . public detachBehavior(): void . public detachBehavior(string $name = ''): void . Detach a behavior. Parameters . $name (default: ‘’): The behavior name. public on(): void . public on(string $eventName = '', mixed $callback = null, string $priority = 'after'): void . Event registration. Parameters . $eventName (default: ‘’): The event name to register. $callback (default: null): The event handler to register. Must be one of the following: . | A Closure (function(){ … }) | An object method ([$object, ‘methodName’]) | A static class method (‘MyClass::myMethod’) | A global function (‘myFunction’) | . $priority (default: ‘after’): The order priority in the events stack (‘after’ or ‘before’). Default to ‘after’. public trigger(): array . public trigger(string $eventName = '', array $args = array()): array . Trigger an event. Event handlers corresponding to this event will be called in the order they are registered. Parameters . $eventName (default: ‘’): The event name to trigger. $args (default: array()): The event handlers arguments. Return: . array . public when(): void . public static when(string $eventName = '', mixed $callback = null, string $priority = 'after'): void . Static event registration. Parameters . $eventName (default: ‘’): The event name to register. $callback (default: null): The event handler to register. Must be one of the following: . | A Closure (function(){ … }) | An object method ([$object, ‘methodName’]) | A static class method (‘MyClass::myMethod’) | A global function (‘myFunction’) | . $priority (default: ‘after’): The order priority in the events stack (‘after’ or ‘before’). Default to ‘after’. protected init(): void . protected init(): void . Method called at the end of the constructor. ",
+    "url": "/docs/api/Component.html#methods-1",
+    "relUrl": "/docs/api/Component.html#methods-1"
+  },"21": {
+    "doc": "Component",
+    "title": "Component",
+    "content": " ",
+    "url": "/docs/api/Component.html",
+    "relUrl": "/docs/api/Component.html"
+  },"22": {
+    "doc": "Controller",
+    "title": "\\piko\\Controller",
+    "content": "Controller is the base class for classes containing controller logic. ",
+    "url": "/docs/api/Controller.html#pikocontroller",
+    "relUrl": "/docs/api/Controller.html#pikocontroller"
+  },"23": {
+    "doc": "Controller",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $id | The controller identifier. | . | public $layout | The name of the layout to be applied to this contr… | . | public $module | The module that this controller belongs to. | . | public $viewPath | The root directory that contains view files for th… | . ",
+    "url": "/docs/api/Controller.html#properties",
+    "relUrl": "/docs/api/Controller.html#properties"
+  },"24": {
+    "doc": "Controller",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/Controller.html#inherited-properties",
+    "relUrl": "/docs/api/Controller.html#inherited-properties"
+  },"25": {
+    "doc": "Controller",
+    "title": "Methods",
+    "content": "| Name | Description | . | public render | Render a view. | . | public runAction | Runs an action within this controller with the spe… | . | protected getViewPath | Returns the directory containing view files for th… | . ",
+    "url": "/docs/api/Controller.html#methods",
+    "relUrl": "/docs/api/Controller.html#methods"
+  },"26": {
+    "doc": "Controller",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/Controller.html#inherited-methods",
+    "relUrl": "/docs/api/Controller.html#inherited-methods"
+  },"27": {
+    "doc": "Controller",
+    "title": "Properties",
+    "content": ". public $id : string . The controller identifier. public $layout : null|string|false . The name of the layout to be applied to this controller’s views. This property mainly affects the behavior of render(). Defaults to null, meaning the actual layout value should inherit that from module’s layout value. If false, no layout will be applied. public $module : \\piko\\Module . The module that this controller belongs to. public $viewPath : string . The root directory that contains view files for this controller. ",
+    "url": "/docs/api/Controller.html#properties-1",
+    "relUrl": "/docs/api/Controller.html#properties-1"
+  },"28": {
+    "doc": "Controller",
+    "title": "Methods",
+    "content": ". public render(): string . public render(string $viewName, array $data = []): string . Render a view. Parameters . $viewName : The view file name. $data (default: []): An array of data (name-value pairs) to transmit to the view. Return: . string The view output. public runAction(): mixed . public runAction(string $id): mixed . Runs an action within this controller with the specified action ID. Parameters . $id : the ID of the action to be executed. throws \\RuntimeExceptionif the requested action ID cannot be resolved into an action successfully. Return: . mixed the result of the action. protected getViewPath(): string . protected getViewPath(): string . Returns the directory containing view files for this controller. The default implementation returns the directory named as controller id under the module’s viewPath directory. Return: . string the directory containing the view files for this controller. ",
+    "url": "/docs/api/Controller.html#methods-1",
+    "relUrl": "/docs/api/Controller.html#methods-1"
+  },"29": {
+    "doc": "Controller",
+    "title": "Controller",
+    "content": " ",
+    "url": "/docs/api/Controller.html",
+    "relUrl": "/docs/api/Controller.html"
+  },"30": {
+    "doc": "Db",
+    "title": "\\piko\\Db",
+    "content": "Db is the base class to access SQL databases. It’s just a proxy to \\PDO. ",
+    "url": "/docs/api/Db.html#pikodb",
+    "relUrl": "/docs/api/Db.html#pikodb"
+  },"31": {
+    "doc": "Db",
+    "title": "Methods",
+    "content": "| Name | Description | . | public __construct | Extends \\PDO constructor to accept an array of con… | . ",
+    "url": "/docs/api/Db.html#methods",
+    "relUrl": "/docs/api/Db.html#methods"
+  },"32": {
+    "doc": "Db",
+    "title": "Methods",
+    "content": ". public __construct(): mixed . public __construct(array $config = []): mixed . Extends \\PDO constructor to accept an array of configuration. Parameters . $config (default: []): An array (name-value pairs) containing dsn, username, password and options of the database. see \\PDO::__construct() . Return: . mixed . ",
+    "url": "/docs/api/Db.html#methods-1",
+    "relUrl": "/docs/api/Db.html#methods-1"
+  },"33": {
+    "doc": "Db",
+    "title": "Db",
+    "content": " ",
+    "url": "/docs/api/Db.html",
+    "relUrl": "/docs/api/Db.html"
+  },"34": {
+    "doc": "DbRecord",
+    "title": "\\piko\\DbRecord",
+    "content": "DbRecord reprensents a database table row. ",
+    "url": "/docs/api/DbRecord.html#pikodbrecord",
+    "relUrl": "/docs/api/DbRecord.html#pikodbrecord"
+  },"35": {
+    "doc": "DbRecord",
+    "title": "Constants",
+    "content": "| Name | Description | . | public TYPE_BOOL |   | . | public TYPE_INT |   | . | public TYPE_STRING |   | . ",
+    "url": "/docs/api/DbRecord.html#constants",
+    "relUrl": "/docs/api/DbRecord.html#constants"
+  },"36": {
+    "doc": "DbRecord",
+    "title": "Properties",
+    "content": "| Name | Description | . | protected $db | The database instance. | . | protected $primaryKey | The name of the primary key. Default to 'id'. | . | protected $schema | A name-value pair that describes the structure of … | . | protected $tableName | The name of the table. | . ",
+    "url": "/docs/api/DbRecord.html#properties",
+    "relUrl": "/docs/api/DbRecord.html#properties"
+  },"37": {
+    "doc": "DbRecord",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . | protected $data | Represents the model's data. | . ",
+    "url": "/docs/api/DbRecord.html#inherited-properties",
+    "relUrl": "/docs/api/DbRecord.html#inherited-properties"
+  },"38": {
+    "doc": "DbRecord",
+    "title": "Methods",
+    "content": "| Name | Description | . | public __construct | Constructor | . | public __get | Magick method to access model's data as class attr… | . | public __set | Magick method to set model's data as class attribu… | . | public delete | Delete this record. | . | public load | Load row data. | . | public save | Save this record into the table. | . | protected afterDelete | Method called after a delete action. | . | protected afterSave | Method called after a save action. | . | protected beforeDelete | Method called before a delete action. | . | protected beforeSave | Method called before a save action. | . | protected checkColumn | Check if column name is defined in the table schem… | . ",
+    "url": "/docs/api/DbRecord.html#methods",
+    "relUrl": "/docs/api/DbRecord.html#methods"
+  },"39": {
+    "doc": "DbRecord",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public __get | Magick method to access model's data as class attr… | . | public __isset | Magick method to check if attribute is defined in … | . | public __set | Magick method to set model's data as class attribu… | . | public __unset | Magick method to unset attribute in model's data. | . | public attachBehavior | Attach a behavior to the component instance. | . | public bind | Bind directly the model data. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public validate | Validate this model (Should be extended) | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . public $TYPE_BOOL . public $TYPE_INT . public $TYPE_STRING . ",
+    "url": "/docs/api/DbRecord.html#inherited-methods",
+    "relUrl": "/docs/api/DbRecord.html#inherited-methods"
+  },"40": {
+    "doc": "DbRecord",
+    "title": "Properties",
+    "content": ". protected $db : \\piko\\Db . The database instance. protected $primaryKey : string . The name of the primary key. Default to ‘id’. protected $schema : array . A name-value pair that describes the structure of the table. eg.['id' =&gt; self::TYPE_INT, 'name' =&gt; 'id' =&gt; self::TYPE_STRING] . protected $tableName : string . The name of the table. ",
+    "url": "/docs/api/DbRecord.html#properties-1",
+    "relUrl": "/docs/api/DbRecord.html#properties-1"
+  },"41": {
+    "doc": "DbRecord",
+    "title": "Methods",
+    "content": ". public __construct(): void . public __construct(\\piko\\number $id, array $config = []): void . Constructor . Parameters . $id : The value of the row primary key in order to load the row imediately. $config (default: []): An array of configuration. public __get(): mixed . public __get(mixed $attribute): mixed . Magick method to access model’s data as class attribute. Parameters . $attribute : The attribute’s name. see \\piko\\Model::__get() . Return: . mixed The attribute’s value. public __set(): void . public __set(mixed $attribute, mixed $value): void . Magick method to set model’s data as class attribute. Parameters . $attribute : The attribute’s name. $value : The attribute’s value. see \\piko\\Model::__set() . public delete(): bool . public delete(): bool . Delete this record. throws \\RuntimeException . Return: . bool . public load(): void . public load(\\piko\\number $id): void . Load row data. Parameters . $id : The value of the row primary key. throws \\RuntimeException . public save(): bool . public save(): bool . Save this record into the table. throws \\RuntimeException . Return: . bool . protected afterDelete(): void . protected afterDelete(): void . Method called after a delete action. protected afterSave(): void . protected afterSave(): void . Method called after a save action. protected beforeDelete(): bool . protected beforeDelete(): bool . Method called before a delete action. Return: . bool . protected beforeSave(): bool . protected beforeSave(bool $insert): bool . Method called before a save action. Parameters . $insert : If the row is a new record, the value will be true, otherwise, false. Return: . bool . protected checkColumn(): void . protected checkColumn(string $name): void . Check if column name is defined in the table schema. Parameters . $name : . throws \\RuntimeException . see \\piko\\DbRecord::$schema . ",
+    "url": "/docs/api/DbRecord.html#methods-1",
+    "relUrl": "/docs/api/DbRecord.html#methods-1"
+  },"42": {
+    "doc": "DbRecord",
+    "title": "DbRecord",
+    "content": " ",
+    "url": "/docs/api/DbRecord.html",
+    "relUrl": "/docs/api/DbRecord.html"
+  },"43": {
+    "doc": "HttpException",
+    "title": "\\piko\\HttpException",
+    "content": "HttpException convert exception code to http status header. see \\Exception . ",
+    "url": "/docs/api/HttpException.html#pikohttpexception",
+    "relUrl": "/docs/api/HttpException.html#pikohttpexception"
+  },"44": {
+    "doc": "HttpException",
+    "title": "Methods",
+    "content": "| Name | Description | . | public __construct | Constructor sends http header if php SAPI != cli. | . ",
+    "url": "/docs/api/HttpException.html#methods",
+    "relUrl": "/docs/api/HttpException.html#methods"
+  },"45": {
+    "doc": "HttpException",
+    "title": "Methods",
+    "content": ". public __construct(): mixed . public __construct(string $message = null, int $code = null, \\Throwable $previous = null): mixed . Constructor sends http header if php SAPI != cli. Parameters . $message (default: null): The exception message. $code (default: null): The exception code (should be an HTTP status code, eg. 404) . $previous (default: null): A previous exception. Return: . mixed . ",
+    "url": "/docs/api/HttpException.html#methods-1",
+    "relUrl": "/docs/api/HttpException.html#methods-1"
+  },"46": {
+    "doc": "HttpException",
+    "title": "HttpException",
+    "content": " ",
+    "url": "/docs/api/HttpException.html",
+    "relUrl": "/docs/api/HttpException.html"
+  },"47": {
+    "doc": "I18n",
+    "title": "\\piko\\I18n",
+    "content": "Internationalization class . ",
+    "url": "/docs/api/I18n.html#pikoi18n",
+    "relUrl": "/docs/api/I18n.html#pikoi18n"
+  },"48": {
+    "doc": "I18n",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $translations | A key / values pairs of domain / path | . | protected $messages | Messages container by domain | . ",
+    "url": "/docs/api/I18n.html#properties",
+    "relUrl": "/docs/api/I18n.html#properties"
+  },"49": {
+    "doc": "I18n",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/I18n.html#inherited-properties",
+    "relUrl": "/docs/api/I18n.html#inherited-properties"
+  },"50": {
+    "doc": "I18n",
+    "title": "Methods",
+    "content": "| Name | Description | . | public addTranslation | Register a translation | . | public translate | Translate a text. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/I18n.html#methods",
+    "relUrl": "/docs/api/I18n.html#methods"
+  },"51": {
+    "doc": "I18n",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/I18n.html#inherited-methods",
+    "relUrl": "/docs/api/I18n.html#inherited-methods"
+  },"52": {
+    "doc": "I18n",
+    "title": "Properties",
+    "content": ". public $translations : array . A key / values pairs of domain / path . protected $messages : array . Messages container by domain . ",
+    "url": "/docs/api/I18n.html#properties-1",
+    "relUrl": "/docs/api/I18n.html#properties-1"
+  },"53": {
+    "doc": "I18n",
+    "title": "Methods",
+    "content": ". public addTranslation(): void . public addTranslation(string $domain, string $path): void . Register a translation . Parameters . $domain : The translation domain, for instance ‘app’. $path : The path to the directory where to find translation files. public translate(): string . public translate(string $domain, string $text, array $params = []): string . Translate a text. Parameters . $domain : The translation domain, for instance ‘app’. $text : The text to translate. $params (default: []): Parameters substitution, eg. $this-&gt;translate(‘site’, ‘Hello {name}’, [‘name’ =&gt; ‘John’]). Return: . string The translated text or the text itself if no translation was found. protected init(): void . protected init(): void . Method called at the end of the constructor. see \\piko\\Component::init() . ",
+    "url": "/docs/api/I18n.html#methods-1",
+    "relUrl": "/docs/api/I18n.html#methods-1"
+  },"54": {
+    "doc": "I18n",
+    "title": "I18n",
+    "content": " ",
+    "url": "/docs/api/I18n.html",
+    "relUrl": "/docs/api/I18n.html"
+  },"55": {
+    "doc": "IdentityInterface",
+    "title": "\\piko\\IdentityInterface",
+    "content": "User identity interface. ",
+    "url": "/docs/api/IdentityInterface.html#pikoidentityinterface",
+    "relUrl": "/docs/api/IdentityInterface.html#pikoidentityinterface"
+  },"56": {
+    "doc": "IdentityInterface",
+    "title": "Methods",
+    "content": "| Name | Description | . | public findIdentity | Finds an identity by the given ID. | . | public getId | Returns an ID that can uniquely identify a user id… | . ",
+    "url": "/docs/api/IdentityInterface.html#methods",
+    "relUrl": "/docs/api/IdentityInterface.html#methods"
+  },"57": {
+    "doc": "IdentityInterface",
+    "title": "Methods",
+    "content": ". public findIdentity(): \\piko\\IdentityInterface|null . public static findIdentity(string|int $id): \\piko\\IdentityInterface|null . Finds an identity by the given ID. Parameters . $id : the ID to be looked for . Return: . \\piko\\IdentityInterface|null the identity object that matches the given ID. null should be returned if such an identity cannot be found . public getId(): string|int . public getId(): string|int . Returns an ID that can uniquely identify a user identity. Return: . string|int an ID that uniquely identifies a user identity. ",
+    "url": "/docs/api/IdentityInterface.html#methods-1",
+    "relUrl": "/docs/api/IdentityInterface.html#methods-1"
+  },"58": {
+    "doc": "IdentityInterface",
+    "title": "IdentityInterface",
+    "content": " ",
+    "url": "/docs/api/IdentityInterface.html",
+    "relUrl": "/docs/api/IdentityInterface.html"
+  },"59": {
+    "doc": "Model",
+    "title": "\\piko\\Model",
+    "content": "Base model class. ",
+    "url": "/docs/api/Model.html#pikomodel",
+    "relUrl": "/docs/api/Model.html#pikomodel"
+  },"60": {
+    "doc": "Model",
+    "title": "Properties",
+    "content": "| Name | Description | . | protected $data | Represents the model's data. | . ",
+    "url": "/docs/api/Model.html#properties",
+    "relUrl": "/docs/api/Model.html#properties"
+  },"61": {
+    "doc": "Model",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/Model.html#inherited-properties",
+    "relUrl": "/docs/api/Model.html#inherited-properties"
+  },"62": {
+    "doc": "Model",
+    "title": "Methods",
+    "content": "| Name | Description | . | public __get | Magick method to access model's data as class attr… | . | public __isset | Magick method to check if attribute is defined in … | . | public __set | Magick method to set model's data as class attribu… | . | public __unset | Magick method to unset attribute in model's data. | . | public bind | Bind directly the model data. | . | public validate | Validate this model (Should be extended) | . ",
+    "url": "/docs/api/Model.html#methods",
+    "relUrl": "/docs/api/Model.html#methods"
+  },"63": {
+    "doc": "Model",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/Model.html#inherited-methods",
+    "relUrl": "/docs/api/Model.html#inherited-methods"
+  },"64": {
+    "doc": "Model",
+    "title": "Properties",
+    "content": ". protected $data : array . Represents the model’s data. ",
+    "url": "/docs/api/Model.html#properties-1",
+    "relUrl": "/docs/api/Model.html#properties-1"
+  },"65": {
+    "doc": "Model",
+    "title": "Methods",
+    "content": ". public __get(): mixed . public __get(string $attribute): mixed . Magick method to access model’s data as class attribute. Parameters . $attribute : The attribute’s name. Return: . mixed The attribute’s value. public __isset(): bool . public __isset(string $attribute): bool . Magick method to check if attribute is defined in model’s data. Parameters . $attribute : The attribute’s name. Return: . bool . public __set(): void . public __set(string $attribute, mixed $value): void . Magick method to set model’s data as class attribute. Parameters . $attribute : The attribute’s name. $value : The attribute’s value. public __unset(): void . public __unset(string $attribute): void . Magick method to unset attribute in model’s data. Parameters . $attribute : The attribute’s name. public bind(): void . public bind(array $data): void . Bind directly the model data. Parameters . $data : An array of data (name-value pairs). public validate(): bool . public validate(): bool . Validate this model (Should be extended) . Return: . bool . ",
+    "url": "/docs/api/Model.html#methods-1",
+    "relUrl": "/docs/api/Model.html#methods-1"
+  },"66": {
+    "doc": "Model",
+    "title": "Model",
+    "content": " ",
+    "url": "/docs/api/Model.html",
+    "relUrl": "/docs/api/Model.html"
+  },"67": {
+    "doc": "Module",
+    "title": "\\piko\\Module",
+    "content": "Module is the base class for classes containing module logic. ",
+    "url": "/docs/api/Module.html#pikomodule",
+    "relUrl": "/docs/api/Module.html#pikomodule"
+  },"68": {
+    "doc": "Module",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $controllerMap | Mapping from controller ID to controller class. | . | public $controllerNamespace | Base name space of module's controllers. Default t… | . | public $id | The module identifier. | . | public $layout | The name of the module's layout file. | . | public $layoutPath | The layout directory of the module. | . | private $basePath | The root directory of the module. | . ",
+    "url": "/docs/api/Module.html#properties",
+    "relUrl": "/docs/api/Module.html#properties"
+  },"69": {
+    "doc": "Module",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/Module.html#inherited-properties",
+    "relUrl": "/docs/api/Module.html#inherited-properties"
+  },"70": {
+    "doc": "Module",
+    "title": "Methods",
+    "content": "| Name | Description | . | public getBasePath | Returns the root directory of the module. | . | public run | Run module controller action. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/Module.html#methods",
+    "relUrl": "/docs/api/Module.html#methods"
+  },"71": {
+    "doc": "Module",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/Module.html#inherited-methods",
+    "relUrl": "/docs/api/Module.html#inherited-methods"
+  },"72": {
+    "doc": "Module",
+    "title": "Properties",
+    "content": ". public $controllerMap : array . Mapping from controller ID to controller class. public $controllerNamespace : string . Base name space of module’s controllers. Default to {baseModuleNameSpace}\\controllers . public $id : string . The module identifier. public $layout : string . The name of the module’s layout file. public $layoutPath : string . The layout directory of the module. private $basePath : string . The root directory of the module. ",
+    "url": "/docs/api/Module.html#properties-1",
+    "relUrl": "/docs/api/Module.html#properties-1"
+  },"73": {
+    "doc": "Module",
+    "title": "Methods",
+    "content": ". public getBasePath(): string . public getBasePath(): string . Returns the root directory of the module. Return: . string the root directory of the module. public run(): mixed . public run(string $controllerId, string $actionId): mixed . Run module controller action. Parameters . $controllerId : The controller identifier. $actionId : The controller action identifier. Return: . mixed The module output. protected init(): void . protected init(): void . Method called at the end of the constructor. see \\piko\\Component::init() . ",
+    "url": "/docs/api/Module.html#methods-1",
+    "relUrl": "/docs/api/Module.html#methods-1"
+  },"74": {
+    "doc": "Module",
+    "title": "Module",
+    "content": " ",
+    "url": "/docs/api/Module.html",
+    "relUrl": "/docs/api/Module.html"
+  },"75": {
+    "doc": "Piko",
+    "title": "\\piko\\Piko",
+    "content": "Piko is the helper class for the Piko framework. ",
+    "url": "/docs/api/Piko.html#pikopiko",
+    "relUrl": "/docs/api/Piko.html#pikopiko"
+  },"76": {
+    "doc": "Piko",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $app | The application instance. | . | protected $aliases | The aliases container. | . | protected $registry | The registry container. | . | protected $singletons | The singletons container. | . ",
+    "url": "/docs/api/Piko.html#properties",
+    "relUrl": "/docs/api/Piko.html#properties"
+  },"77": {
+    "doc": "Piko",
+    "title": "Methods",
+    "content": "| Name | Description | . | public configureObject | Configure public attributes of an object. | . | public createObject | Singleton factory method. | . | public get | Retrieve data from the registry. | . | public getAlias | Translates a path alias into an actual path. | . | public set | Store data in the registry. | . | public setAlias | Registers a path alias. A path alias is a short na… | . | public t | Translate a text. This is a shortcut to translate … | . ",
+    "url": "/docs/api/Piko.html#methods",
+    "relUrl": "/docs/api/Piko.html#methods"
+  },"78": {
+    "doc": "Piko",
+    "title": "Properties",
+    "content": ". public $app : \\piko\\Application . The application instance. protected $aliases : array . The aliases container. protected $registry : array . The registry container. protected $singletons : array . The singletons container. ",
+    "url": "/docs/api/Piko.html#properties-1",
+    "relUrl": "/docs/api/Piko.html#properties-1"
+  },"79": {
+    "doc": "Piko",
+    "title": "Methods",
+    "content": ". public configureObject(): void . public static configureObject(object $object, array $properties = []): void . Configure public attributes of an object. Parameters . $object : The object instance. $properties (default: []): A name-value pair array corresponding to the object public properties. public createObject(): object . public static createObject(string|array $type, array $properties = []): object . Singleton factory method. Parameters . $type : The object type. If it is a string, it should be the fully qualified name of the class. If an array given, it should contain the key ‘class’ with the value corresponding to the fully qualified name of the class . $properties (default: []): A name-value pair array corresponding to the object public properties. Return: . object . public get(): mixed . public static get(string $key, mixed $default = null): mixed . Retrieve data from the registry. Parameters . $key : The registry key. $default (default: null): Default value if data is not found from the registry. Return: . mixed . public getAlias(): string|bool . public static getAlias(string $alias): string|bool . Translates a path alias into an actual path. Parameters . $alias : The alias to be translated. Return: . string|bool The path corresponding to the alias. False if the alias is not registered. public set(): void . public static set(string $key, mixed $value): void . Store data in the registry. Parameters . $key : . $value : . public setAlias(): void . public static setAlias(string $alias, string $path): void . Registers a path alias. A path alias is a short name representing a long path (a file path, a URL, etc.) . Parameters . $alias : The alias name (e.g. “@web”). It must start with a ‘@’ character. $path : the path corresponding to the alias. throws \\InvalidArgumentExceptionif $path is an invalid alias. see \\piko\\Piko::getAlias() . public t(): string . public static t(string $domain, string $text, array $params = []): string . Translate a text. This is a shortcut to translate method in i18n component. Parameters . $domain : The translation domain, for instance ‘app’. $text : The text to translate. $params (default: []): Parameters substitution. see \\piko\\I18n . Return: . string The translated text or the text itself if no translation was found. ",
+    "url": "/docs/api/Piko.html#methods-1",
+    "relUrl": "/docs/api/Piko.html#methods-1"
+  },"80": {
+    "doc": "Piko",
+    "title": "Piko",
+    "content": " ",
+    "url": "/docs/api/Piko.html",
+    "relUrl": "/docs/api/Piko.html"
+  },"81": {
+    "doc": "Router",
+    "title": "\\piko\\Router",
+    "content": "Base application router. ",
+    "url": "/docs/api/Router.html#pikorouter",
+    "relUrl": "/docs/api/Router.html#pikorouter"
+  },"82": {
+    "doc": "Router",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $routes | Name-value pair uri to routes correspondance. Each… | . ",
+    "url": "/docs/api/Router.html#properties",
+    "relUrl": "/docs/api/Router.html#properties"
+  },"83": {
+    "doc": "Router",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/Router.html#inherited-properties",
+    "relUrl": "/docs/api/Router.html#inherited-properties"
+  },"84": {
+    "doc": "Router",
+    "title": "Methods",
+    "content": "| Name | Description | . | public getUrl | Convert a route to an url. | . | public resolve | Resolve the application route corresponding to the… | . ",
+    "url": "/docs/api/Router.html#methods",
+    "relUrl": "/docs/api/Router.html#methods"
+  },"85": {
+    "doc": "Router",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/Router.html#inherited-methods",
+    "relUrl": "/docs/api/Router.html#inherited-methods"
+  },"86": {
+    "doc": "Router",
+    "title": "Properties",
+    "content": ". public $routes : array . Name-value pair uri to routes correspondance. Each name corresponds to a regular expression of the request uri. Each value corresponds to a route replacement. eg. '^/about$' =&gt; 'site/default/about' means all requests corresponding to ‘/about’ will be treated in ‘about’ action in the ‘defaut’ controller of ‘site’ module. eg. '^/(\\w+)/(\\w+)/(\\w+)' =&gt; '$1/$2/$3' means uri part 1 is the module id, part 2, the controller id and part 3 the action id. Also route parameters could be given using pipe character after route. eg. '^/user/(\\d+)' =&gt; 'site/user/view|id=$1' The router will populate $_GET with ‘id’ = The user id in the uri. see \\piko\\preg_replace() . ",
+    "url": "/docs/api/Router.html#properties-1",
+    "relUrl": "/docs/api/Router.html#properties-1"
+  },"87": {
+    "doc": "Router",
+    "title": "Methods",
+    "content": ". public getUrl(): string . public getUrl(string $route, array $params = []): string . Convert a route to an url. Parameters . $route : The route given as ‘{moduleId}/{controllerId}/{ationId}’. $params (default: []): Optional query parameters. Return: . string The url. public resolve(): string . public resolve(): string . Resolve the application route corresponding to the request uri. The expected route scheme is : ‘{moduleId}/{controllerId}/{ationId}’ . Return: . string The route. ",
+    "url": "/docs/api/Router.html#methods-1",
+    "relUrl": "/docs/api/Router.html#methods-1"
+  },"88": {
+    "doc": "Router",
+    "title": "Router",
+    "content": " ",
+    "url": "/docs/api/Router.html",
+    "relUrl": "/docs/api/Router.html"
+  },"89": {
+    "doc": "User",
+    "title": "\\piko\\User",
+    "content": "Application User base class. ",
+    "url": "/docs/api/User.html#pikouser",
+    "relUrl": "/docs/api/User.html#pikouser"
+  },"90": {
+    "doc": "User",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $accessCheckerClass | The access checker to use for checking access. | . | public $authTimeout | The number of seconds in which the user will be lo… | . | public $identityClass | The class name of the identity object. | . | protected $access | Internal cache of access permissions. | . | protected $accessChecker | Access checker instance. | . | protected $identity | The identity instance. | . ",
+    "url": "/docs/api/User.html#properties",
+    "relUrl": "/docs/api/User.html#properties"
+  },"91": {
+    "doc": "User",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/User.html#inherited-properties",
+    "relUrl": "/docs/api/User.html#inherited-properties"
+  },"92": {
+    "doc": "User",
+    "title": "Methods",
+    "content": "| Name | Description | . | public can | Check if the user can do an action. | . | public getId | Get user identifier. | . | public getIdentity | Get user identity | . | public isGuest | Returns a value indicating whether the user is a g… | . | public login | Start the session and set user identity. | . | public logout | Destroy the session and remove user identity. | . | public setIdentity | Set user identity. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/User.html#methods",
+    "relUrl": "/docs/api/User.html#methods"
+  },"93": {
+    "doc": "User",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . ",
+    "url": "/docs/api/User.html#inherited-methods",
+    "relUrl": "/docs/api/User.html#inherited-methods"
+  },"94": {
+    "doc": "User",
+    "title": "Properties",
+    "content": ". public $accessCheckerClass : string . The access checker to use for checking access. public $authTimeout : int . The number of seconds in which the user will be logged out automatically if he remains inactive. public $identityClass : string . The class name of the identity object. protected $access : array . Internal cache of access permissions. protected $accessChecker : object . Access checker instance. protected $identity : \\piko\\IdentityInterface . The identity instance. ",
+    "url": "/docs/api/User.html#properties-1",
+    "relUrl": "/docs/api/User.html#properties-1"
+  },"95": {
+    "doc": "User",
+    "title": "Methods",
+    "content": ". public can(): bool . public can(string $permission): bool . Check if the user can do an action. Parameters . $permission : The permission name. Return: . bool . public getId(): null|string|int . public getId(): null|string|int . Get user identifier. Return: . null|string|int . public getIdentity(): \\piko\\IdentityInterface|null . public getIdentity(): \\piko\\IdentityInterface|null . Get user identity . Return: . \\piko\\IdentityInterface|null The user identity or null if no identity is found. public isGuest(): bool . public isGuest(): bool . Returns a value indicating whether the user is a guest (not authenticated). Return: . bool whether the current user is a guest. public login(): void . public login(\\piko\\IdentityInterface $identity): void . Start the session and set user identity. Parameters . $identity : The user identity. public logout(): void . public logout(): void . Destroy the session and remove user identity. public setIdentity(): void . public setIdentity(\\piko\\IdentityInterface $identity): void . Set user identity. Parameters . $identity : The user identity. throws \\RuntimeExceptionIf identiy doesn’t implement IdentityInterface. protected init(): void . protected init(): void . Method called at the end of the constructor. see \\piko\\Component::init() . ",
+    "url": "/docs/api/User.html#methods-1",
+    "relUrl": "/docs/api/User.html#methods-1"
+  },"96": {
+    "doc": "User",
+    "title": "User",
+    "content": " ",
+    "url": "/docs/api/User.html",
+    "relUrl": "/docs/api/User.html"
+  },"97": {
+    "doc": "Utils",
+    "title": "\\piko\\Utils",
+    "content": "Miscellaneous utils. ",
+    "url": "/docs/api/Utils.html#pikoutils",
+    "relUrl": "/docs/api/Utils.html#pikoutils"
+  },"98": {
+    "doc": "Utils",
+    "title": "Methods",
+    "content": "| Name | Description | . | public parseEnvFile | Parse an environment configuration file and set en… | . ",
+    "url": "/docs/api/Utils.html#methods",
+    "relUrl": "/docs/api/Utils.html#methods"
+  },"99": {
+    "doc": "Utils",
+    "title": "Methods",
+    "content": ". public parseEnvFile(): void . public static parseEnvFile(string $file): void . Parse an environment configuration file and set environment variables. The expected format of the configuration file is : ... ENV_KEY1 = env_value1 ENV_KEY2 = env_value2 ... Parameters . $file : The file path. throws \\RuntimeExceptionIf file not found. ",
+    "url": "/docs/api/Utils.html#methods-1",
+    "relUrl": "/docs/api/Utils.html#methods-1"
+  },"100": {
+    "doc": "Utils",
+    "title": "Utils",
+    "content": " ",
+    "url": "/docs/api/Utils.html",
+    "relUrl": "/docs/api/Utils.html"
+  },"101": {
+    "doc": "View",
+    "title": "\\piko\\View",
+    "content": "Base application view. ",
+    "url": "/docs/api/View.html#pikoview",
+    "relUrl": "/docs/api/View.html#pikoview"
+  },"102": {
+    "doc": "View",
+    "title": "Constants",
+    "content": "| Name | Description | . | public POS_END | End of body position. | . | public POS_HEAD | Head position. | . ",
+    "url": "/docs/api/View.html#constants",
+    "relUrl": "/docs/api/View.html#constants"
+  },"103": {
+    "doc": "View",
+    "title": "Properties",
+    "content": "| Name | Description | . | public $css | The registered CSS code blocks. | . | public $cssFiles | The registered CSS files. | . | public $endBody | Parts of the end of the body. | . | public $head | Parts of the head. | . | public $js | The registered JS code blocks | . | public $jsFiles | The registered JS files. | . | public $params | View parameters. | . | public $paths | Directories where to find view files. | . | public $themeMap | Theme map configuration. A key paired array where … | . | public $title | The page title | . ",
+    "url": "/docs/api/View.html#properties",
+    "relUrl": "/docs/api/View.html#properties"
+  },"104": {
+    "doc": "View",
+    "title": "Inherited Properties",
+    "content": "| Name | Description | . | public $behaviors | Behaviors container. | . | public $events | Event handlers container. | . | public $events2 | Static event handlers container. | . ",
+    "url": "/docs/api/View.html#inherited-properties",
+    "relUrl": "/docs/api/View.html#inherited-properties"
+  },"105": {
+    "doc": "View",
+    "title": "Methods",
+    "content": "| Name | Description | . | public escape | Escape HTML special characters. | . | public registerCSS | Register css code. | . | public registerCSSFile | Register a stylesheet url. | . | public registerJs | Register a script. | . | public registerJsFile | Register a script url. | . | public render | Render the view. | . | protected applyTheme | Try to find an override of the file in a theme. | . | protected endBody | Assemble html in the end of the body position. | . | protected findFile | Retrieve a view file. | . | protected head | Assemble html in the head position. | . ",
+    "url": "/docs/api/View.html#methods",
+    "relUrl": "/docs/api/View.html#methods"
+  },"106": {
+    "doc": "View",
+    "title": "Inherited Methods",
+    "content": "| Name | Description | . | public __call | Magic method to call a behavior. | . | public __construct | Constructor | . | public attachBehavior | Attach a behavior to the component instance. | . | public detachBehavior | Detach a behavior. | . | public on | Event registration. | . | public trigger | Trigger an event. Event handlers corresponding to … | . | public when | Static event registration. | . | protected init | Method called at the end of the constructor. | . public $POS_END . End of body position. public $POS_HEAD . Head position. ",
+    "url": "/docs/api/View.html#inherited-methods",
+    "relUrl": "/docs/api/View.html#inherited-methods"
+  },"107": {
+    "doc": "View",
+    "title": "Properties",
+    "content": ". public $css : array . The registered CSS code blocks. see \\piko\\View::registerCss() . public $cssFiles : array . The registered CSS files. see \\piko\\View::registerCssFile() . public $endBody : array . Parts of the end of the body. public $head : array . Parts of the head. public $js : array . The registered JS code blocks . see \\piko\\View::registerJs() . public $jsFiles : array . The registered JS files. see \\piko\\View::registerJsFile() . public $params : array . View parameters. public $paths : array . Directories where to find view files. public $themeMap : array . Theme map configuration. A key paired array where each key represents a path to override and the value, the mapped path. The value could be either a string or an array of path and in this case, it may be possibe to use child themes. Configuration example : ... 'view' =&gt; [ 'class' =&gt; 'piko\\View', 'themeMap' =&gt; [ '@app/modules/site/views' =&gt; [ '@app/themes/child-theme', '@app/themes/parent-theme', ], '@app/modules/admin/views' =&gt; '@app/themes/piko/admin', ], ], . public $title : string . The page title . ",
+    "url": "/docs/api/View.html#properties-1",
+    "relUrl": "/docs/api/View.html#properties-1"
+  },"108": {
+    "doc": "View",
+    "title": "Methods",
+    "content": ". public escape(): string . public escape(string $string): string . Escape HTML special characters. Parameters . $string : Dirty html. Return: . string Clean html. public registerCSS(): void . public registerCSS(string $css, string $key = null): void . Register css code. Parameters . $css : The css code. $key (default: null): An optional identifier . public registerCSSFile(): void . public registerCSSFile(string $url): void . Register a stylesheet url. Parameters . $url : The stylesheet url. public registerJs(): void . public registerJs(string $js, int $position = self::POS_END, string $key = null): void . Register a script. Parameters . $js : The script code. $position (default: self::POS_END): The view position where to insert the script (default at the end of the body). $key (default: null): An optional identifier . public registerJsFile(): void . public registerJsFile(string $url, int $position = self::POS_END, string $key = null): void . Register a script url. Parameters . $url : The script url. $position (default: self::POS_END): The view position where to insert the script (default at the end of the body). $key (default: null): An optional identifier . public render(): string . public render(string $file, mixed $model = []): string . Render the view. Parameters . $file : The view file name. $model (default: []): . Return: . string The view output. protected applyTheme(): string . protected applyTheme(string $path): string . Try to find an override of the file in a theme. Parameters . $path : The file path . Return: . string The overriden or not file path . protected endBody(): string . protected endBody(): string . Assemble html in the end of the body position. Return: . string The end of the body html. protected findFile(): string . protected findFile(string $viewName): string . Retrieve a view file. Parameters . $viewName : The view name (without .php extension). throws \\RuntimeExceptionif view file not found. Return: . string The path of the view file. protected head(): string . protected head(): string . Assemble html in the head position. Return: . string The head html. ",
+    "url": "/docs/api/View.html#methods-1",
+    "relUrl": "/docs/api/View.html#methods-1"
+  },"109": {
+    "doc": "View",
+    "title": "View",
+    "content": " ",
+    "url": "/docs/api/View.html",
+    "relUrl": "/docs/api/View.html"
+  },"110": {
+    "doc": "Application",
+    "title": "How application works",
+    "content": "Piko applications are organized following the Model-View-Controller (MVC) design pattern and the MVC logic is packaged into modules. Example of application structure : . modules - moduleA - controllers - models - views - moduleB - controllers - models - views public - css - js index.php . ",
+    "url": "/docs/application.html#how-application-works",
+    "relUrl": "/docs/application.html#how-application-works"
+  },"111": {
+    "doc": "Application",
+    "title": "Workflow",
+    "content": ". 1 - Routing . When application start, the first step is to convert request URI into internal route. The internal route is a string identifier which indicates to the application how to dispatch the request and follows this schema : . ModuleId/ControllerId/ActionId . Exemple : The request URI /hello may correspond to the internal route site\\default\\hello which means that the action hello in the controller default in the module site should be dispatched by the application. More information . 2 - Dispatching . Once the application discovered the internal route (see above), the next step is to dispatch the request to the appropriate controller action. An action is a method in a controller sufixed with Action. For the action id hello, the controller method should be named helloAction. 3 - Rendering . The controller action returns to the application the output to display : . Exemple for the action id hello : . class DefaultController extends \\piko\\Controller { public function helloAction() { return \"Hello world!\"; } } . ",
+    "url": "/docs/application.html#workflow",
+    "relUrl": "/docs/application.html#workflow"
+  },"112": {
+    "doc": "Application",
+    "title": "Entry script",
+    "content": "Entry script is the first step to bootstrap application. It generally named index.php and stored in the web accessible directory. This is an example of basic bootstraping : . use piko\\Application; require '../vendor/autoload.php'; $config = require '../config.php'; (new Application($config))-&gt;run(); . Piko embed an usefull utility to get environment variables from a file. It can be used in the entry script : . use piko\\Application; use piko\\Utils; require '../vendor/autoload.php'; Utils::parseEnvFile('../.env'); $config = require '../config.php'; (new Application($config))-&gt;run(); . The .env file could contains this variables : . PIKO_DEBUG = 1 PIKO_ENV = dev APP_TIMEZONE = Europe/Paris APP_LANGUAGE = fr ADMIN_EMAIL = youremail@yourhost.com . Now, after parsing this file with Utils::parseEnvFile('../.env') you can access this variables in all the application by calling the php native function getenv. ",
+    "url": "/docs/application.html#entry-script",
+    "relUrl": "/docs/application.html#entry-script"
+  },"113": {
+    "doc": "Application",
+    "title": "Configuration",
+    "content": "In the step above, we load a configuration array from a file and apply it to the application. In order to the application work, the minimal configuration is to declare a module and a route to access this module: . [ 'components' =&gt; [ 'router' =&gt; [ 'class' =&gt; 'piko\\Router', 'routes' =&gt; [ '^/$' =&gt; 'site/default/index', ], ] ], 'modules' =&gt; [ 'site' =&gt; 'app\\modules\\site\\Module' ] ] . To understand the routing mechanism, see Requests. Also, other important parameters can be set in the configuration array: . [ 'basePath' =&gt; __DIR__, 'defaultLayoutPath' =&gt; '@app/layouts', 'defaultLayout' =&gt; 'main', 'errorRoute' =&gt; 'site/default/error', 'language' =&gt; 'fr', 'components' =&gt; [ //... ], 'modules' =&gt; [ //... ], 'bootstrap' =&gt; [ //... ] ] . We will see in detail each of them: . basePath : Absolute base path of the application. It corresponds to the alias @app (see Alias) . defaultLayoutPath : Absolute path where view layouts are stored. An alias can be used (default : @app/layouts) . defaultLayout : The default layout name without file extension php. (default : main) . errorRoute : The Error route to display exceptions in a friendly way. If not set, Exceptions catched will be thrown and stop the script execution. language : The language used in the application . components: Array of components used in the application. (see Component) . modules: Array of modules used in the application. (see Module) . bootstrap: Array of modules ids which participate to the application bootstrap process. (see Module) . ",
+    "url": "/docs/application.html#configuration",
+    "relUrl": "/docs/application.html#configuration"
+  },"114": {
+    "doc": "Application",
+    "title": "Controllers",
+    "content": "Controllers are classes derived from \\piko\\Controller. They are part of MVC architecture and they are responsible for processing requests and generating responses. Controllers are composed of actions methods that end users can address and request for execution. A controller can have one or multiple actions. End user address action throw routes as described above. Example: . namespace app\\modules\\site\\controllers; class DefaultController extends \\piko\\Controller { /** * The corresponding route to access this action is site/default/hello */ public function helloAction() { return \"Hello world!\"; } } . Controller class naming . Controller class naming uses Camel Case convention. The first part of the name is the controler Id and the last part is the word Controller. Exemples: . | ControllerId | class name | . | article | ArticleController | . | article-manager | ArticleManagerController | . Action method naming . ",
+    "url": "/docs/application.html#controllers",
+    "relUrl": "/docs/application.html#controllers"
+  },"115": {
+    "doc": "Application",
+    "title": "Models",
+    "content": " ",
+    "url": "/docs/application.html#models",
+    "relUrl": "/docs/application.html#models"
+  },"116": {
+    "doc": "Application",
+    "title": "Views",
+    "content": " ",
+    "url": "/docs/application.html#views",
+    "relUrl": "/docs/application.html#views"
+  },"117": {
+    "doc": "Application",
+    "title": "Modules",
+    "content": " ",
+    "url": "/docs/application.html#modules",
+    "relUrl": "/docs/application.html#modules"
+  },"118": {
+    "doc": "Application",
+    "title": "Application",
+    "content": " ",
+    "url": "/docs/application.html",
+    "relUrl": "/docs/application.html"
+  },"119": {
+    "doc": "Concepts",
+    "title": "Concepts",
+    "content": ". ",
+    "url": "/docs/concepts.html",
+    "relUrl": "/docs/concepts.html"
+  },"120": {
+    "doc": "Concepts",
+    "title": "Alias",
+    "content": "Alias are a convenient way to . use piko\\Piko; Piko::getAlias('@app/modules/site'); Piko::getAlias('@webroot/documents'); Piko::getAlias('@web/css/styles.css'); . ",
+    "url": "/docs/concepts.html#alias",
+    "relUrl": "/docs/concepts.html#alias"
+  },"121": {
+    "doc": "Concepts",
+    "title": "Singleton factory",
+    "content": " ",
+    "url": "/docs/concepts.html#singleton-factory",
+    "relUrl": "/docs/concepts.html#singleton-factory"
+  },"122": {
+    "doc": "Concepts",
+    "title": "Container",
+    "content": " ",
+    "url": "/docs/concepts.html#container",
+    "relUrl": "/docs/concepts.html#container"
+  },"123": {
+    "doc": "Concepts",
+    "title": "Environment vars",
+    "content": " ",
+    "url": "/docs/concepts.html#environment-vars",
+    "relUrl": "/docs/concepts.html#environment-vars"
+  },"124": {
+    "doc": "Concepts",
+    "title": "Component",
+    "content": "Events . Behaviors . ",
+    "url": "/docs/concepts.html#component",
+    "relUrl": "/docs/concepts.html#component"
+  },"125": {
+    "doc": "Database",
+    "title": "Database management",
+    "content": " ",
+    "url": "/docs/database.html#database-management",
+    "relUrl": "/docs/database.html#database-management"
+  },"126": {
+    "doc": "Database",
+    "title": "Database",
+    "content": " ",
+    "url": "/docs/database.html",
+    "relUrl": "/docs/database.html"
+  },"127": {
+    "doc": "Getting started",
+    "title": "Getting Started",
+    "content": "To quickly test or start a new Piko based project, the recommended way is to use the Piko project skeletton. ",
+    "url": "/docs/getting-started.html#getting-started",
+    "relUrl": "/docs/getting-started.html#getting-started"
+  },"128": {
+    "doc": "Getting started",
+    "title": "Piko project skeletton installation",
+    "content": "If you don’t have Composer installed on your system, you may install it by following the instructions at getcomposer.org. Then install your project template using the following command: . composer create-project piko/project yourprojectname . Run your app . Once the project installed (see above), you can run it using the PHP built-in web server : . cd yourprojectname &amp;&amp; php -S localhost:8080 -t web . And you can see the result in your browser : http://localhost:8080/ . ",
+    "url": "/docs/getting-started.html#piko-project-skeletton-installation",
+    "relUrl": "/docs/getting-started.html#piko-project-skeletton-installation"
+  },"129": {
+    "doc": "Getting started",
+    "title": "Hello world example",
+    "content": "Once the project created (see above) create a new controller file in modules/site/controllers named HelloController.php. and edit the file with this code : . &lt;?php namespace app\\modules\\site\\controllers; class HelloController extends \\piko\\Controller { public function worldAction() { return \"Hello world!\"; } } . Then open the URL : http://localhost:8080/site/hello/world . You should see `Hello world!’ in your browser. The URI /site/hello/world corresponds to the module site, the controller hello and the action world. If you need to customize the URI edit the file config.php and add a new route : . &lt;?php return [ // ... 'components' =&gt; [ 'router' =&gt; [ 'class' =&gt; 'piko\\Router', 'routes' =&gt; [ //... '^/hello-world$' =&gt; 'site/hello/world', '^/(\\w+)/(\\w+)/(\\w+)' =&gt; '$1/$2/$3' ], ], // ... ] ]; . So you will obtain the same result than above with this URL : http://localhost:8080/hello-world . How application works . ",
+    "url": "/docs/getting-started.html#hello-world-example",
+    "relUrl": "/docs/getting-started.html#hello-world-example"
+  },"130": {
+    "doc": "Getting started",
+    "title": "Getting started",
+    "content": " ",
+    "url": "/docs/getting-started.html",
+    "relUrl": "/docs/getting-started.html"
+  },"131": {
+    "doc": "i18n",
+    "title": "Internationalization",
+    "content": " ",
+    "url": "/docs/i18n.html#internationalization",
+    "relUrl": "/docs/i18n.html#internationalization"
+  },"132": {
+    "doc": "i18n",
+    "title": "i18n",
+    "content": " ",
+    "url": "/docs/i18n.html",
+    "relUrl": "/docs/i18n.html"
+  },"133": {
+    "doc": "API",
+    "title": "Namespace: \\piko",
+    "content": " ",
+    "url": "/docs/api/#namespace-piko",
+    "relUrl": "/docs/api/#namespace-piko"
+  },"134": {
+    "doc": "API",
+    "title": "Interfaces",
+    "content": "| Name | Summary | . | \\piko\\IdentityInterface | User identity interface. | . ",
+    "url": "/docs/api/#interfaces",
+    "relUrl": "/docs/api/#interfaces"
+  },"135": {
+    "doc": "API",
+    "title": "Classes",
+    "content": "| Name | Summary | . | \\piko\\Application | The Web application class | . | \\piko\\AssetBundle | AssetBundle represents a collection of CSS files and JS files to publish inside the public path. | . | \\piko\\Component | Component class implements events and behaviors features. | . | \\piko\\Controller | Controller is the base class for classes containing controller logic. | . | \\piko\\Db | Db is the base class to access SQL databases. It's just a proxy to \\PDO. | . | \\piko\\DbRecord | DbRecord reprensents a database table row. | . | \\piko\\HttpException | HttpException convert exception code to http status header. | . | \\piko\\I18n | Internationalization class | . | \\piko\\Model | Base model class. | . | \\piko\\Module | Module is the base class for classes containing module logic. | . | \\piko\\Piko | Piko is the helper class for the Piko framework. | . | \\piko\\Router | Base application router. | . | \\piko\\User | Application User base class. | . | \\piko\\Utils | Miscellaneous utils. | . | \\piko\\View | Base application view. | . ",
+    "url": "/docs/api/#classes",
+    "relUrl": "/docs/api/#classes"
+  },"136": {
+    "doc": "API",
+    "title": "API",
+    "content": " ",
+    "url": "/docs/api/",
+    "relUrl": "/docs/api/"
+  },"137": {
+    "doc": "Home",
+    "title": "Piko Framework",
+    "content": "Piko is a micro Framework to build MVC web applications. It requires no dependencies and its size is under 100kB once installed. The framework approach is minimalist in its implementation but offer a powerful and solid base to construct any kind of project. Features: . | Modular MVC routing | Database management (via PDO) | Internationalization (i18n) | User management (authentification, authorisation) | Assets management | . ",
+    "url": "/#piko-framework",
+    "relUrl": "/#piko-framework"
+  },"138": {
+    "doc": "Home",
+    "title": "Installation via composer",
+    "content": "composer require piko/framework . ",
+    "url": "/#installation-via-composer",
+    "relUrl": "/#installation-via-composer"
+  },"139": {
+    "doc": "Home",
+    "title": "Inspiration",
+    "content": "The concepts used in Piko are inspired by Yii2 framework. Getting started . ",
+    "url": "/#inspiration",
+    "relUrl": "/#inspiration"
+  },"140": {
+    "doc": "Home",
+    "title": "Home",
+    "content": " ",
+    "url": "/",
+    "relUrl": "/"
+  },"141": {
+    "doc": "Requests",
+    "title": "Requests",
+    "content": "This section explains how to configure requests in the Piko framework. ",
+    "url": "/docs/requests.html",
+    "relUrl": "/docs/requests.html"
+  },"142": {
+    "doc": "Requests",
+    "title": "Definitions",
+    "content": "A request corresponds to an URI and have to be dispatched to a controller action throw a route. A route is an internal identifier corresponding to a module, a controller and an action (which is a controller method suffixed by Action. A route is always structured like this : &lt;moduleId&gt;/&lt;controllerId&gt;/&lt;actionId&gt;. Exemple: The request URI /hello can correspond to the route site/default/hello which means that the application will dispatch the route to the method helloAction in the controller DefaultController in the module site. ",
+    "url": "/docs/requests.html#definitions",
+    "relUrl": "/docs/requests.html#definitions"
+  },"143": {
+    "doc": "Requests",
+    "title": "Configuration",
+    "content": "Routes configuration consumed by piko\\Router consists only to an associative array where keys are URIs and values are corresponding routes. It works like preg_replace function: the URI is the regex pattern and the route, the replacement. Example of configuration: . &lt;?php return [ // ... 'components' =&gt; [ 'router' =&gt; [ 'class' =&gt; 'piko\\Router', 'routes' =&gt; [ //... '^/hello$' =&gt; 'site/default/hello', ], ], // ... ] ]; . ",
+    "url": "/docs/requests.html#configuration",
+    "relUrl": "/docs/requests.html#configuration"
+  },"144": {
+    "doc": "Requests",
+    "title": "Request parameters",
+    "content": "Piko offers the possibility to retrieve parameters from URI. In the configuration, you have to specify parameters in the right part of the route separed with the pipe character |. Use coma to separate parameters. This example show how to extract an username parameter from the URI: . 'routes' =&gt; [ //... '^/user/(\\w+)' =&gt; 'user/default/view|username=$1', ] . Now the username can be retrieved from the superglobal $_GET var: . namespace app\\modules\\user\\controllers; class DefaultController extends \\piko\\Controller { public function viewAction() { $username = $_GET['username']; return \"Hello $username\"; } } . ",
+    "url": "/docs/requests.html#request-parameters",
+    "relUrl": "/docs/requests.html#request-parameters"
+  },"145": {
+    "doc": "Requests",
+    "title": "Dynamic routes",
+    "content": "As the correspondance between URIs and routes works like the preg_replace function, it’s possible to generate routes. This example show how to generate the entire route from the URI: . 'routes' =&gt; [ //... '^/(\\w+)/(\\w+)/(\\w+)' =&gt; '$1/$2/$3' ] . ",
+    "url": "/docs/requests.html#dynamic-routes",
+    "relUrl": "/docs/requests.html#dynamic-routes"
+  },"146": {
+    "doc": "Requests",
+    "title": "Retrieve URL from route",
+    "content": "piko\\Router offers the ability to reverse a route to its URI: . // Configuration 'routes' =&gt; [ //... '^/user/(\\w+)' =&gt; 'user/default/view|username=$1', ] //... $router = \\piko\\Piko::get('router'); echo $router-&gt;getUrl('user/default/view', ['username' =&gt; 'johnny']; // will output '/user/johnny' . ",
+    "url": "/docs/requests.html#retrieve-url-from-route",
+    "relUrl": "/docs/requests.html#retrieve-url-from-route"
+  },"147": {
+    "doc": "User",
+    "title": "Authentification",
+    "content": " ",
+    "url": "/docs/user.html#authentification",
+    "relUrl": "/docs/user.html#authentification"
+  },"148": {
+    "doc": "User",
+    "title": "Permissions",
+    "content": " ",
+    "url": "/docs/user.html#permissions",
+    "relUrl": "/docs/user.html#permissions"
+  },"149": {
+    "doc": "User",
+    "title": "User",
+    "content": " ",
+    "url": "/docs/user.html",
+    "relUrl": "/docs/user.html"
+  }
+}
