@@ -1,0 +1,31 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@import "minima";
+
+body {
+  display: block;
+  &.toggled .sidebar-wrapper {
+    left: 0;
+  }
+}
+
+.sidebar-wrapper {
+  width: 280px;
+  height: 100vh;
+  max-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -280px;
+  z-index: 999;
+  -webkit-transition: left .3s ease, width .3s ease;
+  transition: left .3s ease, width .3s ease;
+}
+
+.sidebar-brand {
+  @include relative-font-size(1.625);
+  font-weight: 300;
+  line-height: $base-line-height * $base-font-size * 2.25;
+  letter-spacing: -1px;
+}
