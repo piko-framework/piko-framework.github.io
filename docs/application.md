@@ -10,7 +10,7 @@ nav_order: 3
 
 Piko applications are organized following the [Model-View-Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) design pattern and the MVC logic is packaged into modules.
 
-Example of application structure : 
+Example of application structure :
 
 ```
 modules
@@ -38,7 +38,7 @@ When application start, the first step is to convert request URI into internal r
 
 `ModuleId/ControllerId/ActionId`
 
-Exemple : The request URI `/hello` may correspond to the internal route `site\default\hello` which means that the action `hello` in the controller `default` in the module `site` should be dispatched by the application.
+Example : The request URI `/hello` may correspond to the internal route `site\default\hello` which means that the action `hello` in the controller `default` in the module `site` should be dispatched by the application.
 
 [More information](requests.md)
 
@@ -46,13 +46,13 @@ Exemple : The request URI `/hello` may correspond to the internal route `site\de
 
 Once the application discovered the internal route (see above), the next step is to dispatch the request to the appropriate controller action.
 
-An action is a method in a controller sufixed with `Action`. For the action id `hello`, the controller method should be named `helloAction`.
+An action is a method in a controller suffixed with `Action`. For the action id `hello`, the controller method should be named `helloAction`.
 
 ### 3 - Rendering
 
 The controller action returns to the application the output to display :
 
-Exemple for the action id `hello` :
+Example for the action id `hello` :
 
 ```php
 class DefaultController extends \piko\Controller
@@ -67,7 +67,7 @@ class DefaultController extends \piko\Controller
 ## Entry script
 
 Entry script is the first step to bootstrap application. It generally named `index.php` and stored in the web accessible directory.
-This is an example of basic bootstraping :
+This is an example of basic bootstrapping :
 
 ```php
 use piko\Application;
@@ -77,7 +77,7 @@ $config = require '../config.php';
 (new Application($config))->run();
 ```
 
-Piko embed an usefull utility to get environment variables from a file. It can be used in the entry script :
+Piko embed an useful utility to get environment variables from a file. It can be used in the entry script :
 
 ```php
 use piko\Application;
@@ -204,4 +204,3 @@ Exemples:
 ## Views
 
 ## Modules
-

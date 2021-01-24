@@ -14,7 +14,7 @@ A **request** corresponds to an URI and have to be dispatched to a controller ac
 
 A **route** is an internal identifier corresponding to a module, a controller and an action (which is a controller method suffixed by `Action`. A route is always structured like this : `<moduleId>/<controllerId>/<actionId>`.
 
-Exemple: The request URI `/hello` can correspond to the route `site/default/hello` which means that the application will dispatch the route to the method `helloAction` in the controller `DefaultController` in the module `site`.
+Example: The request URI `/hello` can correspond to the route `site/default/hello` which means that the application will dispatch the route to the method `helloAction` in the controller `DefaultController` in the module `site`.
 
 ## Configuration
 
@@ -41,7 +41,7 @@ return [
 
 ## Request parameters
 
-Piko offers the possibility to retrieve parameters from URI. In the configuration, you have to specify parameters in the right part of the route separed with the pipe character `|`. Use coma to separate parameters.
+Piko offers the possibility to retrieve parameters from URI. In the configuration, you have to specify parameters in the right part of the route separated with the pipe character `|`. Use coma to separate parameters.
 
 This example show how to extract an username parameter from the URI:
 
@@ -52,7 +52,7 @@ This example show how to extract an username parameter from the URI:
 ]
 ```
 
-Now the username can be retrieved from the superglobal $_GET var:
+Now the username can be retrieved from the super-global $_GET var:
 
 ```php
 namespace app\modules\user\controllers;
@@ -70,7 +70,7 @@ class DefaultController extends \piko\Controller
 
 ## Dynamic routes
 
-As the correspondance between URIs and routes works like the preg_replace function, it's possible to generate routes.
+As the correspondence between URIs and routes works like the preg_replace function, it's possible to generate routes.
 
 This example show how to generate the entire route from the URI:
 
@@ -99,8 +99,3 @@ echo $router->getUrl('user/default/view', ['username' => 'johnny'];
 
 // will output '/user/johnny'
 ```
-
-
-
-
-

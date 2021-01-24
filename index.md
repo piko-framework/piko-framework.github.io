@@ -17,7 +17,7 @@ The framework approach is minimalist in its implementation but offer a powerful 
 - Modular MVC routing
 - Database management (via PDO)
 - Internationalization (i18n)
-- User management (authentification, authorisation)
+- User management (authentication, authorization)
 - Assets management
 
 ## Installation via composer
