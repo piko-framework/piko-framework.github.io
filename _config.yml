@@ -31,7 +31,9 @@ github_username:  jekyll
 #    output: true
 
 # Build settings
-markdown: kramdown
+
+# Use GitHub Flavored Markdown instead of kramdown
+markdown: GFM
 theme: minima
 plugins:
   - jekyll-feed
