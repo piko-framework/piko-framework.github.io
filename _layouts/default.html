@@ -3,15 +3,19 @@
 
   {%- include head.html -%}
 
-  <body class="toggled">
+  <body>
 
     {%- include nav.html -%}
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
-      </div>
+    <main class="main" aria-label="Content">
+      {{ content }}
     </main>
+
+    <script>
+      document.getElementById('btn-menu').addEventListener('click', function(e){
+        document.getElementById('mainmenu').classList.toggle('visible');
+      });
+    </script>
   </body>
 
 </html>

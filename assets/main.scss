@@ -2,7 +2,10 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
+$bg-side-bar: #4f5575;
 $bg-code: #f4f3f3;
+$text-color: #484351;
+$brand-color: #0366d6;
 
 @import "minima";
 
@@ -13,9 +16,19 @@ body {
   }
 }
 
+a {
+  &:visited {
+    color: $brand-color;
+  }
+  &:hover {
+    color: darken($brand-color, 15%);
+  }
+}
+
 pre, code {
   background-color: $bg-code;
   font-family: monospace;
+  font-size: 14px;
 }
 
 .highlight {
@@ -26,16 +39,125 @@ pre, code {
   .cd { color: #7b9ab5; } // Comment block
 }
 
-.sidebar-wrapper {
-  width: 280px;
-  height: 100vh;
-  max-height: 100vh;
-  position: fixed;
-  top: 0;
-  left: -280px;
-  z-index: 999;
-  -webkit-transition: left .3s ease, width .3s ease;
-  transition: left .3s ease, width .3s ease;
+.menu-icon {
+  display: block;
+  width: 36px;
+  height: 26px;
+  line-height: 36px;
+  padding-top: 10px;
+  text-align: center;
+  cursor: pointer;
+  margin-right: 1rem;
+  > svg {
+    fill: lighten($bg-side-bar, 55%);
+  }
+}
+
+.svg-icon {
+  width: 20px;
+  height: 20px;
+  fill: lighten($bg-side-bar, 55%);
+}
+
+.side-bar {
+  z-index: 0;
+  background-color: $bg-side-bar;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.main {
+  padding: 2rem;
+  h2, h3, h4, h5, h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebar-menu {
+  display: none;
+  &.visible {
+    display: block;
+  }
+}
+
+@media (min-width: 800px) {
+  .menu-icon {
+    display: none;
+  }
+
+  .side-bar {
+    width: 264px;
+    position: fixed;
+    height: 100%;
+  }
+
+  .sidebar-header, .sidebar-menu, .sidebar-footer {
+    width: 264px;
+  }
+
+  .main {
+    margin-left: 264px;
+  }
+
+  .sidebar-menu {
+    display:block;
+    padding-top:3rem;
+    padding-bottom:1rem;
+    overflow-y:auto;
+    flex:1 1 auto
+  }
+}
+
+@media (min-width: 1064px) {
+  .main {
+    margin-left: calc( (100% - 1064px) / 2 + 264px );
+    width: 800px;
+    box-sizing: border-box;
+  }
+  .side-bar {
+    width: calc((100% - 1064px) / 2 + 264px);
+    min-width: 264px;
+  }
+}
+
+.nav-list {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style: none;
+  .nav-list-item {
+    margin: 0;
+    .nav-list {
+      display: none;
+    }
+    &.active {
+      .nav-list {
+        display: block;
+      }
+      > .nav-link {
+        color: #FFF;
+        font-weight: bold;
+      }
+    }
+    .nav-link {
+      display: block;
+      padding: 0 1.5rem;
+      line-height: 2rem;
+      color: lighten($bg-side-bar, 45%);
+      &:hover {
+        text-decoration: none;
+        background-color: lighten($bg-side-bar, 10%);
+      }
+    }
+  }
 }
 
 .sidebar-brand {
@@ -43,4 +165,20 @@ pre, code {
   font-weight: 300;
   line-height: $base-line-height * $base-font-size * 2.25;
   letter-spacing: -1px;
+  text-decoration: none !important;
+  color: #fff !important;
+  display: block;
+  padding: 0 1rem;
+}
+
+.social-media-list {
+  a {
+    color: #fff;
+    &:hover {
+      color: lighten($bg-side-bar, 45%);
+      .username {
+        text-decoration: none;
+      }
+    }
+  }
 }
