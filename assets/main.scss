@@ -2,6 +2,8 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
+$bg-code: #f4f3f3;
+
 @import "minima";
 
 body {
@@ -9,6 +11,19 @@ body {
   &.toggled .sidebar-wrapper {
     left: 0;
   }
+}
+
+pre, code {
+  background-color: $bg-code;
+  font-family: monospace;
+}
+
+.highlight {
+  .highlighter-rouge & {
+    background-color: $bg-code;
+  }
+
+  .cd { color: #7b9ab5; } // Comment block
 }
 
 .sidebar-wrapper {
