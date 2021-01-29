@@ -79,4 +79,4 @@ So you will obtain the same result than above with this URL : [http://localhost:
 
 ------
 
-[How application works](application.md){: .btn .btn-green }
+[How application works](application.md){: .btn .btn-orange }

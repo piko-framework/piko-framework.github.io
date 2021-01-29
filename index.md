@@ -32,4 +32,4 @@ The concepts used in Piko are inspired by [Yii2 framework](https://www.yiiframew
 
 -----
 
-[Getting started](docs/getting-started.md){: .btn .btn-green }
+[Getting started](docs/getting-started.md){: .btn .btn-orange }
