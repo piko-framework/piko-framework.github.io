@@ -6,8 +6,20 @@ $bg-side-bar: #4f5575;
 $bg-code: #f4f3f3;
 $text-color: #484351;
 $brand-color: #0366d6;
+$green-color: #10ac7d;
+$orange-color: #ea8b52;
 
 @import "minima";
+
+@mixin btn-color($bg) {
+  background-color: $bg;
+  background-image: linear-gradient(lighten($bg, 5%), darken($bg, 5%));
+
+  &:hover {
+    background-color: darken($bg, 4%);
+    background-image: linear-gradient((lighten($bg, 2%), darken($bg, 8%)));
+  }
+}
 
 body {
   display: block;
@@ -38,12 +50,48 @@ pre, code {
   font-size: 14px;
 }
 
+.btn {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0.3em 1em;
+  margin: 0;
+  line-height: 1.5;
+  color: #fff;
+  text-decoration: none;
+  vertical-align: baseline;
+  cursor: pointer;
+  background-color: $grey-color;
+  border-width: 0;
+  border-radius: 4px;
+  appearance: none;
+  font-family: sans-serif;
+
+  &:visited {
+    color: #fff;
+  }
+  &:hover {
+    text-decoration: none;
+    background-color: darken($grey-color, 4%);
+  }
+}
+
+.btn-green {
+  @include btn-color($green-color);
+}
+
+.btn-orange {
+  @include btn-color($orange-color);
+}
+
 .highlight {
   .highlighter-rouge & {
     background-color: $bg-code;
   }
-
   .cd { color: #7b9ab5; } // Comment block
+  .kn { // Namespace keyword
+    color: #000000;
+    font-weight: bold;
+  }
 }
 
 .menu-icon {
