@@ -25,6 +25,13 @@ a {
   }
 }
 
+hr {
+  height: 1px;
+  margin: 2rem 0;
+  background-color: $grey-color-light;
+  border: 0;
+}
+
 pre, code {
   background-color: $bg-code;
   font-family: monospace;
