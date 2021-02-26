@@ -6,13 +6,21 @@ nav_order: 0
 
 # Piko Framework
 
-Piko is a micro Framework to build [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) web applications.
+**A PHP micro Framework to build Web applications with a minimalist and essential implementation.**
 
-It requires no dependencies and its size is under 100kB once installed.
+## MVC
 
-The framework approach is minimalist in its implementation but offer a powerful and solid base to construct any kind of project.
+Piko uses the well known [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) architectural pattern. Models manage data, Views display data and Controllers bind models to views.
 
-### Features:
+## Fast and Lightweight
+
+Piko has been implemented with performances in mind. Requests are routed quickly and views use pure PHP. It requires no dependencies and its code has a small footprint (under 100kB once installed).
+
+## Modular
+MVC logic is packaged inside modules which compose the application. This design encourages code re-usability.
+
+
+## Features:
 
 - Modular MVC routing
 - Database management (via PDO)
