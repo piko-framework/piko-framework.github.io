@@ -7,29 +7,6 @@
 $srcDir = __DIR__ . '/piko/api';
 $destDir = __DIR__ . '/docs/api';
 
-/*
- * if (file_exists($apiDir . '/README.md')) {
- * rename($apiDir . '/README.md', $apiDir . '/index.md');
- * }
- */
-function prepend($file, $prepend)
-{
-    $fp = fopen($file, 'r+');
-    $chunkLength = strlen($prepend);
-
-    $i = 0;
-    do {
-        $readData = fread($fp, $chunkLength);
-        fseek($fp, $i * $chunkLength);
-        fwrite($fp, $prepend);
-
-        $prepend = $readData;
-        $i ++;
-    } while ($readData);
-
-    fclose($fp);
-}
-
 $files = scandir($srcDir);
 $matches = [];
 
@@ -51,12 +28,14 @@ layout: default
 title: API
 has_children: true
 has_toc: false
+nav_order: 20
 ---
+
 
 EOL;
     }
 
-    if (preg_match('/(.*)\.md$/', $file, $matches)) {
+    elseif (preg_match('/(.*)\.md$/', $file, $matches)) {
 
         $header = <<<EOL
 ---
