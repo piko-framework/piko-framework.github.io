@@ -23,7 +23,7 @@ Db is the base class to access SQL databases. It's just a proxy to \PDO.
 
 | Name | Description |
 |------|-------------|
-| public [`__construct`](#method___construct) | Extends \PDO constructor to accept an array of con... |
+| public [`__construct`](#method___construct) | Extends PDO constructor to accept an array of conf... |
 
 
 -----
@@ -42,7 +42,7 @@ Db is the base class to access SQL databases. It's just a proxy to \PDO.
 public  __construct(array  $config = []): mixed
 ```
 
-Extends \PDO constructor to accept an array of configuration.
+Extends PDO constructor to accept an array of configuration.
 
 
 

@@ -44,6 +44,10 @@ The Web application class
 |------|-------------|
 | public [`__construct`](#method___construct) | Constructor  |
 | public [`dispatch`](#method_dispatch) | Dispatch a route and return the output result.  |
+| public [`getModule`](#method_getModule) | Get a module instance  |
+| public [`getRouter`](#method_getRouter) | Get the application router instance  |
+| public [`getUser`](#method_getUser) | Get the application user instance  |
+| public [`getView`](#method_getView) | Get the application view instance  |
 | public [`redirect`](#method_redirect) | Redirect the application to another url.  |
 | public [`run`](#method_run) | Run the application.  |
 
@@ -201,6 +205,108 @@ The route to dispatch. The route format is one of the following :
 #### Return:
 **string**
 The output result.
+
+-----
+
+
+
+<a name="method_getModule"></a>
+### public getModule(): \piko\Module
+
+```php
+public  getModule(string  $moduleId): \piko\Module
+```
+
+Get a module instance
+
+
+
+#### Parameters
+**$moduleId** :
+The module identifier
+
+
+
+
+**throws**  \RuntimeException
+
+
+
+#### Return:
+**\piko\Module**
+instance
+
+-----
+
+
+
+<a name="method_getRouter"></a>
+### public getRouter(): \piko\Router
+
+```php
+public  getRouter(): \piko\Router
+```
+
+Get the application router instance
+
+
+
+
+
+
+
+
+#### Return:
+**\piko\Router**
+instance
+
+-----
+
+
+
+<a name="method_getUser"></a>
+### public getUser(): \piko\User
+
+```php
+public  getUser(): \piko\User
+```
+
+Get the application user instance
+
+
+
+
+
+
+
+
+#### Return:
+**\piko\User**
+instance
+
+-----
+
+
+
+<a name="method_getView"></a>
+### public getView(): \piko\View
+
+```php
+public  getView(): \piko\View
+```
+
+Get the application view instance
+
+
+
+
+
+
+
+
+#### Return:
+**\piko\View**
+instance
 
 -----
 

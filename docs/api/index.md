@@ -1,9 +1,7 @@
 ---
 layout: default
-title: API
-nav_order: 100
-has_children: true
-has_toc: false
+title: README
+parent: API
 ---
 
 # Namespace: \piko

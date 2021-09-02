@@ -38,9 +38,12 @@ Controller is the base class for classes containing controller logic.
 
 | Name | Description |
 |------|-------------|
-| public [`render`](#method_render) | Render a view.  |
 | public [`runAction`](#method_runAction) | Runs an action within this controller with the spe... |
+| protected [`forward`](#method_forward) | Proxy to Application::dispatch  |
+| protected [`getUrl`](#method_getUrl) | Convenient method to convert a route to an url  |
 | protected [`getViewPath`](#method_getViewPath) | Returns the directory containing view files for th... |
+| protected [`redirect`](#method_redirect) | Proxy to Application::redirect  |
+| protected [`render`](#method_render) | Render a view.  |
 
 ## Inherited Methods
 
@@ -105,37 +108,6 @@ The root directory that contains view files for this controller.
 
 
 
-<a name="method_render"></a>
-### public render(): string
-
-```php
-public  render(string  $viewName, array  $data = []): string
-```
-
-Render a view.
-
-
-
-#### Parameters
-**$viewName** :
-The view file name.
-
-**$data**  (default: []):
-An array of data (name-value pairs) to transmit to the view.
-
-
-
-
-
-
-#### Return:
-**string**
-The view output.
-
------
-
-
-
 <a name="method_runAction"></a>
 ### public runAction(): mixed
 
@@ -166,6 +138,72 @@ the result of the action.
 
 
 
+<a name="method_forward"></a>
+### protected forward(): string
+
+```php
+protected  forward(string  $route): string
+```
+
+Proxy to Application::dispatch
+
+
+
+#### Parameters
+**$route** :
+The route to forward
+
+
+
+
+
+
+#### Return:
+**string**
+
+
+-----
+
+
+
+<a name="method_getUrl"></a>
+### protected getUrl(): string
+
+```php
+protected  getUrl(string  $route, array  $params = [], bool  $absolute = false): string
+```
+
+Convenient method to convert a route to an url
+
+
+
+#### Parameters
+**$route** :
+The route to convert
+
+**$params**  (default: []):
+The route params
+
+**$absolute**  (default: false):
+Optional to have an absolute url.
+
+
+
+
+**throws**  \RuntimeExceptionif router is not instance of piko\Router
+
+**see**  \piko\Router::getUrl
+
+
+
+#### Return:
+**string**
+
+
+-----
+
+
+
 <a name="method_getViewPath"></a>
 ### protected getViewPath(): string
 
@@ -186,4 +224,59 @@ viewPath directory.
 #### Return:
 **string**
 the directory containing the view files for this controller.
+
+-----
+
+
+
+<a name="method_redirect"></a>
+### protected redirect(): void
+
+```php
+protected  redirect(string  $url): void
+```
+
+Proxy to Application::redirect
+
+
+
+#### Parameters
+**$url** :
+The url to redirect
+
+
+
+
+
+
+-----
+
+
+
+<a name="method_render"></a>
+### protected render(): string|null
+
+```php
+protected  render(string  $viewName, array  $data = []): string|null
+```
+
+Render a view.
+
+
+
+#### Parameters
+**$viewName** :
+The view file name.
+
+**$data**  (default: []):
+An array of data (name-value pairs) to transmit to the view.
+
+
+
+
+
+
+#### Return:
+**string|null**
+The view output.
 

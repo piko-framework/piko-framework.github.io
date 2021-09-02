@@ -22,6 +22,7 @@ Base application router.
 | Name | Description |
 |------|-------------|
 | public [`$routes`](#property_routes) | Name-value pair uri to routes correspondance. Each... |
+| protected [`$cache`](#property_cache) | Internal cache for routes uris  |
 
 ## Inherited Properties
 
@@ -37,6 +38,7 @@ Base application router.
 |------|-------------|
 | public [`getUrl`](#method_getUrl) | Convert a route to an url.  |
 | public [`resolve`](#method_resolve) | Resolve the application route corresponding to the... |
+| protected [`getRouteUris`](#method_getRouteUris) | Retrieve all the uris rattached to the route  |
 
 ## Inherited Methods
 
@@ -79,6 +81,15 @@ with 'id' = The user id in the uri.
 **see**  \piko\preg_replace()
 
 
+
+<a name="property_cache"></a>
+### protected $cache : array
+Internal cache for routes uris
+
+
+
+
+
 -----
 
 ## Methods
@@ -90,7 +101,7 @@ with 'id' = The user id in the uri.
 ### public getUrl(): string
 
 ```php
-public  getUrl(string  $route, array  $params = []): string
+public  getUrl(string  $route, array  $params = [], bool  $absolute = false): string
 ```
 
 Convert a route to an url.
@@ -103,6 +114,9 @@ The route given as '{moduleId}/{controllerId}/{ationId}'.
 
 **$params**  (default: []):
 Optional query parameters.
+
+**$absolute**  (default: false):
+Optional to have an absolute url.
 
 
 
@@ -136,4 +150,32 @@ The expected route scheme is : '{moduleId}/{controllerId}/{ationId}'
 #### Return:
 **string**
 The route.
+
+-----
+
+
+
+<a name="method_getRouteUris"></a>
+### protected getRouteUris(): array
+
+```php
+protected  getRouteUris(string  $route): array
+```
+
+Retrieve all the uris rattached to the route
+
+
+
+#### Parameters
+**$route** :
+
+
+
+
+
+
+
+#### Return:
+**array**
+
 

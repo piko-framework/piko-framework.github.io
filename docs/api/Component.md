@@ -50,7 +50,7 @@ Behaviors offer the possibility to add custom methods without extending the clas
 
 
 <a name="property_behaviors"></a>
-### public $behaviors : array
+### public $behaviors : callable[]
 Behaviors container.
 
 
@@ -59,7 +59,7 @@ Behaviors container.
 
 
 <a name="property_events"></a>
-### public $events : array
+### public $events : callable[]
 Event handlers container.
 
 
@@ -68,7 +68,7 @@ Event handlers container.
 
 
 <a name="property_events2"></a>
-### public $events2 : array
+### public $events2 : callable[]
 Static event handlers container.
 
 
@@ -143,7 +143,7 @@ A configuration array to set public properties of the class.
 ### public attachBehavior(): void
 
 ```php
-public  attachBehavior(string  $name = '', mixed  $callback = null): void
+public  attachBehavior(string  $name, callable  $callback): void
 ```
 
 Attach a behavior to the component instance.
@@ -151,10 +151,10 @@ Attach a behavior to the component instance.
 
 
 #### Parameters
-**$name**  (default: ''):
+**$name** :
 The behavior name.
 
-**$callback**  (default: null):
+**$callback** :
 The behavior implementation. Must be  one of the following:
 - A Closure (function(){ ... })
 - An object method ([$object, 'methodName'])
@@ -174,7 +174,7 @@ The behavior implementation. Must be  one of the following:
 ### public detachBehavior(): void
 
 ```php
-public  detachBehavior(string  $name = ''): void
+public  detachBehavior(string  $name): void
 ```
 
 Detach a behavior.
@@ -182,7 +182,7 @@ Detach a behavior.
 
 
 #### Parameters
-**$name**  (default: ''):
+**$name** :
 The behavior name.
 
 
@@ -198,7 +198,7 @@ The behavior name.
 ### public on(): void
 
 ```php
-public  on(string  $eventName = '', mixed  $callback = null, string  $priority = 'after'): void
+public  on(string  $eventName, mixed  $callback, string  $priority = 'after'): void
 ```
 
 Event registration.
@@ -206,10 +206,10 @@ Event registration.
 
 
 #### Parameters
-**$eventName**  (default: ''):
+**$eventName** :
 The event name to register.
 
-**$callback**  (default: null):
+**$callback** :
 The event handler to register. Must be  one of the following:
 - A Closure (function(){ ... })
 - An object method ([$object, 'methodName'])
@@ -232,7 +232,7 @@ The order priority in the events stack ('after' or 'before'). Default to 'after'
 ### public trigger(): array
 
 ```php
-public  trigger(string  $eventName = '', array  $args = array()): array
+public  trigger(string  $eventName, array  $args = []): array
 ```
 
 Trigger an event.
@@ -240,10 +240,10 @@ Event handlers corresponding to this event will be called in the order they are 
 
 
 #### Parameters
-**$eventName**  (default: ''):
+**$eventName** :
 The event name to trigger.
 
-**$args**  (default: array()):
+**$args**  (default: []):
 The event handlers arguments.
 
 
@@ -263,7 +263,7 @@ The event handlers arguments.
 ### public when(): void
 
 ```php
-public static  when(string  $eventName = '', mixed  $callback = null, string  $priority = 'after'): void
+public static  when(string  $eventName, mixed  $callback, string  $priority = 'after'): void
 ```
 
 Static event registration.
@@ -271,10 +271,10 @@ Static event registration.
 
 
 #### Parameters
-**$eventName**  (default: ''):
+**$eventName** :
 The event name to register.
 
-**$callback**  (default: null):
+**$callback** :
 The event handler to register. Must be  one of the following:
 - A Closure (function(){ ... })
 - An object method ([$object, 'methodName'])

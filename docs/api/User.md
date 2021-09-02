@@ -157,10 +157,10 @@ The permission name.
 
 
 <a name="method_getId"></a>
-### public getId(): null|string|int
+### public getId(): string|int|null
 
 ```php
-public  getId(): null|string|int
+public  getId(): string|int|null
 ```
 
 Get user identifier.
@@ -173,7 +173,7 @@ Get user identifier.
 
 
 #### Return:
-**null|string|int**
+**string|int|null**
 
 
 -----

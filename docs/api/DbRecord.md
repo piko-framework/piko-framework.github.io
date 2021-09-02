@@ -72,6 +72,7 @@ DbRecord reprensents a database table row.
 | public [`bind`](Model.md#method_bind) | Bind directly the model data.  |
 | public [`detachBehavior`](Component.md#method_detachBehavior) | Detach a behavior.  |
 | public [`on`](Component.md#method_on) | Event registration.  |
+| public [`toArray`](Model.md#method_toArray) | Get the model data as an associative array.  |
 | public [`trigger`](Component.md#method_trigger) | Trigger an event. Event handlers corresponding to ... |
 | public [`validate`](Model.md#method_validate) | Validate this model (Should be extended)  |
 | public [`when`](Component.md#method_when) | Static event registration.  |

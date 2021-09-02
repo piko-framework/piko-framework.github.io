@@ -30,6 +30,7 @@ Base application view.
 | public [`$css`](#property_css) | The registered CSS code blocks.  |
 | public [`$cssFiles`](#property_cssFiles) | The registered CSS files.  |
 | public [`$endBody`](#property_endBody) | Parts of the end of the body.  |
+| public [`$extension`](#property_extension) | View filename extension  |
 | public [`$head`](#property_head) | Parts of the head.  |
 | public [`$js`](#property_js) | The registered JS code blocks  |
 | public [`$jsFiles`](#property_jsFiles) | The registered JS files.  |
@@ -59,6 +60,7 @@ Base application view.
 | protected [`applyTheme`](#method_applyTheme) | Try to find an override of the file in a theme.  |
 | protected [`endBody`](#method_endBody) | Assemble html in the end of the body position.  |
 | protected [`findFile`](#method_findFile) | Retrieve a view file.  |
+| protected [`getUrl`](#method_getUrl) | Convenient method to convert a route to an url  |
 | protected [`head`](#method_head) | Assemble html in the head position.  |
 
 ## Inherited Methods
@@ -122,6 +124,15 @@ The registered CSS files.
 <a name="property_endBody"></a>
 ### public $endBody : array
 Parts of the end of the body.
+
+
+
+
+
+
+<a name="property_extension"></a>
+### public $extension : string
+View filename extension
 
 
 
@@ -360,7 +371,7 @@ An optional identifier
 ### public render(): string
 
 ```php
-public  render(string  $file, mixed  $model = []): string
+public  render(string  $file, array  $model = []): string
 ```
 
 Render the view.
@@ -451,7 +462,7 @@ Retrieve a view file.
 
 #### Parameters
 **$viewName** :
-The view name (without .php extension).
+The view name (without extension).
 
 
 
@@ -463,6 +474,44 @@ The view name (without .php extension).
 #### Return:
 **string**
 The path of the view file.
+
+-----
+
+
+
+<a name="method_getUrl"></a>
+### protected getUrl(): string
+
+```php
+protected  getUrl(string  $route, array  $params = [], bool  $absolute = false): string
+```
+
+Convenient method to convert a route to an url
+
+
+
+#### Parameters
+**$route** :
+The route to convert
+
+**$params**  (default: []):
+The route params
+
+**$absolute**  (default: false):
+Optional to have an absolute url.
+
+
+
+
+**throws**  \RuntimeExceptionif router is not instance of piko\Router
+
+**see**  \piko\Router::getUrl
+
+
+
+#### Return:
+**string**
+
 
 -----
 

@@ -40,6 +40,7 @@ Base model class.
 | public [`__set`](#method___set) | Magick method to set model&#039;s data as class attribu... |
 | public [`__unset`](#method___unset) | Magick method to unset attribute in model&#039;s data.  |
 | public [`bind`](#method_bind) | Bind directly the model data.  |
+| public [`toArray`](#method_toArray) | Get the model data as an associative array.  |
 | public [`validate`](#method_validate) | Validate this model (Should be extended)  |
 
 ## Inherited Methods
@@ -201,6 +202,30 @@ An array of data (name-value pairs).
 
 
 
+
+
+-----
+
+
+
+<a name="method_toArray"></a>
+### public toArray(): array
+
+```php
+public  toArray(): array
+```
+
+Get the model data as an associative array.
+
+
+
+
+
+
+
+
+#### Return:
+**array**
 
 
 -----
