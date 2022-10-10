@@ -27,7 +27,9 @@ Once the project installed (see above), you can run it using the PHP built-in we
 cd yourprojectname && php -S localhost:8080 -t web
 ```
 
-And you can see the result in your browser : [http://localhost:8080/](http://localhost:8080/)
+You should see the interface bellow in your Web browser if you go to [http://localhost:8080/](http://localhost:8080/)
+
+![Piko project snapshot](piko-project-snapshot.jpg)
 
 ## Hello world example
 
@@ -43,7 +45,7 @@ class HelloController extends \piko\Controller
 {
     public function worldAction()
     {
-        return "Hello world!";
+        return "<h1>Hello world!</h1>";
     }
 }
 
@@ -53,9 +55,9 @@ Then open the URL : [http://localhost:8080/site/hello/world](http://localhost:80
 
 You should see `Hello world!' in your browser.
 
-The URI /site/hello/world corresponds to the module `site`, the controller `hello` and the action `world`.
+The URI `/site/hello/world` corresponds by default to the module `site`, the controller `hello` and the action `world`.
 
-If you need to customize the URI edit the file config.php and add a new route :
+It's possible to customize the URI by editing the file config.php and add a new route like this :
 
 ```php
 <?php
@@ -66,8 +68,8 @@ return [
             'class' => 'piko\Router',
             'routes' => [
                 //...
-                '^/hello-world$' => 'site/hello/world',
-                '^/(\w+)/(\w+)/(\w+)' => '$1/$2/$3'
+                '/hello-world' => 'site/hello/world',
+                '/:module/:controller/:action' => ':module/:controller/:action'
             ],
         ],
         // ...
@@ -75,7 +77,26 @@ return [
 ];
 ```
 
-So you will obtain the same result than above with this URL : [http://localhost:8080/hello-world](http://localhost:8080/hello-world)
+You will obtain the same result than above with this URL : [http://localhost:8080/hello-world](http://localhost:8080/hello-world)
+
+Rather than generate html code directly in the controller, it's possible to use a separate file.
+
+Create a new file `world.php` in `modules/site/views/hello` (create before the directory hello) with this content :
+
+```
+<h1>Hello World!</h1>
+```
+
+In `modules/site/controllers/HelloController.php` we can rewrite the method `worldAction` like this :
+
+```php
+    public function worldAction()
+    {
+        return $this->render('world');
+    }
+```
+
+This will render the content of the file `modules/site/views/hello/world.php`.
 
 ------
 
