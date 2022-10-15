@@ -9,8 +9,10 @@ parent: API
 {% set methods = node.methods|sortByVisibility %}
 
 {% macro shortdesc(node, size) %}
+{% if node.name == '__construct' %}Constructor{% else %}
 {% set desc = "#{node.summary} #{node.description}" %}
 {{desc[:size]}}{% if desc|length > size %}...{% endif %}
+{% endif %}
 {% endmacro %}
 
 # {{ node.fullyQualifiedStructuralElementName }}
@@ -20,7 +22,7 @@ parent: API
 {{ include('components/tags.md.twig', {'node': node}) }}
 
 {% if constants is not empty %}
-## Constants
+## Constants summary
 
 | Name | Description |
 |------|-------------|
@@ -30,7 +32,7 @@ parent: API
 {% endif %}
 
 {% if properties is not empty %}
-## Properties
+## Properties summary
 
 | Name | Description |
 |------|-------------|
@@ -50,7 +52,7 @@ parent: API
 {% endif %}
 
 {% if methods is not empty %}
-## Methods
+## Methods summary
 
 | Name | Description |
 |------|-------------|

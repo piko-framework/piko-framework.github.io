@@ -13,7 +13,7 @@
 {% endmacro %}
 
 <a name="method_{{ method.name }}"></a>
-### {% if method.deprecated %}(deprecated) - {% endif %}{{ method.visibility }} {{ method.name }}(): {{ _self.types(method.response.types) }}
+### {% if method.deprecated %}(deprecated) - {% endif %}{{ method.visibility }} **{{ method.name }}()**: {{ _self.types(method.response.types) }}
 
 ```php
 {{ method.visibility }} {{_self.methodType(method)}} {{ method.name }}({{ _self.arguments(method)|raw }}): {{ _self.types(method.response.types) }}
