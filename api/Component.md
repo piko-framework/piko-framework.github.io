@@ -8,10 +8,10 @@ parent: API
 
 # \piko\Component
 
-Component class implements events and behaviors features.
-Also component public properties can be initialized with an array of configuration during instantiation.
+Component class offers events and behaviors features to inherited classes.
+Public properties can be initialized with an array of configuration during instantiation.
 
-Events offer the possibility to inject custom code when they are triggered.
+Events offer the possibility to execute external code when they are triggered.
 Behaviors offer the possibility to add custom methods without extending the class.
 
 
@@ -20,27 +20,27 @@ Behaviors offer the possibility to add custom methods without extending the clas
 
 
 
-## Properties
+## Properties summary
 
 | Name | Description |
 |------|-------------|
 | public [`$behaviors`](#property_behaviors) | Behaviors container.  |
-| public [`$events`](#property_events) | Event handlers container.  |
-| public [`$events2`](#property_events2) | Static event handlers container.  |
+| public [`$on`](#property_on) | Event listeners container.  |
+| public [`$when`](#property_when) | Static event listeners container.  |
 
 
-## Methods
+## Methods summary
 
 | Name | Description |
 |------|-------------|
 | public [`__call`](#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](#method___construct) | Constructor  |
+| public [`__construct`](#method___construct) | Constructor |
 | public [`attachBehavior`](#method_attachBehavior) | Attach a behavior to the component instance.  |
 | public [`detachBehavior`](#method_detachBehavior) | Detach a behavior.  |
 | public [`on`](#method_on) | Event registration.  |
-| public [`trigger`](#method_trigger) | Trigger an event. Event handlers corresponding to ... |
+| public [`trigger`](#method_trigger) | Trigger an event. Event listeners will be called i... |
 | public [`when`](#method_when) | Static event registration.  |
-| protected [`init`](#method_init) | Method called at the end of the constructor.  |
+| protected [`init`](#method_init) | Method called at the end of the constructor. This ... |
 
 
 -----
@@ -50,7 +50,7 @@ Behaviors offer the possibility to add custom methods without extending the clas
 
 
 <a name="property_behaviors"></a>
-### public $behaviors : callable[]
+### public **$behaviors** : callable[]
 Behaviors container.
 
 
@@ -58,18 +58,18 @@ Behaviors container.
 
 
 
-<a name="property_events"></a>
-### public $events : callable[]
-Event handlers container.
+<a name="property_on"></a>
+### public **$on** : callable[][]
+Event listeners container.
 
 
 
 
 
 
-<a name="property_events2"></a>
-### public $events2 : callable[]
-Static event handlers container.
+<a name="property_when"></a>
+### public **$when** : callable[][]
+Static event listeners container.
 
 
 
@@ -83,10 +83,10 @@ Static event handlers container.
 
 
 <a name="method___call"></a>
-### public __call(): mixed
+### public **__call()**: mixed
 
 ```php
-public  __call(string  $name, array  $args): mixed
+public  __call(string  $name, array&lt;int,mixed&gt;  $args): mixed
 ```
 
 Magic method to call a behavior.
@@ -116,10 +116,10 @@ The behavior arguments.
 
 
 <a name="method___construct"></a>
-### public __construct(): void
+### public **__construct()**: void
 
 ```php
-public  __construct(array  $config = []): void
+public  __construct(array&lt;string,array&gt;  $config = []): void
 ```
 
 Constructor
@@ -140,7 +140,7 @@ A configuration array to set public properties of the class.
 
 
 <a name="method_attachBehavior"></a>
-### public attachBehavior(): void
+### public **attachBehavior()**: void
 
 ```php
 public  attachBehavior(string  $name, callable  $callback): void
@@ -160,6 +160,7 @@ The behavior implementation. Must be  one of the following:
 - An object method ([$object, 'methodName'])
 - A static class method ('MyClass::myMethod')
 - A global function ('myFunction')
+- An object implementing __invoke()
 
 
 
@@ -171,7 +172,7 @@ The behavior implementation. Must be  one of the following:
 
 
 <a name="method_detachBehavior"></a>
-### public detachBehavior(): void
+### public **detachBehavior()**: void
 
 ```php
 public  detachBehavior(string  $name): void
@@ -195,10 +196,10 @@ The behavior name.
 
 
 <a name="method_on"></a>
-### public on(): void
+### public **on()**: void
 
 ```php
-public  on(string  $eventName, mixed  $callback, string  $priority = 'after'): void
+public  on(string  $eventName, callable  $callback, string  $priority = 'after'): void
 ```
 
 Event registration.
@@ -207,14 +208,15 @@ Event registration.
 
 #### Parameters
 **$eventName** :
-The event name to register.
+The event name to listen.
 
 **$callback** :
-The event handler to register. Must be  one of the following:
+The event listener to register. Must be  one of the following:
 - A Closure (function(){ ... })
 - An object method ([$object, 'methodName'])
 - A static class method ('MyClass::myMethod')
 - A global function ('myFunction')
+- An object implementing __invoke()
 
 **$priority**  (default: 'after'):
 The order priority in the events stack ('after' or 'before'). Default to 'after'.
@@ -229,14 +231,14 @@ The order priority in the events stack ('after' or 'before'). Default to 'after'
 
 
 <a name="method_trigger"></a>
-### public trigger(): array
+### public **trigger()**: array
 
 ```php
-public  trigger(string  $eventName, array  $args = []): array
+public  trigger(string  $eventName, array&lt;int,mixed&gt;  $args = []): array
 ```
 
 Trigger an event.
-Event handlers corresponding to this event will be called in the order they are registered.
+Event listeners will be called in the order they are registered.
 
 
 #### Parameters
@@ -244,7 +246,7 @@ Event handlers corresponding to this event will be called in the order they are 
 The event name to trigger.
 
 **$args**  (default: []):
-The event handlers arguments.
+The event arguments.
 
 
 
@@ -260,10 +262,10 @@ The event handlers arguments.
 
 
 <a name="method_when"></a>
-### public when(): void
+### public **when()**: void
 
 ```php
-public static  when(string  $eventName, mixed  $callback, string  $priority = 'after'): void
+public static  when(string  $eventName, callable  $callback, string  $priority = 'after'): void
 ```
 
 Static event registration.
@@ -272,14 +274,15 @@ Static event registration.
 
 #### Parameters
 **$eventName** :
-The event name to register.
+The event name to listen.
 
 **$callback** :
-The event handler to register. Must be  one of the following:
+The event listener to register. Must be  one of the following:
 - A Closure (function(){ ... })
 - An object method ([$object, 'methodName'])
 - A static class method ('MyClass::myMethod')
 - A global function ('myFunction')
+- An object implementing __invoke()
 
 **$priority**  (default: 'after'):
 The order priority in the events stack ('after' or 'before'). Default to 'after'.
@@ -294,14 +297,14 @@ The order priority in the events stack ('after' or 'before'). Default to 'after'
 
 
 <a name="method_init"></a>
-### protected init(): void
+### protected **init()**: void
 
 ```php
 protected  init(): void
 ```
 
 Method called at the end of the constructor.
-
+This could be overriden in inherited classes.
 
 
 

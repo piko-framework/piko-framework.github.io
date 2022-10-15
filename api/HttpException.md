@@ -21,11 +21,11 @@ HttpException convert exception code to http status header.
 
 
 
-## Methods
+## Methods summary
 
 | Name | Description |
 |------|-------------|
-| public [`__construct`](#method___construct) | Constructor sends http header if php SAPI != cli.  |
+| public [`__construct`](#method___construct) | Constructor |
 
 
 -----
@@ -38,21 +38,21 @@ HttpException convert exception code to http status header.
 
 
 <a name="method___construct"></a>
-### public __construct(): mixed
+### public **__construct()**: mixed
 
 ```php
-public  __construct(string  $message = null, int  $code = null, \Throwable  $previous = null): mixed
+public  __construct(string  $message = '', int  $code = 404, \Throwable  $previous = null): mixed
 ```
 
-Constructor sends http header if php SAPI != cli.
+Constructor set http header with response code and message if code is given
 
 
 
 #### Parameters
-**$message**  (default: null):
+**$message**  (default: ''):
 The exception message.
 
-**$code**  (default: null):
+**$code**  (default: 404):
 The exception code (should be an HTTP status code, eg. 404)
 
 **$previous**  (default: null):

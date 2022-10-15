@@ -17,7 +17,7 @@ AssetBundle represents a collection of CSS files and JS files to publish inside 
 
 
 
-## Properties
+## Properties summary
 
 | Name | Description |
 |------|-------------|
@@ -36,10 +36,10 @@ AssetBundle represents a collection of CSS files and JS files to publish inside 
 | Name | Description |
 |------|-------------|
 | public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$events`](Component.md#property_events) | Event handlers container.  |
-| public [`$events2`](Component.md#property_events2) | Static event handlers container.  |
+| public [`$on`](Component.md#property_on) | Event listeners container.  |
+| public [`$when`](Component.md#property_when) | Static event listeners container.  |
 
-## Methods
+## Methods summary
 
 | Name | Description |
 |------|-------------|
@@ -51,14 +51,14 @@ AssetBundle represents a collection of CSS files and JS files to publish inside 
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](Component.md#method___construct) | Constructor  |
-| public [`attachBehavior`](Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](Component.md#method_on) | Event registration.  |
-| public [`trigger`](Component.md#method_trigger) | Trigger an event. Event handlers corresponding to ... |
-| public [`when`](Component.md#method_when) | Static event registration.  |
-| protected [`init`](Component.md#method_init) | Method called at the end of the constructor.  |
+| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
+| public [`__construct`](/Component.md#method___construct) | Constructor |
+| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
+| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
+| public [`on`](/Component.md#method_on) | Event registration.  |
+| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
+| public [`when`](/Component.md#method_when) | Static event registration.  |
+| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
 
 -----
 
@@ -67,7 +67,7 @@ AssetBundle represents a collection of CSS files and JS files to publish inside 
 
 
 <a name="property_css"></a>
-### public $css : array
+### public **$css** : string[]
 List of CSS files that this bundle contains.
 
 
@@ -76,7 +76,7 @@ List of CSS files that this bundle contains.
 
 
 <a name="property_dependencies"></a>
-### public $dependencies : array
+### public **$dependencies** : string[]
 Bundle dependencies.
 
 
@@ -85,7 +85,7 @@ Bundle dependencies.
 
 
 <a name="property_js"></a>
-### public $js : array
+### public **$js** : string[]
 List of JavaScript files that this bundle contains.
 
 
@@ -94,7 +94,7 @@ List of JavaScript files that this bundle contains.
 
 
 <a name="property_jsPosition"></a>
-### public $jsPosition : int
+### public **$jsPosition** : int
 Position of the js file in the generated view.
 
 
@@ -105,7 +105,7 @@ Position of the js file in the generated view.
 
 
 <a name="property_name"></a>
-### public $name : string
+### public **$name** : string
 The bundle name. (eg. jquery, bootstrap, etc.)
 
 
@@ -114,7 +114,7 @@ The bundle name. (eg. jquery, bootstrap, etc.)
 
 
 <a name="property_publishedBasePath"></a>
-### public $publishedBasePath : string
+### public **$publishedBasePath** : string
 The root directory storing the published asset files.
 
 
@@ -123,7 +123,7 @@ The root directory storing the published asset files.
 
 
 <a name="property_publishedBaseUrl"></a>
-### public $publishedBaseUrl : string
+### public **$publishedBaseUrl** : string
 The base URL through which the published asset files can be accessed.
 
 
@@ -132,7 +132,7 @@ The base URL through which the published asset files can be accessed.
 
 
 <a name="property_sourcePath"></a>
-### public $sourcePath : string
+### public **$sourcePath** : string
 The directory that contains the source asset files for this asset bundle.
 You can use either a directory or an alias of the directory.
 
@@ -141,9 +141,9 @@ You can use either a directory or an alias of the directory.
 
 
 <a name="property_assetBundles"></a>
-### protected $assetBundles : \piko\AssetBundle[]
+### protected **$assetBundles** : \piko\AssetBundle[]
 list of the registered asset bundles. The keys are the bundle names
-and the values are the registered AssetBundle objects.
+and the values are the AssetBundle class name.
 
 
 
@@ -159,7 +159,7 @@ and the values are the registered AssetBundle objects.
 
 
 <a name="method_publish"></a>
-### public publish(): void
+### public **publish()**: void
 
 ```php
 public  publish(): void
@@ -179,7 +179,7 @@ Publish assets into public path
 
 
 <a name="method_register"></a>
-### public register(): \piko\AssetBundle
+### public **register()**: \piko\AssetBundle
 
 ```php
 public static  register(\piko\View  $view): \piko\AssetBundle
@@ -207,7 +207,7 @@ the registered asset bundle instance
 
 
 <a name="method_copy"></a>
-### protected copy(): void
+### protected **copy()**: void
 
 ```php
 protected  copy(string  $src, string  $dest): void

@@ -8,7 +8,7 @@ parent: API
 
 # \piko\Router
 
-Base application router.
+Router class.
 
 
 
@@ -17,41 +17,51 @@ Base application router.
 
 
 
-## Properties
+## Properties summary
 
 | Name | Description |
 |------|-------------|
-| public [`$routes`](#property_routes) | Name-value pair uri to routes correspondance. Each... |
-| protected [`$cache`](#property_cache) | Internal cache for routes uris  |
+| public [`$baseUri`](#property_baseUri) | Base uri The base uri is the base part of the requ... |
+| public [`$host`](#property_host) | Http host  |
+| public [`$protocol`](#property_protocol) | Http protocol used (http/https)  |
+| protected [`$cacheHandlers`](#property_cacheHandlers) | Internal cache for routes handlers  |
+| protected [`$fullyDynamicRoutes`](#property_fullyDynamicRoutes) | Name-value pair route to handler correspondance. T... |
+| protected [`$radix`](#property_radix) | The radix trie storage utility  |
+| protected [`$routes`](#property_routes) | Name-value pair route to handler correspondance. E... |
+| protected [`$staticRoutes`](#property_staticRoutes) | Name-value pair route to handler correspondance. T... |
 
 ## Inherited Properties
 
 | Name | Description |
 |------|-------------|
 | public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$events`](Component.md#property_events) | Event handlers container.  |
-| public [`$events2`](Component.md#property_events2) | Static event handlers container.  |
+| public [`$on`](Component.md#property_on) | Event listeners container.  |
+| public [`$when`](Component.md#property_when) | Static event listeners container.  |
 
-## Methods
+## Methods summary
 
 | Name | Description |
 |------|-------------|
-| public [`getUrl`](#method_getUrl) | Convert a route to an url.  |
-| public [`resolve`](#method_resolve) | Resolve the application route corresponding to the... |
-| protected [`getRouteUris`](#method_getRouteUris) | Retrieve all the uris rattached to the route  |
+| public [`__construct`](#method___construct) | Constructor |
+| public [`addRoute`](#method_addRoute) | Register a route path and its corresponding handle... |
+| public [`getUrl`](#method_getUrl) | Convert an handler to its corresponding route url ... |
+| public [`resolve`](#method_resolve) | Parse the route path and return a match instance.  |
+| protected [`findFullyDynamicRoute`](#method_findFullyDynamicRoute) | Search for a fully parameterized route against the... |
+| protected [`gethandlerRoutes`](#method_gethandlerRoutes) | Retrieve all routes attached to the handler  |
+| protected [`init`](#method_init) | Method called at the end of the constructor.  |
 
 ## Inherited Methods
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](Component.md#method___construct) | Constructor  |
-| public [`attachBehavior`](Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](Component.md#method_on) | Event registration.  |
-| public [`trigger`](Component.md#method_trigger) | Trigger an event. Event handlers corresponding to ... |
-| public [`when`](Component.md#method_when) | Static event registration.  |
-| protected [`init`](Component.md#method_init) | Method called at the end of the constructor.  |
+| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
+| public [`__construct`](/Component.md#method___construct) | Constructor |
+| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
+| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
+| public [`on`](/Component.md#method_on) | Event registration.  |
+| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
+| public [`when`](/Component.md#method_when) | Static event registration.  |
+| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
 
 -----
 
@@ -59,33 +69,77 @@ Base application router.
 ## Properties
 
 
+<a name="property_baseUri"></a>
+### public **$baseUri** : string
+Base uri
+The base uri is the base part of the request uri which shouldn't be parsed.
+Example for the uri /home/blog/page : if the $baseUri is /home, the router will parse /blog/page
+
+
+
+
+
+<a name="property_host"></a>
+### public **$host** : string
+Http host
+
+
+
+
+
+
+<a name="property_protocol"></a>
+### public **$protocol** : string
+Http protocol used (http/https)
+
+
+
+
+
+
+<a name="property_cacheHandlers"></a>
+### protected **$cacheHandlers** : array[]
+Internal cache for routes handlers
+
+
+
+
+
+
+<a name="property_fullyDynamicRoutes"></a>
+### protected **$fullyDynamicRoutes** : string[]
+Name-value pair route to handler correspondance.
+This contains only routes composed with params. Ex:
+`'/:controller/:action' => ':controller/:action'`
+
+
+
+
+
+<a name="property_radix"></a>
+### protected **$radix** : \piko\router\RadixTrie
+The radix trie storage utility
+
+
+
+
+
+
 <a name="property_routes"></a>
-### public $routes : array
-Name-value pair uri to routes correspondance.
-Each name corresponds to a regular expression of the request uri.
-Each value corresponds to a route replacement.
-
-eg. `'^/about$' => 'site/default/about'` means all requests corresponding to
-'/about' will be treated in 'about' action in the 'defaut' controller of 'site' module.
-
-eg. `'^/(\w+)/(\w+)/(\w+)' => '$1/$2/$3'` means uri part 1 is the module id,
-part 2, the controller id and part 3 the action id.
-
-Also route parameters could be given using pipe character after route.
-
-eg. `'^/user/(\d+)' => 'site/user/view|id=$1'` The router will populate `$_GET`
-with 'id' = The user id in the uri.
+### protected **$routes** : string[]
+Name-value pair route to handler correspondance.
+Each key corresponds to a route. Each value corresponds to a route handler.
+Routes and handlers can contain parameters. Ex:
+`'/user/:id' => 'usercontroller/viewAction'`
 
 
 
-**see**  \piko\preg_replace()
 
 
-
-<a name="property_cache"></a>
-### protected $cache : array
-Internal cache for routes uris
-
+<a name="property_staticRoutes"></a>
+### protected **$staticRoutes** : string[]
+Name-value pair route to handler correspondance.
+This contains only routes with non params.
 
 
 
@@ -97,26 +151,91 @@ Internal cache for routes uris
 
 
 
-<a name="method_getUrl"></a>
-### public getUrl(): string
+<a name="method___construct"></a>
+### public **__construct()**: void
 
 ```php
-public  getUrl(string  $route, array  $params = [], bool  $absolute = false): string
+public  __construct(array&lt;string,array&gt;  $config = []): void
 ```
 
-Convert a route to an url.
+Constructor
+Example:
+
+```php
+$router = new Router([
+     'baseUri' => '/subdir',
+     'routes' => [
+         '/' => 'home',
+         '/user/:id' => 'userView',
+         '/:module/:controller/:action' => ':module/:controller/:action',
+     ]
+ ]);
+
+```
+
+
+#### Parameters
+**$config**  (default: []):
+A configuration array to set public properties and routes
+
+
+
+
+**see**  \piko\Component
+
+
+
+-----
+
+
+
+<a name="method_addRoute"></a>
+### public **addRoute()**: void
+
+```php
+public  addRoute(string  $path, mixed  $handler): void
+```
+
+Register a route path and its corresponding handler
 
 
 
 #### Parameters
-**$route** :
-The route given as '{moduleId}/{controllerId}/{ationId}'.
+**$path** :
+
+
+**$handler** :
+
+
+
+
+
+
+
+-----
+
+
+
+<a name="method_getUrl"></a>
+### public **getUrl()**: string
+
+```php
+public  getUrl(string  $handler, string[]  $params = [], bool  $absolute = false): string
+```
+
+Convert an handler to its corresponding route url (reverse routing).
+
+
+
+#### Parameters
+**$handler** :
+
 
 **$params**  (default: []):
 Optional query parameters.
 
 **$absolute**  (default: false):
-Optional to have an absolute url.
+Optional to get an absolute url.
 
 
 
@@ -125,22 +244,26 @@ Optional to have an absolute url.
 
 #### Return:
 **string**
-The url.
+The corresponding url.
 
 -----
 
 
 
 <a name="method_resolve"></a>
-### public resolve(): string
+### public **resolve()**: \piko\router\Matcher
 
 ```php
-public  resolve(): string
+public  resolve(string  $path): \piko\router\Matcher
 ```
 
-Resolve the application route corresponding to the request uri.
-The expected route scheme is : '{moduleId}/{controllerId}/{ationId}'
+Parse the route path and return a match instance.
 
+
+
+#### Parameters
+**$path** :
+The route path
 
 
 
@@ -148,26 +271,54 @@ The expected route scheme is : '{moduleId}/{controllerId}/{ationId}'
 
 
 #### Return:
-**string**
-The route.
+**\piko\router\Matcher**
+The route match.
 
 -----
 
 
 
-<a name="method_getRouteUris"></a>
-### protected getRouteUris(): array
+<a name="method_findFullyDynamicRoute"></a>
+### protected **findFullyDynamicRoute()**: \piko\router\Matcher
 
 ```php
-protected  getRouteUris(string  $route): array
+protected  findFullyDynamicRoute(string  $path): \piko\router\Matcher
 ```
 
-Retrieve all the uris rattached to the route
+Search for a fully parameterized route against the route path.
+Ex: /:controller/:action
+
+
+#### Parameters
+**$path** :
+The route path
+
+
+
+
+
+
+#### Return:
+**\piko\router\Matcher**
+The route match
+
+-----
+
+
+
+<a name="method_gethandlerRoutes"></a>
+### protected **gethandlerRoutes()**: string[]
+
+```php
+protected  gethandlerRoutes(string  $handler): string[]
+```
+
+Retrieve all routes attached to the handler
 
 
 
 #### Parameters
-**$route** :
+**$handler** :
 
 
 
@@ -176,6 +327,28 @@ Retrieve all the uris rattached to the route
 
 
 #### Return:
-**array**
+**string[]**
+
+
+-----
+
+
+
+<a name="method_init"></a>
+### protected **init()**: void
+
+```php
+protected  init(): void
+```
+
+Method called at the end of the constructor.
+
+
+
+
+
+
+**see**  \piko\Component::init()
+
 
 

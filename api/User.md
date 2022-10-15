@@ -17,15 +17,13 @@ Application User base class.
 
 
 
-## Properties
+## Properties summary
 
 | Name | Description |
 |------|-------------|
-| public [`$accessCheckerClass`](#property_accessCheckerClass) | The access checker to use for checking access.  |
 | public [`$authTimeout`](#property_authTimeout) | The number of seconds in which the user will be lo... |
 | public [`$identityClass`](#property_identityClass) | The class name of the identity object.  |
 | protected [`$access`](#property_access) | Internal cache of access permissions.  |
-| protected [`$accessChecker`](#property_accessChecker) | Access checker instance.  |
 | protected [`$identity`](#property_identity) | The identity instance.  |
 
 ## Inherited Properties
@@ -33,10 +31,10 @@ Application User base class.
 | Name | Description |
 |------|-------------|
 | public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$events`](Component.md#property_events) | Event handlers container.  |
-| public [`$events2`](Component.md#property_events2) | Static event handlers container.  |
+| public [`$on`](Component.md#property_on) | Event listeners container.  |
+| public [`$when`](Component.md#property_when) | Static event listeners container.  |
 
-## Methods
+## Methods summary
 
 | Name | Description |
 |------|-------------|
@@ -48,19 +46,20 @@ Application User base class.
 | public [`logout`](#method_logout) | Destroy the session and remove user identity.  |
 | public [`setIdentity`](#method_setIdentity) | Set user identity.  |
 | protected [`init`](#method_init) | Method called at the end of the constructor.  |
+| protected [`startSession`](#method_startSession) |   |
 
 ## Inherited Methods
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](Component.md#method___construct) | Constructor  |
-| public [`attachBehavior`](Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](Component.md#method_on) | Event registration.  |
-| public [`trigger`](Component.md#method_trigger) | Trigger an event. Event handlers corresponding to ... |
-| public [`when`](Component.md#method_when) | Static event registration.  |
-| protected [`init`](Component.md#method_init) | Method called at the end of the constructor.  |
+| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
+| public [`__construct`](/Component.md#method___construct) | Constructor |
+| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
+| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
+| public [`on`](/Component.md#method_on) | Event registration.  |
+| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
+| public [`when`](/Component.md#method_when) | Static event registration.  |
+| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
 
 -----
 
@@ -68,17 +67,8 @@ Application User base class.
 ## Properties
 
 
-<a name="property_accessCheckerClass"></a>
-### public $accessCheckerClass : string
-The access checker to use for checking access.
-
-
-
-
-
-
 <a name="property_authTimeout"></a>
-### public $authTimeout : int
+### public **$authTimeout** : int
 The number of seconds in which the user will be logged out automatically if he remains inactive.
 
 
@@ -87,7 +77,7 @@ The number of seconds in which the user will be logged out automatically if he r
 
 
 <a name="property_identityClass"></a>
-### public $identityClass : string
+### public **$identityClass** : string
 The class name of the identity object.
 
 
@@ -96,7 +86,7 @@ The class name of the identity object.
 
 
 <a name="property_access"></a>
-### protected $access : array
+### protected **$access** : bool[]
 Internal cache of access permissions.
 
 
@@ -104,17 +94,8 @@ Internal cache of access permissions.
 
 
 
-<a name="property_accessChecker"></a>
-### protected $accessChecker : object
-Access checker instance.
-
-
-
-
-
-
 <a name="property_identity"></a>
-### protected $identity : \piko\IdentityInterface
+### protected **$identity** : \piko\IdentityInterface|null
 The identity instance.
 
 
@@ -129,7 +110,7 @@ The identity instance.
 
 
 <a name="method_can"></a>
-### public can(): bool
+### public **can()**: bool
 
 ```php
 public  can(string  $permission): bool
@@ -157,7 +138,7 @@ The permission name.
 
 
 <a name="method_getId"></a>
-### public getId(): string|int|null
+### public **getId()**: string|int|null
 
 ```php
 public  getId(): string|int|null
@@ -181,7 +162,7 @@ Get user identifier.
 
 
 <a name="method_getIdentity"></a>
-### public getIdentity(): \piko\IdentityInterface|null
+### public **getIdentity()**: \piko\IdentityInterface|null
 
 ```php
 public  getIdentity(): \piko\IdentityInterface|null
@@ -205,7 +186,7 @@ The user identity or null if no identity is found.
 
 
 <a name="method_isGuest"></a>
-### public isGuest(): bool
+### public **isGuest()**: bool
 
 ```php
 public  isGuest(): bool
@@ -229,7 +210,7 @@ whether the current user is a guest.
 
 
 <a name="method_login"></a>
-### public login(): void
+### public **login()**: void
 
 ```php
 public  login(\piko\IdentityInterface  $identity): void
@@ -253,7 +234,7 @@ The user identity.
 
 
 <a name="method_logout"></a>
-### public logout(): void
+### public **logout()**: void
 
 ```php
 public  logout(): void
@@ -273,7 +254,7 @@ Destroy the session and remove user identity.
 
 
 <a name="method_setIdentity"></a>
-### public setIdentity(): void
+### public **setIdentity()**: void
 
 ```php
 public  setIdentity(\piko\IdentityInterface  $identity): void
@@ -299,7 +280,7 @@ The user identity.
 
 
 <a name="method_init"></a>
-### protected init(): void
+### protected **init()**: void
 
 ```php
 protected  init(): void
@@ -313,6 +294,24 @@ Method called at the end of the constructor.
 
 
 **see**  \piko\Component::init()
+
+
+
+-----
+
+
+
+<a name="method_startSession"></a>
+### protected **startSession()**: void
+
+```php
+protected  startSession(): void
+```
+
+
+
+
+
 
 
 

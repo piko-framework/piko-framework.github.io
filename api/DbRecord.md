@@ -8,7 +8,8 @@ parent: API
 
 # \piko\DbRecord
 
-DbRecord reprensents a database table row.
+DbRecord represents a database table's row and implements
+the Active Record pattern.
 
 
 
@@ -16,7 +17,7 @@ DbRecord reprensents a database table row.
 
 
 
-## Constants
+## Constants summary
 
 | Name | Description |
 |------|-------------|
@@ -24,10 +25,11 @@ DbRecord reprensents a database table row.
 | public [`TYPE_INT`](#constant_TYPE_INT) |   |
 | public [`TYPE_STRING`](#constant_TYPE_STRING) |   |
 
-## Properties
+## Properties summary
 
 | Name | Description |
 |------|-------------|
+| protected [`$data`](#property_data) |   |
 | protected [`$db`](#property_db) | The database instance.  |
 | protected [`$primaryKey`](#property_primaryKey) | The name of the primary key. Default to &#039;id&#039;.  |
 | protected [`$schema`](#property_schema) | A name-value pair that describes the structure of ... |
@@ -38,17 +40,18 @@ DbRecord reprensents a database table row.
 | Name | Description |
 |------|-------------|
 | public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$events`](Component.md#property_events) | Event handlers container.  |
-| public [`$events2`](Component.md#property_events2) | Static event handlers container.  |
-| protected [`$data`](Model.md#property_data) | Represents the model&#039;s data.  |
+| public [`$on`](Component.md#property_on) | Event listeners container.  |
+| public [`$when`](Component.md#property_when) | Static event listeners container.  |
 
-## Methods
+## Methods summary
 
 | Name | Description |
 |------|-------------|
-| public [`__construct`](#method___construct) | Constructor  |
-| public [`__get`](#method___get) | Magick method to access model&#039;s data as class attr... |
-| public [`__set`](#method___set) | Magick method to set model&#039;s data as class attribu... |
+| public [`__construct`](#method___construct) | Constructor |
+| public [`__get`](#method___get) | Magick method to access rows&#039;s data as class attri... |
+| public [`__isset`](#method___isset) | Magick method to check if attribute is defined in ... |
+| public [`__set`](#method___set) | Magick method to set row&#039;s data as class attribute... |
+| public [`__unset`](#method___unset) | Magick method to unset attribute in row&#039;s data.  |
 | public [`delete`](#method_delete) | Delete this record.  |
 | public [`load`](#method_load) | Load row data.  |
 | public [`save`](#method_save) | Save this record into the table.  |
@@ -62,38 +65,31 @@ DbRecord reprensents a database table row.
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](Component.md#method___construct) | Constructor  |
-| public [`__get`](Model.md#method___get) | Magick method to access model&#039;s data as class attr... |
-| public [`__isset`](Model.md#method___isset) | Magick method to check if attribute is defined in ... |
-| public [`__set`](Model.md#method___set) | Magick method to set model&#039;s data as class attribu... |
-| public [`__unset`](Model.md#method___unset) | Magick method to unset attribute in model&#039;s data.  |
-| public [`attachBehavior`](Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`bind`](Model.md#method_bind) | Bind directly the model data.  |
-| public [`detachBehavior`](Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](Component.md#method_on) | Event registration.  |
-| public [`toArray`](Model.md#method_toArray) | Get the model data as an associative array.  |
-| public [`trigger`](Component.md#method_trigger) | Trigger an event. Event handlers corresponding to ... |
-| public [`validate`](Model.md#method_validate) | Validate this model (Should be extended)  |
-| public [`when`](Component.md#method_when) | Static event registration.  |
-| protected [`init`](Component.md#method_init) | Method called at the end of the constructor.  |
+| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
+| public [`__construct`](/Component.md#method___construct) | Constructor |
+| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
+| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
+| public [`on`](/Component.md#method_on) | Event registration.  |
+| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
+| public [`when`](/Component.md#method_when) | Static event registration.  |
+| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
 
 -----
 
 <a name="constant_TYPE_BOOL"></a>
-### public $TYPE_BOOL
+### public **$TYPE_BOOL**
 
 
 
 
 <a name="constant_TYPE_INT"></a>
-### public $TYPE_INT
+### public **$TYPE_INT**
 
 
 
 
 <a name="constant_TYPE_STRING"></a>
-### public $TYPE_STRING
+### public **$TYPE_STRING**
 
 
 
@@ -103,8 +99,16 @@ DbRecord reprensents a database table row.
 ## Properties
 
 
+<a name="property_data"></a>
+### protected **$data** : array
+
+
+
+
+
+
 <a name="property_db"></a>
-### protected $db : \piko\Db
+### protected **$db** : \PDO
 The database instance.
 
 
@@ -113,7 +117,7 @@ The database instance.
 
 
 <a name="property_primaryKey"></a>
-### protected $primaryKey : string
+### protected **$primaryKey** : string
 The name of the primary key. Default to 'id'.
 
 
@@ -122,7 +126,7 @@ The name of the primary key. Default to 'id'.
 
 
 <a name="property_schema"></a>
-### protected $schema : array
+### protected **$schema** : int[]
 A name-value pair that describes the structure of the table.
 eg.`['id' => self::TYPE_INT, 'name' => 'id' => self::TYPE_STRING]`
 
@@ -131,7 +135,7 @@ eg.`['id' => self::TYPE_INT, 'name' => 'id' => self::TYPE_STRING]`
 
 
 <a name="property_tableName"></a>
-### protected $tableName : string
+### protected **$tableName** : string
 The name of the table.
 
 
@@ -146,7 +150,7 @@ The name of the table.
 
 
 <a name="method___construct"></a>
-### public __construct(): void
+### public **__construct()**: void
 
 ```php
 public  __construct(\piko\number  $id, array  $config = []): void
@@ -166,6 +170,8 @@ An array of configuration.
 
 
 
+**throws**  \RuntimeException
+
 
 
 -----
@@ -173,13 +179,13 @@ An array of configuration.
 
 
 <a name="method___get"></a>
-### public __get(): mixed
+### public **__get()**: mixed
 
 ```php
-public  __get(mixed  $attribute): mixed
+public  __get(string  $attribute): mixed
 ```
 
-Magick method to access model's data as class attribute.
+Magick method to access rows's data as class attribute.
 
 
 
@@ -189,8 +195,6 @@ The attribute's name.
 
 
 
-
-**see**  \piko\Model::__get()
 
 
 
@@ -202,14 +206,42 @@ The attribute's value.
 
 
 
-<a name="method___set"></a>
-### public __set(): void
+<a name="method___isset"></a>
+### public **__isset()**: mixed
 
 ```php
-public  __set(mixed  $attribute, mixed  $value): void
+public  __isset(string  $attribute): mixed
 ```
 
-Magick method to set model's data as class attribute.
+Magick method to check if attribute is defined in row's data.
+
+
+
+#### Parameters
+**$attribute** :
+The attribute's name.
+
+
+
+
+
+
+#### Return:
+**mixed**
+
+
+-----
+
+
+
+<a name="method___set"></a>
+### public **__set()**: void
+
+```php
+public  __set(string  $attribute, mixed  $value): void
+```
+
+Magick method to set row's data as class attribute.
 
 
 
@@ -223,8 +255,34 @@ The attribute's value.
 
 
 
-**see**  \piko\Model::__set()
 
+
+-----
+
+
+
+<a name="method___unset"></a>
+### public **__unset()**: mixed
+
+```php
+public  __unset(string  $attribute): mixed
+```
+
+Magick method to unset attribute in row's data.
+
+
+
+#### Parameters
+**$attribute** :
+The attribute's name.
+
+
+
+
+
+
+#### Return:
+**mixed**
 
 
 -----
@@ -232,7 +290,7 @@ The attribute's value.
 
 
 <a name="method_delete"></a>
-### public delete(): bool
+### public **delete()**: bool
 
 ```php
 public  delete(): bool
@@ -258,7 +316,7 @@ Delete this record.
 
 
 <a name="method_load"></a>
-### public load(): void
+### public **load()**: void
 
 ```php
 public  load(\piko\number  $id): void
@@ -284,7 +342,7 @@ The value of the row primary key.
 
 
 <a name="method_save"></a>
-### public save(): bool
+### public **save()**: bool
 
 ```php
 public  save(): bool
@@ -310,7 +368,7 @@ Save this record into the table.
 
 
 <a name="method_afterDelete"></a>
-### protected afterDelete(): void
+### protected **afterDelete()**: void
 
 ```php
 protected  afterDelete(): void
@@ -330,7 +388,7 @@ Method called after a delete action.
 
 
 <a name="method_afterSave"></a>
-### protected afterSave(): void
+### protected **afterSave()**: void
 
 ```php
 protected  afterSave(): void
@@ -350,7 +408,7 @@ Method called after a save action.
 
 
 <a name="method_beforeDelete"></a>
-### protected beforeDelete(): bool
+### protected **beforeDelete()**: bool
 
 ```php
 protected  beforeDelete(): bool
@@ -374,7 +432,7 @@ Method called before a delete action.
 
 
 <a name="method_beforeSave"></a>
-### protected beforeSave(): bool
+### protected **beforeSave()**: bool
 
 ```php
 protected  beforeSave(bool  $insert): bool
@@ -402,7 +460,7 @@ If the row is a new record, the value will be true, otherwise, false.
 
 
 <a name="method_checkColumn"></a>
-### protected checkColumn(): void
+### protected **checkColumn()**: void
 
 ```php
 protected  checkColumn(string  $name): void

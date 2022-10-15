@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- To build the API doc run: phpdoc --template=_phpdoc/templates/markdown -->
+<!-- 
+To build the API doc run 'phpdoc' on the command line 
+(see https://docs.phpdoc.org/guide/getting-started/installing.html)
+-->
 
 <phpdocumentor configVersion="3">
     <paths>
@@ -23,6 +26,6 @@
             </ignore>
         </api>
     </version>
-    <!--<setting name="guides.enabled" value="0"></setting>-->
+    <template name="_phpdoc/templates/markdown" />
 </phpdocumentor>
 

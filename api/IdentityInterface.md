@@ -16,7 +16,7 @@ User identity interface.
 
 
 
-## Methods
+## Methods summary
 
 | Name | Description |
 |------|-------------|
@@ -32,7 +32,7 @@ User identity interface.
 
 
 <a name="method_findIdentity"></a>
-### public findIdentity(): \piko\IdentityInterface|null
+### public **findIdentity()**: \piko\IdentityInterface|null
 
 ```php
 public static  findIdentity(string|int  $id): \piko\IdentityInterface|null
@@ -61,7 +61,7 @@ null should be returned if such an identity cannot be found
 
 
 <a name="method_getId"></a>
-### public getId(): string|int
+### public **getId()**: string|int
 
 ```php
 public  getId(): string|int

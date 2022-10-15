@@ -17,17 +17,15 @@ Piko is the helper class for the Piko framework.
 
 
 
-## Properties
+## Properties summary
 
 | Name | Description |
 |------|-------------|
-| public [`$app`](#property_app) | The application instance.  |
 | protected [`$aliases`](#property_aliases) | The aliases container.  |
 | protected [`$registry`](#property_registry) | The registry container.  |
-| protected [`$singletons`](#property_singletons) | The singletons container.  |
 
 
-## Methods
+## Methods summary
 
 | Name | Description |
 |------|-------------|
@@ -35,9 +33,9 @@ Piko is the helper class for the Piko framework.
 | public [`createObject`](#method_createObject) | Singleton factory method.  |
 | public [`get`](#method_get) | Retrieve data from the registry.  |
 | public [`getAlias`](#method_getAlias) | Translates a path alias into an actual path.  |
+| public [`reset`](#method_reset) | Reset aliases and registry  |
 | public [`set`](#method_set) | Store data in the registry.  |
 | public [`setAlias`](#method_setAlias) | Registers a path alias. A path alias is a short na... |
-| public [`t`](#method_t) | Translate a text. This is a shortcut to translate ... |
 
 
 -----
@@ -46,17 +44,8 @@ Piko is the helper class for the Piko framework.
 ## Properties
 
 
-<a name="property_app"></a>
-### public $app : \piko\Application
-The application instance.
-
-
-
-
-
-
 <a name="property_aliases"></a>
-### protected $aliases : array
+### protected **$aliases** : string[]
 The aliases container.
 
 
@@ -65,17 +54,8 @@ The aliases container.
 
 
 <a name="property_registry"></a>
-### protected $registry : array
+### protected **$registry** : array
 The registry container.
-
-
-
-
-
-
-<a name="property_singletons"></a>
-### protected $singletons : array
-The singletons container.
 
 
 
@@ -89,10 +69,10 @@ The singletons container.
 
 
 <a name="method_configureObject"></a>
-### public configureObject(): void
+### public **configureObject()**: void
 
 ```php
-public static  configureObject(object  $object, array  $properties = []): void
+public static  configureObject(object  $object, array&lt;string,array&gt;  $properties = []): void
 ```
 
 Configure public attributes of an object.
@@ -116,10 +96,10 @@ A name-value pair array corresponding to the object public properties.
 
 
 <a name="method_createObject"></a>
-### public createObject(): object
+### public **createObject()**: object
 
 ```php
-public static  createObject(string|array  $type, array  $properties = []): object
+public static  createObject(string|array&lt;string,array&gt;  $type, array&lt;string,array&gt;  $properties = []): object
 ```
 
 Singleton factory method.
@@ -150,7 +130,7 @@ A name-value pair array corresponding to the object public properties.
 
 
 <a name="method_get"></a>
-### public get(): mixed
+### public **get()**: mixed
 
 ```php
 public static  get(string  $key, mixed  $default = null): mixed
@@ -181,7 +161,7 @@ Default value if data is not found from the registry.
 
 
 <a name="method_getAlias"></a>
-### public getAlias(): string|bool
+### public **getAlias()**: string|bool
 
 ```php
 public static  getAlias(string  $alias): string|bool
@@ -208,8 +188,28 @@ The path corresponding to the alias. False if the alias is not registered.
 
 
 
+<a name="method_reset"></a>
+### public **reset()**: void
+
+```php
+public static  reset(): void
+```
+
+Reset aliases and registry
+
+
+
+
+
+
+
+
+-----
+
+
+
 <a name="method_set"></a>
-### public set(): void
+### public **set()**: void
 
 ```php
 public static  set(string  $key, mixed  $value): void
@@ -236,7 +236,7 @@ Store data in the registry.
 
 
 <a name="method_setAlias"></a>
-### public setAlias(): void
+### public **setAlias()**: void
 
 ```php
 public static  setAlias(string  $alias, string  $path): void
@@ -261,40 +261,4 @@ the path corresponding to the alias.
 **see**  \piko\Piko::getAlias()
 
 
-
------
-
-
-
-<a name="method_t"></a>
-### public t(): string
-
-```php
-public static  t(string  $domain, string  $text, array  $params = []): string
-```
-
-Translate a text.
-This is a shortcut to translate method in i18n component.
-
-
-#### Parameters
-**$domain** :
-The translation domain, for instance 'app'.
-
-**$text** :
-The text to translate.
-
-**$params**  (default: []):
-Parameters substitution.
-
-
-
-
-**see**  \piko\I18n
-
-
-
-#### Return:
-**string**
-The translated text or the text itself if no translation was found.
 
