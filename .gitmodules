@@ -1,3 +1,21 @@
-[submodule "piko"]
-	path = _piko
+[submodule ".piko-packages/piko"]
+	path = .piko-packages/piko
 	url = https://github.com/piko-framework/piko.git
+[submodule ".piko-packages/core"]
+	path = .piko-packages/core
+	url = https://github.com/piko-framework/core.git
+[submodule ".piko-packages/router"]
+	path = .piko-packages/router
+	url = https://github.com/piko-framework/router.git
+[submodule ".piko-packages/i18n"]
+	path = .piko-packages/i18n
+	url = https://github.com/piko-framework/i18n.git
+[submodule ".piko-packages/db"]
+	path = .piko-packages/db
+	url = https://github.com/piko-framework/db.git
+[submodule ".piko-packages/user"]
+	path = .piko-packages/user
+	url = https://github.com/piko-framework/user.git
+[submodule ".piko-packages/asset-bundle"]
+	path = .piko-packages/asset-bundle
+	url = https://github.com/piko-framework/asset-bundle.git
