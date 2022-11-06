@@ -22,7 +22,10 @@ To build the API doc run 'phpdoc' on the command line
               <path>user/src</path>
             </source>
             <ignore>
-                <path>router/src/router</path>
+                <path>piko/src/ModularApplication/*</path>
+                <path>router/src/Router/Edge.php</path>
+                <path>router/src/Router/Node.php</path>
+                <path>router/src/Router/RadixTrie.php</path>
             </ignore>
         </api>
     </version>

@@ -6,7 +6,7 @@
 | Name | Summary |
 | ---- | ------- |
 {% for trait in node.traits|sort_asc %}
-| [{{ trait }}]({{ trait.name }}.md) | {{ trait.summary }} |
+| [{{ trait }}]({{ trait.name }}.md) | {{ trait.summary|replace({ "\n": "" }) }} |
 {% endfor %}
 {% endif %}
 
@@ -16,7 +16,7 @@
 | Name | Summary |
 | ---- | ------- |
 {% for interface in node.interfaces|sort_asc %}
-| [{{ interface }}]({{ interface.name }}.md) | {{ interface.summary }} |
+| [{{ interface }}]({{ interface.name }}.md) | {{ interface.summary|replace({ "\n": "" }) }} |
 {% endfor %}
 {% endif %}
 
@@ -26,6 +26,6 @@
 | Name | Summary |
 | ---- | ------- |
 {% for class in node.classes|sort_asc %}
-| [{{ class }}]({{ class.name }}.md) | {{ class.summary }} |
+| [{{ class }}]({{ class.name }}.md) | {{ class.summary|replace({ "\n": "" }) }} |
 {% endfor %}
 {% endif %}

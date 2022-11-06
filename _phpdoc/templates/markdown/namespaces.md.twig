@@ -6,8 +6,8 @@ has_toc: false
 nav_order: 20
 ---
 
-{% if node.children|length > 0 %}
-{% for namespace in node.children|sort_asc %}
+{% if project.namespace.children|length > 0 %}
+{% for namespace in project.namespace.children|sort_asc %}
 {{ include('components/namespace.md.twig', {'node': namespace}) }}
 {% endfor %}
 {% endif %}
