@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\View
+# \Piko\View
 
 Base application view.
 
@@ -44,14 +44,15 @@ Base application view.
 
 | Name | Description |
 |------|-------------|
-| public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$on`](Component.md#property_on) | Event listeners container.  |
-| public [`$when`](Component.md#property_when) | Static event listeners container.  |
+| protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
+| protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
+| private [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 
 ## Methods summary
 
 | Name | Description |
 |------|-------------|
+| public [`__construct`](#method___construct) | Constructor |
 | public [`escape`](#method_escape) | Escape HTML special characters.  |
 | public [`registerCSS`](#method_registerCSS) | Register css code.  |
 | public [`registerCSSFile`](#method_registerCSSFile) | Register a stylesheet url.  |
@@ -62,20 +63,16 @@ Base application view.
 | protected [`endBody`](#method_endBody) | Assemble html in the end of the body position.  |
 | protected [`findFile`](#method_findFile) | Retrieve a view file.  |
 | protected [`head`](#method_head) | Assemble html in the head position.  |
-| protected [`init`](#method_init) | Method called at the end of the constructor. This ... |
 
 ## Inherited Methods
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](/Component.md#method___construct) | Constructor |
-| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/Component.md#method_on) | Event registration.  |
-| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
-| public [`when`](/Component.md#method_when) | Static event registration.  |
-| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
+| public [`__call`](/BehaviorTrait.md#method___call) | Magic method to call a behavior.  |
+| public [`attachBehavior`](/BehaviorTrait.md#method_attachBehavior) | Attach a behavior to the class instance.  |
+| public [`detachBehavior`](/BehaviorTrait.md#method_detachBehavior) | Detach a behavior.  |
+| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----
 
@@ -116,7 +113,7 @@ The registered CSS code blocks.
 
 
 
-**see**  \piko\View::registerCss()
+**see**  \Piko\View::registerCss()
 
 
 
@@ -127,7 +124,7 @@ The registered CSS files.
 
 
 
-**see**  \piko\View::registerCssFile()
+**see**  \Piko\View::registerCssFile()
 
 
 
@@ -165,7 +162,7 @@ The registered JS code blocks
 
 
 
-**see**  \piko\View::registerJs()
+**see**  \Piko\View::registerJs()
 
 
 
@@ -176,7 +173,7 @@ The registered JS files.
 
 
 
-**see**  \piko\View::registerJsFile()
+**see**  \Piko\View::registerJsFile()
 
 
 
@@ -199,7 +196,7 @@ Directories where to find view files.
 
 
 <a name="property_themeMap"></a>
-### public **$themeMap** : (string|array)[]
+### public **$themeMap** : array&lt;string,string|string[]&gt;
 Theme map configuration.
 A key paired array where each key represents
 a path to override and the value, the mapped path. The value could be either a string
@@ -235,6 +232,33 @@ The page title
 
 ## Methods
 
+
+
+
+<a name="method___construct"></a>
+### public **__construct()**: mixed
+
+```php
+public  __construct(array&lt;string,mixed&gt;  $config = []): mixed
+```
+
+
+
+
+#### Parameters
+**$config**  (default: []):
+
+
+
+
+
+
+
+#### Return:
+**mixed**
+
+
+-----
 
 
 
@@ -509,24 +533,4 @@ Assemble html in the head position.
 #### Return:
 **string**
 The head html.
-
------
-
-
-
-<a name="method_init"></a>
-### protected **init()**: void
-
-```php
-protected  init(): void
-```
-
-Method called at the end of the constructor.
-This could be overriden in inherited classes.
-
-
-
-
-
-
 

@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\DbRecord
+# \Piko\DbRecord
 
 DbRecord represents a database table's row and implements
 the Active Record pattern.
@@ -39,9 +39,9 @@ the Active Record pattern.
 
 | Name | Description |
 |------|-------------|
-| public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$on`](Component.md#property_on) | Event listeners container.  |
-| public [`$when`](Component.md#property_when) | Static event listeners container.  |
+| protected [`$errors`](ModelTrait.md#property_errors) | Errors hash container  |
+| protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
+| protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
 
 ## Methods summary
 
@@ -52,9 +52,11 @@ the Active Record pattern.
 | public [`__isset`](#method___isset) | Magick method to check if attribute is defined in ... |
 | public [`__set`](#method___set) | Magick method to set row&#039;s data as class attribute... |
 | public [`__unset`](#method___unset) | Magick method to unset attribute in row&#039;s data.  |
+| public [`bind`](#method_bind) | Override ModelTrait::bind()  |
 | public [`delete`](#method_delete) | Delete this record.  |
 | public [`load`](#method_load) | Load row data.  |
 | public [`save`](#method_save) | Save this record into the table.  |
+| public [`toArray`](#method_toArray) | Override ModelTrait::toArray()  |
 | protected [`afterDelete`](#method_afterDelete) | Method called after a delete action.  |
 | protected [`afterSave`](#method_afterSave) | Method called after a save action.  |
 | protected [`beforeDelete`](#method_beforeDelete) | Method called before a delete action.  |
@@ -65,14 +67,15 @@ the Active Record pattern.
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](/Component.md#method___construct) | Constructor |
-| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/Component.md#method_on) | Event registration.  |
-| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
-| public [`when`](/Component.md#method_when) | Static event registration.  |
-| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
+| public [`bind`](/ModelTrait.md#method_bind) | Bind the data to the model attribubes.  |
+| public [`getErrors`](/ModelTrait.md#method_getErrors) | Return the errors hash container  |
+| public [`isValid`](/ModelTrait.md#method_isValid) | Check if the model is valid  |
+| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`toArray`](/ModelTrait.md#method_toArray) | Get the model data as an associative array.  |
+| public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
+| protected [`getAttributes`](/ModelTrait.md#method_getAttributes) | Get the public properties reprenting the data mode... |
+| protected [`setError`](/ModelTrait.md#method_setError) | Set an error that will be appended to the errors c... |
+| protected [`validate`](/ModelTrait.md#method_validate) | Validate this model (Should be extended). Inherite... |
 
 -----
 
@@ -100,7 +103,7 @@ the Active Record pattern.
 
 
 <a name="property_data"></a>
-### protected **$data** : array
+### protected **$data** : array&lt;string,string|int|bool&gt;
 
 
 
@@ -150,10 +153,10 @@ The name of the table.
 
 
 <a name="method___construct"></a>
-### public **__construct()**: void
+### public **__construct()**: mixed
 
 ```php
-public  __construct(\piko\number  $id, array  $config = []): void
+public  __construct(\PDO  $db): mixed
 ```
 
 Constructor
@@ -161,17 +164,16 @@ Constructor
 
 
 #### Parameters
-**$id** :
-The value of the row primary key in order to load the row imediately.
-
-**$config**  (default: []):
-An array of configuration.
+**$db** :
+A PDO instance
 
 
 
 
-**throws**  \RuntimeException
 
+
+#### Return:
+**mixed**
 
 
 -----
@@ -238,7 +240,7 @@ The attribute's name.
 ### public **__set()**: void
 
 ```php
-public  __set(string  $attribute, mixed  $value): void
+public  __set(string  $attribute, string|int|bool  $value): void
 ```
 
 Magick method to set row's data as class attribute.
@@ -289,6 +291,30 @@ The attribute's name.
 
 
 
+<a name="method_bind"></a>
+### public **bind()**: void
+
+```php
+public  bind(array&lt;string,string|int|bool&gt;  $data): void
+```
+
+Override ModelTrait::bind()
+
+
+
+#### Parameters
+**$data** :
+
+
+
+
+
+
+
+-----
+
+
+
 <a name="method_delete"></a>
 ### public **delete()**: bool
 
@@ -316,10 +342,10 @@ Delete this record.
 
 
 <a name="method_load"></a>
-### public **load()**: void
+### public **load()**: static
 
 ```php
-public  load(\piko\number  $id): void
+public  load(\Piko\number  $id): static
 ```
 
 Load row data.
@@ -335,6 +361,10 @@ The value of the row primary key.
 
 **throws**  \RuntimeException
 
+
+
+#### Return:
+**static**
 
 
 -----
@@ -361,6 +391,30 @@ Save this record into the table.
 
 #### Return:
 **bool**
+
+
+-----
+
+
+
+<a name="method_toArray"></a>
+### public **toArray()**: array
+
+```php
+public  toArray(): array
+```
+
+Override ModelTrait::toArray()
+
+
+
+
+
+
+
+
+#### Return:
+**array**
 
 
 -----
@@ -479,7 +533,7 @@ Check if column name is defined in the table schema.
 
 **throws**  \RuntimeException
 
-**see**  \piko\DbRecord::$schema
+**see**  \Piko\DbRecord::$schema
 
 
 

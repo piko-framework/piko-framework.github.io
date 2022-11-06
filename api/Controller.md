@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\Controller
+# \Piko\Controller
 
 Controller is the base class for classes containing controller logic.
 
@@ -23,48 +23,44 @@ Controller is the base class for classes containing controller logic.
 |------|-------------|
 | public [`$id`](#property_id) | The controller identifier.  |
 | public [`$layout`](#property_layout) | The name of the layout to be applied to this contr... |
-| public [`$module`](#property_module) | The module that this controller belongs to.  |
 | public [`$viewPath`](#property_viewPath) | The root directory that contains view files for th... |
+| protected [`$module`](#property_module) | The module that this controller belongs to.  |
+| protected [`$request`](#property_request) |   |
+| protected [`$response`](#property_response) |   |
+| protected [`$view`](#property_view) |   |
 
 ## Inherited Properties
 
 | Name | Description |
 |------|-------------|
-| public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$on`](Component.md#property_on) | Event listeners container.  |
-| public [`$when`](Component.md#property_when) | Static event listeners container.  |
+| protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
+| protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
+| private [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 
 ## Methods summary
 
 | Name | Description |
 |------|-------------|
-| public [`runAction`](#method_runAction) | Runs an action within this controller with the spe... |
-| protected [`forward`](#method_forward) | Proxy to Application::dispatch  |
-| protected [`getMethod`](#method_getMethod) | Get the request method  |
+| public [`__construct`](#method___construct) | Constructor |
+| public [`handle`](#method_handle) |   |
+| protected [`forward`](#method_forward) | Forward the given route to another module  |
 | protected [`getViewPath`](#method_getViewPath) | Returns the directory containing view files for th... |
-| protected [`init`](#method_init) | Method called at the end of the constructor. This ... |
 | protected [`isAjax`](#method_isAjax) | Check if the request is AJAX  |
-| protected [`isDelete`](#method_isDelete) | Check if the request method is DELETE  |
-| protected [`isGet`](#method_isGet) | Check if the request method is GET  |
-| protected [`isPost`](#method_isPost) | Check if the request method is POST  |
-| protected [`isPut`](#method_isPut) | Check if the request method is PUT  |
 | protected [`jsonResponse`](#method_jsonResponse) | Convenient method to return a JSON response  |
-| protected [`rawInput`](#method_rawInput) | Get the raw input data of the request  |
 | protected [`redirect`](#method_redirect) | Set a response redirection  |
 | protected [`render`](#method_render) | Render a view.  |
+| private [`getMethodArguments`](#method_getMethodArguments) |   |
+| private [`runAction`](#method_runAction) | Runs an action within this controller with the spe... |
 
 ## Inherited Methods
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](/Component.md#method___construct) | Constructor |
-| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/Component.md#method_on) | Event registration.  |
-| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
-| public [`when`](/Component.md#method_when) | Static event registration.  |
-| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
+| public [`__call`](/BehaviorTrait.md#method___call) | Magic method to call a behavior.  |
+| public [`attachBehavior`](/BehaviorTrait.md#method_attachBehavior) | Attach a behavior to the class instance.  |
+| public [`detachBehavior`](/BehaviorTrait.md#method_detachBehavior) | Detach a behavior.  |
+| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----
 
@@ -92,8 +88,17 @@ If false, no layout will be applied.
 
 
 
+<a name="property_viewPath"></a>
+### public **$viewPath** : string
+The root directory that contains view files for this controller.
+
+
+
+
+
+
 <a name="property_module"></a>
-### public **$module** : \piko\Module
+### protected **$module** : \Piko\Module
 The module that this controller belongs to.
 
 
@@ -101,9 +106,24 @@ The module that this controller belongs to.
 
 
 
-<a name="property_viewPath"></a>
-### public **$viewPath** : string
-The root directory that contains view files for this controller.
+<a name="property_request"></a>
+### protected **$request** : \Psr\Http\Message\ServerRequestInterface
+
+
+
+
+
+
+<a name="property_response"></a>
+### protected **$response** : \Psr\Http\Message\ResponseInterface
+
+
+
+
+
+
+<a name="property_view"></a>
+### protected **$view** : \Piko\View
 
 
 
@@ -116,34 +136,51 @@ The root directory that contains view files for this controller.
 
 
 
-<a name="method_runAction"></a>
-### public **runAction()**: mixed
+<a name="method___construct"></a>
+### public **__construct()**: mixed
 
 ```php
-public  runAction(string  $id, array  $params = []): mixed
+public  __construct(\Piko\Module  $module): mixed
 ```
-
-Runs an action within this controller with the specified action ID.
 
 
 
 #### Parameters
-**$id** :
-the ID of the action to be executed.
-
-**$params**  (default: []):
-An array of request parameters.
+**$module** :
 
 
 
-
-**throws**  \RuntimeExceptionif the requested action ID cannot be resolved into an action successfully.
 
 
 
 #### Return:
 **mixed**
-the result of the action.
+
+
+-----
+
+
+
+<a name="method_handle"></a>
+### public **handle()**: \Psr\Http\Message\ResponseInterface
+
+```php
+public  handle(\Psr\Http\Message\ServerRequestInterface  $request): \Psr\Http\Message\ResponseInterface
+```
+
+
+
+#### Parameters
+**$request** :
+
+
+
+
+
+
+#### Return:
+**\Psr\Http\Message\ResponseInterface**
+
 
 -----
 
@@ -156,7 +193,7 @@ the result of the action.
 protected  forward(string  $route, string[]  $params = []): string
 ```
 
-Proxy to Application::dispatch
+Forward the given route to another module
 
 
 
@@ -166,30 +203,6 @@ The route to forward
 
 **$params**  (default: []):
 An array of params (name-value pairs) associated to the route.
-
-
-
-
-
-
-#### Return:
-**string**
-
-
------
-
-
-
-<a name="method_getMethod"></a>
-### protected **getMethod()**: string
-
-```php
-protected  getMethod(): string
-```
-
-Get the request method
-
-
 
 
 
@@ -229,26 +242,6 @@ the directory containing the view files for this controller.
 
 
 
-<a name="method_init"></a>
-### protected **init()**: void
-
-```php
-protected  init(): void
-```
-
-Method called at the end of the constructor.
-This could be overriden in inherited classes.
-
-
-
-
-
-
-
------
-
-
-
 <a name="method_isAjax"></a>
 ### protected **isAjax()**: bool
 
@@ -273,107 +266,11 @@ Check if the request is AJAX
 
 
 
-<a name="method_isDelete"></a>
-### protected **isDelete()**: bool
-
-```php
-protected  isDelete(): bool
-```
-
-Check if the request method is DELETE
-
-
-
-
-
-
-
-
-#### Return:
-**bool**
-
-
------
-
-
-
-<a name="method_isGet"></a>
-### protected **isGet()**: bool
-
-```php
-protected  isGet(): bool
-```
-
-Check if the request method is GET
-
-
-
-
-
-
-
-
-#### Return:
-**bool**
-
-
------
-
-
-
-<a name="method_isPost"></a>
-### protected **isPost()**: bool
-
-```php
-protected  isPost(): bool
-```
-
-Check if the request method is POST
-
-
-
-
-
-
-
-
-#### Return:
-**bool**
-
-
------
-
-
-
-<a name="method_isPut"></a>
-### protected **isPut()**: bool
-
-```php
-protected  isPut(): bool
-```
-
-Check if the request method is PUT
-
-
-
-
-
-
-
-
-#### Return:
-**bool**
-
-
------
-
-
-
 <a name="method_jsonResponse"></a>
-### protected **jsonResponse()**: string|false
+### protected **jsonResponse()**: \Psr\Http\Message\ResponseInterface
 
 ```php
-protected  jsonResponse(mixed  $data): string|false
+protected  jsonResponse(mixed  $data): \Psr\Http\Message\ResponseInterface
 ```
 
 Convenient method to return a JSON response
@@ -390,35 +287,7 @@ Convenient method to return a JSON response
 
 
 #### Return:
-**string|false**
-
-
------
-
-
-
-<a name="method_rawInput"></a>
-### protected **rawInput()**: string|false
-
-```php
-protected  rawInput(int  $size = 1024): string|false
-```
-
-Get the raw input data of the request
-
-
-
-#### Parameters
-**$size**  (default: 1024):
-The size in bytes of the raw input
-
-
-
-
-
-
-#### Return:
-**string|false**
+**\Psr\Http\Message\ResponseInterface**
 
 
 -----
@@ -450,10 +319,10 @@ The url to redirect
 
 
 <a name="method_render"></a>
-### protected **render()**: string|null
+### protected **render()**: \Psr\Http\Message\ResponseInterface
 
 ```php
-protected  render(string  $viewName, array  $data = []): string|null
+protected  render(string  $viewName, array  $data = []): \Psr\Http\Message\ResponseInterface
 ```
 
 Render a view.
@@ -473,6 +342,69 @@ An array of data (name-value pairs) to transmit to the view.
 
 
 #### Return:
-**string|null**
-The view output.
+**\Psr\Http\Message\ResponseInterface**
+
+
+-----
+
+
+
+<a name="method_getMethodArguments"></a>
+### private **getMethodArguments()**: array
+
+```php
+private  getMethodArguments(string  $methodName, array  $data = []): array
+```
+
+
+
+
+#### Parameters
+**$methodName** :
+The method to analyse
+
+**$data**  (default: []):
+A key-value paired array to bind into the method arguments.
+
+
+
+
+
+
+#### Return:
+**array**
+
+
+-----
+
+
+
+<a name="method_runAction"></a>
+### private **runAction()**: \Psr\Http\Message\ResponseInterface
+
+```php
+private  runAction(string  $id, array  $params = []): \Psr\Http\Message\ResponseInterface
+```
+
+Runs an action within this controller with the specified action ID.
+
+
+
+#### Parameters
+**$id** :
+the ID of the action to be executed.
+
+**$params**  (default: []):
+An array of request parameters.
+
+
+
+
+**throws**  \RuntimeExceptionif the requested action ID cannot be resolved into an action successfully.
+
+
+
+#### Return:
+**\Psr\Http\Message\ResponseInterface**
+the result of the action.
 

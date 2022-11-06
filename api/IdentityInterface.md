@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\IdentityInterface
+# \Piko\User\IdentityInterface
 
 User identity interface.
 
@@ -32,10 +32,10 @@ User identity interface.
 
 
 <a name="method_findIdentity"></a>
-### public **findIdentity()**: \piko\IdentityInterface|null
+### public **findIdentity()**: \Piko\User\IdentityInterface|null
 
 ```php
-public static  findIdentity(string|int  $id): \piko\IdentityInterface|null
+public static  findIdentity(string|int  $id): \Piko\User\IdentityInterface|null
 ```
 
 Finds an identity by the given ID.
@@ -52,7 +52,7 @@ the ID to be looked for
 
 
 #### Return:
-**\piko\IdentityInterface|null**
+**\Piko\User\IdentityInterface|null**
 the identity object that matches the given ID.
 null should be returned if such an identity cannot be found
 

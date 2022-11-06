@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\Module
+# \Piko\Module
 
 Module is the base class for classes containing module logic.
 
@@ -28,37 +28,34 @@ Module is the base class for classes containing module logic.
 to d... |
 | public [`$layoutPath`](#property_layoutPath) | The layout directory of the module.  |
 | public [`$modules`](#property_modules) | Sub modules configuration  |
+| protected [`$application`](#property_application) |   |
 | private [`$basePath`](#property_basePath) | The root directory of the module.  |
 
 ## Inherited Properties
 
 | Name | Description |
 |------|-------------|
-| public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$on`](Component.md#property_on) | Event listeners container.  |
-| public [`$when`](Component.md#property_when) | Static event listeners container.  |
+| protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
+| protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
 
 ## Methods summary
 
 | Name | Description |
 |------|-------------|
+| public [`__construct`](#method___construct) | Constructor |
+| public [`getApplication`](#method_getApplication) |   |
 | public [`getBasePath`](#method_getBasePath) | Returns the root directory of the module.  |
 | public [`getModule`](#method_getModule) | Get a sub module of this module  |
-| public [`run`](#method_run) | Run module controller action.  |
-| protected [`init`](#method_init) | Method called at the end of the constructor.  |
+| public [`handle`](#method_handle) | {@inheritDoc}  |
+| public [`setApplication`](#method_setApplication) |   |
+| protected [`createController`](#method_createController) | Create a controller  |
 
 ## Inherited Methods
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](/Component.md#method___construct) | Constructor |
-| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/Component.md#method_on) | Event registration.  |
-| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
-| public [`when`](/Component.md#method_when) | Static event registration.  |
-| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
+| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----
 
@@ -104,7 +101,7 @@ to deactivate the layout rendering
 
 
 <a name="property_layoutPath"></a>
-### public **$layoutPath** : string
+### public **$layoutPath** : string|null
 The layout directory of the module.
 
 
@@ -113,8 +110,16 @@ The layout directory of the module.
 
 
 <a name="property_modules"></a>
-### public **$modules** : array
+### public **$modules** : (\Piko\Module|string|array&lt;string,mixed&gt;)[]
 Sub modules configuration
+
+
+
+
+
+
+<a name="property_application"></a>
+### protected **$application** : \Piko\ModularApplication
 
 
 
@@ -133,6 +138,55 @@ The root directory of the module.
 
 ## Methods
 
+
+
+
+<a name="method___construct"></a>
+### public **__construct()**: mixed
+
+```php
+public  __construct(array&lt;string,mixed&gt;  $config = []): mixed
+```
+
+
+
+
+#### Parameters
+**$config**  (default: []):
+
+
+
+
+
+
+
+#### Return:
+**mixed**
+
+
+-----
+
+
+
+<a name="method_getApplication"></a>
+### public **getApplication()**: \Piko\ModularApplication
+
+```php
+public  getApplication(): \Piko\ModularApplication
+```
+
+
+
+
+
+
+
+
+#### Return:
+**\Piko\ModularApplication**
+
+
+-----
 
 
 
@@ -161,10 +215,10 @@ the root directory of the module.
 
 
 <a name="method_getModule"></a>
-### public **getModule()**: \piko\Module
+### public **getModule()**: \Piko\Module
 
 ```php
-public  getModule(string  $moduleId): \piko\Module
+public  getModule(string  $moduleId): \Piko\Module
 ```
 
 Get a sub module of this module
@@ -183,33 +237,77 @@ The module identifier
 
 
 #### Return:
-**\piko\Module**
+**\Piko\Module**
 
 
 -----
 
 
 
-<a name="method_run"></a>
-### public **run()**: mixed
+<a name="method_handle"></a>
+### public **handle()**: \Psr\Http\Message\ResponseInterface
 
 ```php
-public  run(string  $controllerId, string  $actionId, string[]  $params = []): mixed
+public  handle(\Psr\Http\Message\ServerRequestInterface  $request): \Psr\Http\Message\ResponseInterface
 ```
 
-Run module controller action.
+{@inheritDoc}
+
+
+
+#### Parameters
+**$request** :
+
+
+
+
+**see**  \Psr\Http\Server\RequestHandlerInterface::handle()
+
+
+
+#### Return:
+**\Psr\Http\Message\ResponseInterface**
+
+
+-----
+
+
+
+<a name="method_setApplication"></a>
+### public **setApplication()**: void
+
+```php
+public  setApplication(\Piko\ModularApplication  $app): void
+```
+
+
+
+#### Parameters
+**$app** :
+
+
+
+
+
+
+-----
+
+
+
+<a name="method_createController"></a>
+### protected **createController()**: \Piko\Controller
+
+```php
+protected  createController(string  $controllerId): \Piko\Controller
+```
+
+Create a controller
 
 
 
 #### Parameters
 **$controllerId** :
-The controller identifier.
-
-**$actionId** :
-The controller action identifier.
-
-**$params**  (default: []):
-Optional query parameters.
+A controller ID
 
 
 
@@ -217,28 +315,6 @@ Optional query parameters.
 
 
 #### Return:
-**mixed**
-The module output.
-
------
-
-
-
-<a name="method_init"></a>
-### protected **init()**: void
-
-```php
-protected  init(): void
-```
-
-Method called at the end of the constructor.
-
-
-
-
-
-
-**see**  \piko\Component::init()
-
+**\Piko\Controller**
 
 

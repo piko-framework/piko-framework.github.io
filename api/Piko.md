@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\Piko
+# \Piko
 
 Piko is the helper class for the Piko framework.
 
@@ -22,19 +22,16 @@ Piko is the helper class for the Piko framework.
 | Name | Description |
 |------|-------------|
 | protected [`$aliases`](#property_aliases) | The aliases container.  |
-| protected [`$registry`](#property_registry) | The registry container.  |
 
 
 ## Methods summary
 
 | Name | Description |
 |------|-------------|
-| public [`configureObject`](#method_configureObject) | Configure public attributes of an object.  |
-| public [`createObject`](#method_createObject) | Singleton factory method.  |
-| public [`get`](#method_get) | Retrieve data from the registry.  |
+| public [`configureObject`](#method_configureObject) | Configure public properties of an object.  |
+| public [`createObject`](#method_createObject) | Generic factory method.  |
 | public [`getAlias`](#method_getAlias) | Translates a path alias into an actual path.  |
-| public [`reset`](#method_reset) | Reset aliases and registry  |
-| public [`set`](#method_set) | Store data in the registry.  |
+| public [`reset`](#method_reset) | Reset aliases  |
 | public [`setAlias`](#method_setAlias) | Registers a path alias. A path alias is a short na... |
 
 
@@ -52,15 +49,6 @@ The aliases container.
 
 
 
-
-<a name="property_registry"></a>
-### protected **$registry** : array
-The registry container.
-
-
-
-
-
 -----
 
 ## Methods
@@ -72,10 +60,10 @@ The registry container.
 ### public **configureObject()**: void
 
 ```php
-public static  configureObject(object  $object, array&lt;string,array&gt;  $properties = []): void
+public static  configureObject(object  $object, array&lt;string,mixed&gt;  $data = []): void
 ```
 
-Configure public attributes of an object.
+Configure public properties of an object.
 
 
 
@@ -83,8 +71,8 @@ Configure public attributes of an object.
 **$object** :
 The object instance.
 
-**$properties**  (default: []):
-A name-value pair array corresponding to the object public properties.
+**$data**  (default: []):
+A key-value array corresponding to the public properties of an object.
 
 
 
@@ -99,10 +87,10 @@ A name-value pair array corresponding to the object public properties.
 ### public **createObject()**: object
 
 ```php
-public static  createObject(string|array&lt;string,array&gt;  $type, array&lt;string,array&gt;  $properties = []): object
+public static  createObject(class-string|array&lt;string,mixed&gt;  $type, array&lt;string,mixed&gt;  $properties = []): object
 ```
 
-Singleton factory method.
+Generic factory method.
 
 
 
@@ -110,11 +98,12 @@ Singleton factory method.
 **$type** :
 The object type.
 If it is a string, it should be the fully qualified name of the class.
-If an array given, it should contain the key 'class' with the value corresponding
-to the fully qualified name of the class
+If an array given, it must contain the key 'class' with the value corresponding
+to the fully qualified name of the class. It should also contain the key 'construct' to give an array of
+constuctor arguments
 
 **$properties**  (default: []):
-A name-value pair array corresponding to the object public properties.
+A key-value paired array corresponding to the object public properties.
 
 
 
@@ -123,37 +112,6 @@ A name-value pair array corresponding to the object public properties.
 
 #### Return:
 **object**
-
-
------
-
-
-
-<a name="method_get"></a>
-### public **get()**: mixed
-
-```php
-public static  get(string  $key, mixed  $default = null): mixed
-```
-
-Retrieve data from the registry.
-
-
-
-#### Parameters
-**$key** :
-The registry key.
-
-**$default**  (default: null):
-Default value if data is not found from the registry.
-
-
-
-
-
-
-#### Return:
-**mixed**
 
 
 -----
@@ -195,35 +153,8 @@ The path corresponding to the alias. False if the alias is not registered.
 public static  reset(): void
 ```
 
-Reset aliases and registry
+Reset aliases
 
-
-
-
-
-
-
-
------
-
-
-
-<a name="method_set"></a>
-### public **set()**: void
-
-```php
-public static  set(string  $key, mixed  $value): void
-```
-
-Store data in the registry.
-
-
-
-#### Parameters
-**$key** :
-
-
-**$value** :
 
 
 
@@ -258,7 +189,7 @@ the path corresponding to the alias.
 
 **throws**  \InvalidArgumentExceptionif $path is an invalid alias.
 
-**see**  \piko\Piko::getAlias()
+**see**  \Piko::getAlias()
 
 
 

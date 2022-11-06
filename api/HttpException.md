@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\HttpException
+# \Piko\HttpException
 
 HttpException convert exception code to http status header.
 
@@ -41,7 +41,7 @@ HttpException convert exception code to http status header.
 ### public **__construct()**: mixed
 
 ```php
-public  __construct(string  $message = '', int  $code = 404, \Throwable  $previous = null): mixed
+public  __construct(int  $code = 404, string  $message = '', \Throwable  $previous = null): mixed
 ```
 
 Constructor set http header with response code and message if code is given
@@ -49,11 +49,11 @@ Constructor set http header with response code and message if code is given
 
 
 #### Parameters
-**$message**  (default: ''):
-The exception message.
-
 **$code**  (default: 404):
 The exception code (should be an HTTP status code, eg. 404)
+
+**$message**  (default: ''):
+The exception message.
 
 **$previous**  (default: null):
 A previous exception.

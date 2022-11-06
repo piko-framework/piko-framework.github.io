@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\AssetBundle
+# \Piko\AssetBundle
 
 AssetBundle represents a collection of CSS files and JS files to publish inside the public path.
 
@@ -35,9 +35,8 @@ AssetBundle represents a collection of CSS files and JS files to publish inside 
 
 | Name | Description |
 |------|-------------|
-| public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$on`](Component.md#property_on) | Event listeners container.  |
-| public [`$when`](Component.md#property_when) | Static event listeners container.  |
+| protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
+| protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
 
 ## Methods summary
 
@@ -51,14 +50,8 @@ AssetBundle represents a collection of CSS files and JS files to publish inside 
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](/Component.md#method___construct) | Constructor |
-| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/Component.md#method_on) | Event registration.  |
-| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
-| public [`when`](/Component.md#method_when) | Static event registration.  |
-| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
+| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----
 
@@ -100,7 +93,7 @@ Position of the js file in the generated view.
 
 
 
-**see**  \piko\View
+**see**  \Piko\View
 
 
 
@@ -141,14 +134,14 @@ You can use either a directory or an alias of the directory.
 
 
 <a name="property_assetBundles"></a>
-### protected **$assetBundles** : \piko\AssetBundle[]
+### protected **$assetBundles** : \Piko\AssetBundle[]
 list of the registered asset bundles. The keys are the bundle names
 and the values are the AssetBundle class name.
 
 
 
 
-**see**  \piko\AssetBundle::register()
+**see**  \Piko\AssetBundle::register()
 
 
 -----
@@ -179,10 +172,10 @@ Publish assets into public path
 
 
 <a name="method_register"></a>
-### public **register()**: \piko\AssetBundle
+### public **register()**: \Piko\AssetBundle
 
 ```php
-public static  register(\piko\View  $view): \piko\AssetBundle
+public static  register(\Piko\View  $view): \Piko\AssetBundle
 ```
 
 Registers this asset bundle with a view.
@@ -199,7 +192,7 @@ the view to be registered with
 
 
 #### Return:
-**\piko\AssetBundle**
+**\Piko\AssetBundle**
 the registered asset bundle instance
 
 -----
@@ -226,6 +219,8 @@ The destination directory to copy
 
 
 
+
+**throws**  \RuntimeExceptionif src not exists
 
 
 

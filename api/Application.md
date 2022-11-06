@@ -6,9 +6,9 @@ parent: API
 
 
 
-# \piko\Application
+# \Piko\Application
 
-The Web application class
+The main application class
 
 
 
@@ -22,50 +22,42 @@ The Web application class
 | Name | Description |
 |------|-------------|
 | public [`$basePath`](#property_basePath) | The absolute base path of the application.  |
-| public [`$bootstrap`](#property_bootstrap) | List of module IDs that should be run during the a... |
-| public [`$charset`](#property_charset) | The charset encoding used in the application.  |
-| public [`$config`](#property_config) | The configuration loaded on application instantiat... |
+| public [`$components`](#property_components) | The components container  |
 | public [`$defaultLayout`](#property_defaultLayout) | The default layout name without file extension.  |
 | public [`$defaultLayoutPath`](#property_defaultLayoutPath) | The default layout path. An alias could be used.  |
 | public [`$errorRoute`](#property_errorRoute) | The Error route to display exceptions in a friendl... |
-| public [`$headers`](#property_headers) | The response headers.  |
-| public [`$instance`](#property_instance) | Application Instance  |
 | public [`$language`](#property_language) | The language that is meant to be used for end user... |
-| public [`$modules`](#property_modules) | List of modules configurations. Should be either :... |
+| protected [`$aliases`](#property_aliases) | The aliases container.  |
+| protected [`$errorHandler`](#property_errorHandler) |   |
+| protected [`$pipeline`](#property_pipeline) |   |
 
 ## Inherited Properties
 
 | Name | Description |
 |------|-------------|
-| public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$on`](Component.md#property_on) | Event listeners container.  |
-| public [`$when`](Component.md#property_when) | Static event listeners container.  |
+| protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
+| protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
+| private [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 
 ## Methods summary
 
 | Name | Description |
 |------|-------------|
 | public [`__construct`](#method___construct) | Constructor |
-| public [`dispatch`](#method_dispatch) | Dispatch a route and return the output result.  |
-| public [`getInstance`](#method_getInstance) | Get the application instance  |
-| public [`getModule`](#method_getModule) | Get a module instance  |
-| public [`getRouter`](#method_getRouter) | Get the application router instance  |
-| public [`getView`](#method_getView) | Get the application view instance  |
+| public [`getComponent`](#method_getComponent) | Retrieve a unique instance of a registered compone... |
+| public [`handle`](#method_handle) | {@inheritDoc}  |
+| public [`pipe`](#method_pipe) | Add a middleware in the application pipeline queue... |
 | public [`run`](#method_run) | Run the application.  |
-| public [`setHeader`](#method_setHeader) | Set Response header  |
 
 ## Inherited Methods
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](/Component.md#method___construct) | Constructor |
-| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/Component.md#method_on) | Event registration.  |
-| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
-| public [`when`](/Component.md#method_when) | Static event registration.  |
-| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
+| public [`__call`](/BehaviorTrait.md#method___call) | Magic method to call a behavior.  |
+| public [`attachBehavior`](/BehaviorTrait.md#method_attachBehavior) | Attach a behavior to the class instance.  |
+| public [`detachBehavior`](/BehaviorTrait.md#method_detachBehavior) | Detach a behavior.  |
+| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----
 
@@ -82,30 +74,9 @@ The absolute base path of the application.
 
 
 
-<a name="property_bootstrap"></a>
-### public **$bootstrap** : string[]
-List of module IDs that should be run during the application bootstrapping process.
-Each module may be specified with a module ID as specified via [[modules]].
-
-During the bootstrapping process, each module will be instantiated. If the module class
-implements the bootstrap() method, this method will be also be called.
-
-
-
-
-
-<a name="property_charset"></a>
-### public **$charset** : string
-The charset encoding used in the application.
-
-
-
-
-
-
-<a name="property_config"></a>
-### public **$config** : array
-The configuration loaded on application instantiation.
+<a name="property_components"></a>
+### public **$components** : (object|callable)[]
+The components container
 
 
 
@@ -139,24 +110,6 @@ If not set, Exceptions catched will be thrown and stop the script execution.
 
 
 
-<a name="property_headers"></a>
-### public **$headers** : string[]
-The response headers.
-
-
-
-
-
-
-<a name="property_instance"></a>
-### public **$instance** : \piko\Application
-Application Instance
-
-
-
-
-
-
 <a name="property_language"></a>
 ### public **$language** : string
 The language that is meant to be used for end users.
@@ -166,32 +119,28 @@ The language that is meant to be used for end users.
 
 
 
-<a name="property_modules"></a>
-### public **$modules** : array
-List of modules configurations.
-Should be either :
-
-```php
-[
-  'moduleId' => 'moduleClassName'
-]
-```
-
-Or :
-
-```php
-[
-  'moduleId' => [
-    'class' => 'moduleClassName',
-    'layoutPath' => '/some/path'
-    // ...
-  ]
-]
-```
+<a name="property_aliases"></a>
+### protected **$aliases** : array&lt;string,string&gt;
+The aliases container.
 
 
 
-**see**  \piko\ModuleTo have more informations on module attributes
+
+
+
+<a name="property_errorHandler"></a>
+### protected **$errorHandler** : \Psr\Http\Server\RequestHandlerInterface
+
+
+
+
+
+
+<a name="property_pipeline"></a>
+### protected **$pipeline** : \SplQueue&lt;\Psr\Http\Server\MiddlewareInterface&gt;
+
+
+
 
 
 -----
@@ -205,7 +154,7 @@ Or :
 ### public **__construct()**: void
 
 ```php
-public  __construct(array  $config): void
+public  __construct(array&lt;string,mixed&gt;  $config = []): void
 ```
 
 Constructor
@@ -213,7 +162,7 @@ Constructor
 
 
 #### Parameters
-**$config** :
+**$config**  (default: []):
 The application configuration.
 
 
@@ -225,142 +174,86 @@ The application configuration.
 
 
 
-<a name="method_dispatch"></a>
-### public **dispatch()**: string
+<a name="method_getComponent"></a>
+### public **getComponent()**: object
 
 ```php
-public  dispatch(string  $route, string[]  $params = []): string
+public  getComponent(string  $type): object
 ```
 
-Dispatch a route and return the output result.
+Retrieve a unique instance of a registered component
 
 
 
 #### Parameters
-**$route** :
-The route to dispatch. The route format is one of the following :
-```
-'{moduleId}/{subModuleId}/.../{controllerId}/{actionId}'
-'{moduleId}/{controllerId}/{actionId}'
-'{moduleId}/{controllerId}'
-'{moduleId}'
-```
-
-**$params**  (default: []):
-Optional route parameters
+**$type** :
+The component class
 
 
 
 
-**throws**  \RuntimeException
+**throws**  \RuntimeExceptionIf the component is not found
 
 
 
 #### Return:
-**string**
-The output result.
-
------
-
-
-
-<a name="method_getInstance"></a>
-### public **getInstance()**: \piko\Application
-
-```php
-public static  getInstance(): \piko\Application
-```
-
-Get the application instance
-
-
-
-
-
-
-
-
-#### Return:
-**\piko\Application**
+**object**
 
 
 -----
 
 
 
-<a name="method_getModule"></a>
-### public **getModule()**: \piko\Module
+<a name="method_handle"></a>
+### public **handle()**: \Psr\Http\Message\ResponseInterface
 
 ```php
-public  getModule(string  $moduleId): \piko\Module
+public  handle(\Psr\Http\Message\ServerRequestInterface  $request): \Psr\Http\Message\ResponseInterface
 ```
 
-Get a module instance
+{@inheritDoc}
 
 
 
 #### Parameters
-**$moduleId** :
-The module identifier
+**$request** :
 
 
 
 
-**throws**  \RuntimeException
+**see**  \Psr\Http\Server\RequestHandlerInterface::handle()
 
 
 
 #### Return:
-**\piko\Module**
-instance
+**\Psr\Http\Message\ResponseInterface**
+
 
 -----
 
 
 
-<a name="method_getRouter"></a>
-### public **getRouter()**: \piko\Router
+<a name="method_pipe"></a>
+### public **pipe()**: void
 
 ```php
-public  getRouter(): \piko\Router
+public  pipe(\Psr\Http\Server\MiddlewareInterface  $middleware): void
 ```
 
-Get the application router instance
+Add a middleware in the application pipeline queue
+
+
+
+#### Parameters
+**$middleware** :
 
 
 
 
 
+**see**  \Psr\Http\Server\MiddlewareInterface
 
 
-
-#### Return:
-**\piko\Router**
-instance
-
------
-
-
-
-<a name="method_getView"></a>
-### public **getView()**: \piko\View
-
-```php
-public  getView(): \piko\View
-```
-
-Get the application view instance
-
-
-
-
-
-
-
-
-#### Return:
-**\piko\View**
-instance
 
 -----
 
@@ -370,39 +263,19 @@ instance
 ### public **run()**: void
 
 ```php
-public  run(): void
+public  run(\Psr\Http\Message\ServerRequestInterface|null  $request = null, bool  $emitHeaders = true): void
 ```
 
 Run the application.
 
 
 
-
-
-
-
-
------
-
-
-
-<a name="method_setHeader"></a>
-### public **setHeader()**: void
-
-```php
-public  setHeader(string  $header, string  $value = ''): void
-```
-
-Set Response header
-
-
-
 #### Parameters
-**$header** :
-The complete header (key:value) or just the header key
+**$request**  (default: null):
 
-**$value**  (default: ''):
-(optional) The header value
+
+**$emitHeaders**  (default: true):
+Controls whether headers will be emmited (header() function called)
 
 
 

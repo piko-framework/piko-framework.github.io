@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\User
+# \Piko\User
 
 Application User base class.
 
@@ -22,6 +22,7 @@ Application User base class.
 | Name | Description |
 |------|-------------|
 | public [`$authTimeout`](#property_authTimeout) | The number of seconds in which the user will be lo... |
+| public [`$checkAccess`](#property_checkAccess) | Callback to check user permission The callback sig... |
 | public [`$identityClass`](#property_identityClass) | The class name of the identity object.  |
 | protected [`$access`](#property_access) | Internal cache of access permissions.  |
 | protected [`$identity`](#property_identity) | The identity instance.  |
@@ -30,14 +31,14 @@ Application User base class.
 
 | Name | Description |
 |------|-------------|
-| public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$on`](Component.md#property_on) | Event listeners container.  |
-| public [`$when`](Component.md#property_when) | Static event listeners container.  |
+| protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
+| protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
 
 ## Methods summary
 
 | Name | Description |
 |------|-------------|
+| public [`__construct`](#method___construct) | Constructor |
 | public [`can`](#method_can) | Check if the user can do an action.  |
 | public [`getId`](#method_getId) | Get user identifier.  |
 | public [`getIdentity`](#method_getIdentity) | Get user identity  |
@@ -45,21 +46,14 @@ Application User base class.
 | public [`login`](#method_login) | Start the session and set user identity.  |
 | public [`logout`](#method_logout) | Destroy the session and remove user identity.  |
 | public [`setIdentity`](#method_setIdentity) | Set user identity.  |
-| protected [`init`](#method_init) | Method called at the end of the constructor.  |
 | protected [`startSession`](#method_startSession) |   |
 
 ## Inherited Methods
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](/Component.md#method___construct) | Constructor |
-| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/Component.md#method_on) | Event registration.  |
-| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
-| public [`when`](/Component.md#method_when) | Static event registration.  |
-| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
+| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----
 
@@ -71,6 +65,15 @@ Application User base class.
 ### public **$authTimeout** : int
 The number of seconds in which the user will be logged out automatically if he remains inactive.
 
+
+
+
+
+
+<a name="property_checkAccess"></a>
+### public **$checkAccess** : callable
+Callback to check user permission
+The callback signature must be : function(int $userId, string $permission): bool
 
 
 
@@ -95,7 +98,7 @@ Internal cache of access permissions.
 
 
 <a name="property_identity"></a>
-### protected **$identity** : \piko\IdentityInterface|null
+### protected **$identity** : \Piko\User\IdentityInterface|null
 The identity instance.
 
 
@@ -106,6 +109,33 @@ The identity instance.
 
 ## Methods
 
+
+
+
+<a name="method___construct"></a>
+### public **__construct()**: mixed
+
+```php
+public  __construct(array&lt;string,mixed&gt;  $config = []): mixed
+```
+
+
+
+
+#### Parameters
+**$config**  (default: []):
+
+
+
+
+
+
+
+#### Return:
+**mixed**
+
+
+-----
 
 
 
@@ -162,10 +192,10 @@ Get user identifier.
 
 
 <a name="method_getIdentity"></a>
-### public **getIdentity()**: \piko\IdentityInterface|null
+### public **getIdentity()**: \Piko\User\IdentityInterface|null
 
 ```php
-public  getIdentity(): \piko\IdentityInterface|null
+public  getIdentity(): \Piko\User\IdentityInterface|null
 ```
 
 Get user identity
@@ -178,7 +208,7 @@ Get user identity
 
 
 #### Return:
-**\piko\IdentityInterface|null**
+**\Piko\User\IdentityInterface|null**
 The user identity or null if no identity is found.
 
 -----
@@ -213,7 +243,7 @@ whether the current user is a guest.
 ### public **login()**: void
 
 ```php
-public  login(\piko\IdentityInterface  $identity): void
+public  login(\Piko\User\IdentityInterface  $identity): void
 ```
 
 Start the session and set user identity.
@@ -257,7 +287,7 @@ Destroy the session and remove user identity.
 ### public **setIdentity()**: void
 
 ```php
-public  setIdentity(\piko\IdentityInterface  $identity): void
+public  setIdentity(\Piko\User\IdentityInterface  $identity): void
 ```
 
 Set user identity.
@@ -272,28 +302,6 @@ The user identity.
 
 
 **throws**  \RuntimeExceptionIf identiy doesn't implement IdentityInterface.
-
-
-
------
-
-
-
-<a name="method_init"></a>
-### protected **init()**: void
-
-```php
-protected  init(): void
-```
-
-Method called at the end of the constructor.
-
-
-
-
-
-
-**see**  \piko\Component::init()
 
 
 

@@ -6,7 +6,7 @@ parent: API
 
 
 
-# \piko\Router
+# \Piko\Router
 
 Router class.
 
@@ -34,9 +34,8 @@ Router class.
 
 | Name | Description |
 |------|-------------|
-| public [`$behaviors`](Component.md#property_behaviors) | Behaviors container.  |
-| public [`$on`](Component.md#property_on) | Event listeners container.  |
-| public [`$when`](Component.md#property_when) | Static event listeners container.  |
+| protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
+| protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
 
 ## Methods summary
 
@@ -48,20 +47,13 @@ Router class.
 | public [`resolve`](#method_resolve) | Parse the route path and return a match instance.  |
 | protected [`findFullyDynamicRoute`](#method_findFullyDynamicRoute) | Search for a fully parameterized route against the... |
 | protected [`gethandlerRoutes`](#method_gethandlerRoutes) | Retrieve all routes attached to the handler  |
-| protected [`init`](#method_init) | Method called at the end of the constructor.  |
 
 ## Inherited Methods
 
 | Name | Description |
 |------|-------------|
-| public [`__call`](/Component.md#method___call) | Magic method to call a behavior.  |
-| public [`__construct`](/Component.md#method___construct) | Constructor |
-| public [`attachBehavior`](/Component.md#method_attachBehavior) | Attach a behavior to the component instance.  |
-| public [`detachBehavior`](/Component.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/Component.md#method_on) | Event registration.  |
-| public [`trigger`](/Component.md#method_trigger) | Trigger an event. Event listeners will be called i... |
-| public [`when`](/Component.md#method_when) | Static event registration.  |
-| protected [`init`](/Component.md#method_init) | Method called at the end of the constructor. This ... |
+| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----
 
@@ -117,7 +109,7 @@ This contains only routes composed with params. Ex:
 
 
 <a name="property_radix"></a>
-### protected **$radix** : \piko\router\RadixTrie
+### protected **$radix** : \Piko\Router\RadixTrie
 The radix trie storage utility
 
 
@@ -152,10 +144,10 @@ This contains only routes with non params.
 
 
 <a name="method___construct"></a>
-### public **__construct()**: void
+### public **__construct()**: mixed
 
 ```php
-public  __construct(array&lt;string,array&gt;  $config = []): void
+public  __construct(array&lt;string,mixed&gt;  $config = []): mixed
 ```
 
 Constructor
@@ -181,8 +173,10 @@ A configuration array to set public properties and routes
 
 
 
-**see**  \piko\Component
 
+
+#### Return:
+**mixed**
 
 
 -----
@@ -251,10 +245,10 @@ The corresponding url.
 
 
 <a name="method_resolve"></a>
-### public **resolve()**: \piko\router\Matcher
+### public **resolve()**: \Piko\Router\Matcher
 
 ```php
-public  resolve(string  $path): \piko\router\Matcher
+public  resolve(string  $path): \Piko\Router\Matcher
 ```
 
 Parse the route path and return a match instance.
@@ -271,7 +265,7 @@ The route path
 
 
 #### Return:
-**\piko\router\Matcher**
+**\Piko\Router\Matcher**
 The route match.
 
 -----
@@ -279,10 +273,10 @@ The route match.
 
 
 <a name="method_findFullyDynamicRoute"></a>
-### protected **findFullyDynamicRoute()**: \piko\router\Matcher
+### protected **findFullyDynamicRoute()**: \Piko\Router\Matcher
 
 ```php
-protected  findFullyDynamicRoute(string  $path): \piko\router\Matcher
+protected  findFullyDynamicRoute(string  $path): \Piko\Router\Matcher
 ```
 
 Search for a fully parameterized route against the route path.
@@ -299,7 +293,7 @@ The route path
 
 
 #### Return:
-**\piko\router\Matcher**
+**\Piko\Router\Matcher**
 The route match
 
 -----
@@ -328,27 +322,5 @@ Retrieve all routes attached to the handler
 
 #### Return:
 **string[]**
-
-
------
-
-
-
-<a name="method_init"></a>
-### protected **init()**: void
-
-```php
-protected  init(): void
-```
-
-Method called at the end of the constructor.
-
-
-
-
-
-
-**see**  \piko\Component::init()
-
 
 
