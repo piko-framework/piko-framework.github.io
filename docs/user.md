@@ -25,9 +25,8 @@ The user component can be declared in the application [configuration](applicatio
 return [
     //...
     'components' => [
-        'user' => [
-            'class' => 'piko\User',
-            'identityClass' => 'app\modules\site\models\User',
+        'Piko\User' => [
+            'identityClass' => 'app\modules\site\models\UserIdentity',
         ],
         //...
     ],
@@ -45,11 +44,13 @@ Example of `identityClass` implementation:
 <?php
 namespace app\modules\site\models;
 
-use piko\IdentityInterface;
-use piko\Model;
+use Piko\IdentityInterface;
+use Piko\ModelTrait
 
-class User extends Model implements IdentityInterface
+class UserIdentity implements IdentityInterface
 {
+    use ModelTrait;
+    
     public $id;
     public $username;
     public $password;
@@ -114,13 +115,15 @@ class DefaultController extends \piko\Controller
     {
         $error = '';
 
-        if ($this->isPost()) {
+        if ($this->request->GetMethod() == 'POST') {
+            $post = $this->request->getParsedBody();
 
-            $userIdentity = User::findByUsername($_POST['username']);
+            $userIdentity = User::findByUsername($post['username']);
 
             if ($userIdentity instanceof User) {
-                if ($userIdentity->password == $_POST['password']) {
-                    $user = Piko::get('user');
+                if ($userIdentity->password == $post['password']) {
+                    $app = $this->module->getApplication();
+                    $user = $app->getComponent('Piko\User');
                     $user->login($userIdentity);
                     return $this->redirect($this->getUrl('site/default/index'));
                 }
@@ -133,24 +136,24 @@ class DefaultController extends \piko\Controller
 
     public function logoutAction()
     {
-        $user = Piko::get('user');
+        $app = $this->module->getApplication();
+        $user = $app->getComponent('Piko\User');
         $user->logout();
         $this->redirect($this->getUrl('site/default/index'));
     }
-
 }
 ```
 
-Other usefull methods are:
+Other useful methods are:
 
 - [User::getIdentity](../api/User.md#method_getIdentity) To retrieve the user identity
 - [User::getId](../api/User.md#method_getId) To retrieve the user id
 - [User::isGuest](../api/User.md#method_isGuest) To check if user is connected
 
 ```php
-use piko\Piko;
+//...
 
-$user = Piko::get('user');
+$user = $app->getComponent('Piko\User');
 
 if (!$user->isGuest()) {
     $identity = $user->getIdentity();
@@ -165,13 +168,9 @@ if (!$user->isGuest()) {
 
 [User::can](../api/User.md#method_can) is used to check a user permission.
 
-For that, a [behavior](concepts.md#behaviors) `checkAccess` must be attached to the 
-[User](../api/User.md) [component](concepts.md#component).
+The control of the permission can be made by a `checkAccess` callback given in the User configuration.
 
-The `checkAccess` behavior can be set directly in the user component configuration or later using the method 
-[attachBehavior](../api/Component.md#method_attachBehavior) of the user instance.
-
-The checkAccess behavior callback must have this signature: 
+The checkAccess callback must have this signature: 
 
 ```
 checkAccess(int user_id, string permission): bool
@@ -183,30 +182,11 @@ Example to set checkAccess in the configuration:
 return [
     //...
     'components' => [
-        'user' => [
-            'class' => 'piko\User',
+        'Piko\User' => [
             'identityClass' => 'app\modules\site\models\User',
-            'behaviors' => [
-                'checkAccess' => 'app\modules\site\models\User::checkAccess'
-            ]
+            'checkAccess' => 'app\modules\site\models\UserIdentity::checkAccess'
         ],
         //...
     ],
 ];
-```
-
-Example to set checkAccess using `attachBehavior`:
-
-```php
-use piko\Piko;
-
-$user = Piko::get('user');
-
-$user->attachBehavior('checkAccess', function($id, $permission) {
-    if ($id == 1 || $permission == 'post') {
-        return true;
-    }
-    return false;
-});
-
 ```

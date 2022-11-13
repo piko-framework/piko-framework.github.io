@@ -22,8 +22,6 @@ Use [Piko::getAlias()](../api/Piko.md#method_getAlias) to retrieve a path or
 Example using getAlias() and setAlias(): 
 
 ```php
-use piko\Piko;
-
 echo Piko::getAlias('@app/modules/site'); // /usr/local/share/myapp/modules/site
 echo Piko::getAlias('@webroot/documents'); // /var/www/documents
 echo Piko::getAlias('@web/css/styles.css'); // /css/styles.css
@@ -33,144 +31,223 @@ echo Piko::getAlias('@lib/pdf/model.pdf'); // /usr/local/share/lib/pdf/model.pdf
 
 ```
 
-<a name="container"></a>
-
-## Container
-
-[Piko::set()](../api/Piko.md#method_set) and [Piko::get()](../api/Piko.md#method_get) respectively store and retrieve mixed 
-values in a global application registry.
-
-Example using set() and get(): 
-
-```php
-use piko\Piko;
-
-Piko::set('now', new \Datetime());
-$now = Piko::get('now');
-echo $now->format('Y-m-d');
-
-```
-
 <a name="component"></a>
 
 ## Component
 
-Components are classes that inherited from [\piko\Component](../api/Component.md).
+Some objects need to be retrieved globally in the application. They are application 
+[singletons](https://en.wikipedia.org/wiki/Singleton_pattern).
+In a Piko application, these objects are called "Components"
 
-Components are instantiated with a key-value pair array where keys corresponds to its public properties. 
-All Piko Framework classes are components.
+Common components are db connexion (PDO), logger, view rendering engine, user session manager, ...
 
-Example of a component:
+These components are declared in the `components` section of the application [configuration](application.md#configuration) 
+using a key-value paired array where keys are components class name and values could be either:
+
+- an array of public properties to configure, with an optional array of constructor parameters (using the key `construct')
+- an already instantiated object
+- a function that returns an instantiated object for lazy loading.
+
+Example of components configuration:
 
 ```php
+use Piko\View;
+use Monolog\Logger;
+use Monolog\StreamHandler;
 
-class Connexion extends \piko\Component
+//...
+'components' => [
+    View::class => [
+        // set a public property
+        'charset' => 'ISO-8859-1' // (Default charset is UTF-8)
+    ],
+    Logger::class => function() {
+        $logger = new Logger('app');
+        $logger->pushHandler(new StreamHandler( __DIR__ . '/../var/log/app.log', Logger::DEBUG));
+
+        return $logger;
+    },
+    PDO::class => [
+        'construct' => [
+            'mysql:dbname=' . getenv('MYSQL_DB') . ';host=' . getenv('MYSQL_HOST'),
+            getenv('MYSQL_USER'),
+            getenv('MYSQL_PASSWORD'),
+        ]
+    ],
+],
+// ...
+```
+
+Once declared, their instances can be accessed throw the application using 
+[Application::getComponent()](../api/Application.md#method_getComponent) method.
+Therefore, the application can act like a container and it is possible to apply 
+the Dependencies Injection pattern through this mechanism.
+
+Note that these components are loaded lazily if they are declared as an array in the configuraton. 
+They are instantiated the first time you access them by using 
+[Application::getComponent()](../api/Application.md#method_getComponent) method.
+
+<a name="events"></a>
+
+## Events
+
+Within Piko, its possible to dispatch and listen for events.
+This feature can be activated using the trait [EventHandlerTrait](../api/EventHandlerTrait.md):
+
+```php
+class MyClass
+{
+    use Piko\EventHandlerTrait;
+}
+```
+
+The [trigger](../api/EventHandlerTrait#method_trigger) method is used to trigger an event and 
+the [on](../api/EventHandlerTrait#method_on) method is used to listen for that event. 
+
+
+Example of event triggering in MyClass: 
+
+```php
+class MyConnectEvent
 {
     public $username = '';
-    public $passord = '';
     
-    public function connect()
+    public function __construct($username)
     {
-        echo $this->username . ' ' . $this->password;
+        $this->username = $username;
     }
 }
 
-$con = new Connexion(['username' => 'adou', 'password' => 'zertez']);
-
-$con->connect(); // adou zertez
-
-```
-<a name="events"></a>
-
-### Events
-
-Other interesting feature of components is they are event handlers. With components, It's possible to trigger 
-and listen events. The [trigger](../api/Component#method_trigger) method is used to trigger an event and 
-the [on](../api/Component#method_on) method to listen for some events. 
-
-
-Example of event triggering in the Connexion component: 
-
-```php
-//...
+class MyClass
+{
+    use Piko\EventHandlerTrait;
+    
+    private $username = '';
+    
     public function connect()
     {
-        echo $this->username . ' ' . $this->password;
-        $this->trigger('afterConnect');
+        $event = $this->trigger(new MyConnectEvent($this->username));
+
+        echo $event->username;
     }
-//...
+}
 ```
 
-Example of event listening with the Connexion component:
+Example of listening event of MyClass:
 
 ```php
-$con = new Connexion(['username' => 'adou', 'password' => 'zertez']);
+$c = new MyClass();
 
-$con->on('afterConnect', function() {
-    echo ' is connected!';
+$c->on(MyConnectEvent::class, function(MyConnectEvent $event) {
+    $event->username = 'Paul';
 });
 
-$con->connect(); // adou zertez is connected!
+$c->connect(); // Paul
 
 ```
 
-The [on](../api/Component#method_on) method listen events only for a single component instance.
-
-The [when](../api/Component#method_when) static method can listen events for all component instances.
-
-Example:
-
-```php
-Connexion::when('afterConnect', function() {
-    echo ' is connected!';
-});
-
-$con = new Connexion(['username' => 'adou', 'password' => 'zertez']);
-
-$con->connect(); // adou zertez is connected!
-
-$con2 = new Connexion(['username' => 'yudo', 'password' => 'gsdg']);
-
-$con2->connect(); // yudo gsdg is connected!
-
-```
+At a lower level, the eventHandlerTrait uses the package
+[piko/event-dispatcher](https://packagist.org/packages/piko/event-dispatcher), which is a
+[PSR-14](https://www.php-fig.org/psr/psr-14/) implementation.
 
 <a name="behaviors"></a>
 
-### Behaviors
+## Behaviors
 
-Another great component feature is that is possible to attach non-existing method during the code execution.
-These methods are called behaviors.
+The [BehaviorTrait](../api/BehaviorTrait.md) may be used to inject dynamically a non-existing method into an object 
 
-To attach a behavior, use [attachBehavior](../api/Component#attachBehavior) method.
+To attach a behavior, use [attachBehavior](../api/BehaviorTrait#attachBehavior) method.
 
 Example:
 
 ```php
-$con = new Connexion(['username' => 'adou', 'password' => 'zertez']);
+class MyClass
+{
+    use Piko\BehaviorTrait;
+}
 
-$con->attachBehavior('disconnect', function() {
+$c = new MyClass(]);
+
+$c->attachBehavior('disconnect', function() {
     echo 'I am disconnected!';
 });
 
-$con->connect(); // adou zertez
 $con->disconnect(); // I am disconnected!
 ```
 
-### Components registered globally in application
+<a name="middleware"></a>
 
-Some components need to be retrieved globally in the application. They are application 
-[singletons](https://en.wikipedia.org/wiki/Singleton_pattern).
+## Middleware
 
-These components are declared in the `components` section of the application [configuration](application.md#configuration).
+In order to obtain a response, a Piko based application sends a request to 
+a [FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)) queue of Middlewares.
 
-Once declared, their instances can be accessed everywhere in the application using 
-[Piko::get()](../api/Piko.md#method_get) method.
+A middleware is a kind of sub-application that sits between the web server and the 
+web application, intercepting requests and responses to perform some action.
 
-If the `components` section is empty in the configuration, the application will register by default two components : 
-piko\View and piko\Router. To retrieve their instances, use `Piko::get('view')` and `Piko::get('router')`.
+Middlewares in Piko implements the standard PSR-15 
+[Psr\Http\Server\MiddlewareInterface](https://www.php-fig.org/psr/psr-15/#22-psrhttpservermiddlewareinterface)
 
-Note that these components are loaded lazily. They are instantiated the first time you access them by using 
-[Piko::get()](../api/Piko.md#method_get) method.
- 
+Here is an illustration of how middleware works in a Piko application:
+
+```
+App  --> request  --> MiddlewareA  --> request   --> MiddlewareB
+App <-- response <--  MiddlewareA <--  response <--  MiddlewareB
+
+```
+
+The request is an instance of 
+[Psr\Http\Message\ServerRequestInterface](https://www.php-fig.org/psr/psr-7/#321-psrhttpmessageserverrequestinterface)
+and the response an instance of
+[Psr\Http\Message\ResponseInterface](https://www.php-fig.org/psr/psr-7/#33-psrhttpmessageresponseinterface)
+
+Actually, the Piko ModularApplication is a queue of two middlewares : 
+[BootstrapMiddleware](https://github.com/piko-framework/piko/blob/main/src/ModularApplication/BootstrapMiddleware.php)
+and
+[RoutingMiddleware](https://github.com/piko-framework/piko/blob/main/src/ModularApplication/RoutingMiddleware.php)
+
+Before the application start, it's possible to pipe a custom middleware.
+
+For instance, to inject the *Access-Control-Allow-Origin* header in the application response:
+
+```php
+namespace app\lib;
+
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+final class CorsMiddleware implements MiddlewareInterface
+{
+    /**
+     * {@inheritDoc}
+     * @see \Psr\Http\Server\MiddlewareInterface::process()
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $response = $handler->handle($request);
+
+        return $response->withHeader('Access-Control-Allow-Origin', '*');
+    }
+}
+```
+
+In the entry script:
+
+```php
+use Piko\ModularApplication;
+use app\lib\CorsMiddleware;
+
+require '../vendor/autoload.php';
+
+$config = require '../config.php';
+$app = new ModularApplication($config);
+$app->pipe(new CorsMiddleware());
+$app->run();
+
+```
+
+
+
 

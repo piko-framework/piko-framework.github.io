@@ -6,7 +6,7 @@ nav_order: 2
 
 # Getting Started
 
-To quickly test or start a new Piko based project, the recommended way is to use the [Piko project skeletton](https://github.com/piko-framework/piko-project).
+To quickly test or to quickly start a new Piko based project, the recommended way is to use the [Piko project skeletton](https://github.com/piko-framework/piko-project).
 
 ## Piko project skeletton installation
 
@@ -57,23 +57,13 @@ You should see `Hello world!' in your browser.
 
 The URI `/site/hello/world` corresponds by default to the module `site`, the controller `hello` and the action `world`.
 
-It's possible to customize the URI by editing the file config.php and add a new route like this :
+It's possible to customize the URI by editing the file config/routes.php and add a new route like this :
 
 ```php
-<?php
 return [
+    '/' => 'site/default/index',
     // ...
-    'components' => [
-        'router' => [
-            'class' => 'piko\Router',
-            'routes' => [
-                //...
-                '/hello-world' => 'site/hello/world',
-                '/:module/:controller/:action' => ':module/:controller/:action'
-            ],
-        ],
-        // ...
-    ]
+    '/hello-world' => 'site/hello/world'
 ];
 ```
 

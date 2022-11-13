@@ -1,75 +1,48 @@
 ---
 layout: default
-title: Database
+title: DbRecord
 nav_order: 7
 ---
 
-# Database management
+# DbRecord
 
-Piko Framework offers a lightweight solution to work with sql databases.
-This can be installed as a separate package in your project:
+[DbRecord](../api/DbRecord.md) is a lightweight [active record](https://en.wikipedia.org/wiki/Active_record_pattern) 
+implementation built on top of PDO.
+
+An active record is an object that represents a database record. It can be used to create / update / delete entities 
+in db tables without writing any sql requests.
+
+Moreover, inherited class represents a model entity where instance of it can be used in a controller 
+(See [Controllers](application.md#controllers)) or in a view script (See [Views](application.md#views)).
+
+## installation
 
 ```bash
-composer require piko/db
+composer require piko/db-record
 ```
 
-This package will install the [Db](../api/Db.md) and the [DbRecord](../api/DbRecord.md) [components](concepts.md#component).
+This command will install the [DbRecord](../api/DbRecord.md) components.
 
-The [Db](../api/Db.md) component is a proxy to [PDO](https://www.php.net/manual/fr/book.pdo.php). 
-The main difference resides in its constructor which uses an array of configuration.
+The component needs a [PDO](https://www.php.net/manual/fr/book.pdo.php) connexion. 
+Ensure that a PDO component is registered in the application [configuration](application.md#configuration).
 
-The db component can be declared in the application [configuration](application.md#configuration).
-
-Example of sqlite configuration:
+Example of Mysql configuration:
 
 ```php
 return [
     //...
     'components' => [
-        'db' => [
-            'class' => 'piko\Db',
-            'dsn' => 'sqlite:' . __DIR__ . '/mydb.sqlite',
+        PDO::class => [
+            'construct' => [
+                'mysql:dbname=' . getenv('MYSQL_DB') . ';host=' . getenv('MYSQL_HOST'),
+                getenv('MYSQL_USER'),
+                getenv('MYSQL_PASSWORD'),
+            ]
         ],
     ],
 ];
 
 ```
-
-Example of mysql configuration:
-
-```php
-return [
-    //...
-    'components' => [
-        'db' => [
-            'class' => 'piko\Db',
-            'dsn' => 'mysql:host=' . $_ENV['DB_HOST'] .';dbname=' . $_ENV['DB_NAME'],
-            'username' => $_ENV['DB_USERNAME'],
-            'password' => $_ENV['DB_PASSWORD'],
-        ],
-    ],
-];
-
-```
-
-Once the db component installed an well configured, it can be used as a PDO instance in the application:
-
-```php
-use piko\Piko;
-
-$db = Piko::get('db');
-$db->exec("INSERT INTO customers SET name = 'Joe'");
-
-```
-
-## DbRecord
-
-[DbRecord](../api/DbRecord.md) is an implementation of the
-[active record pattern](https://en.wikipedia.org/wiki/Active_record_pattern).
-
-It can be used to create / update / delete entities in db tables without writing sql requests. 
-Moreover, inherited class represents a model entity where instance of it can be consumed in a controller 
-(See [Controllers](application.md#controllers)) or in a view script (See [Views](application.md#views)).
 
 Suppose we have a table in our database created with :
 
@@ -87,7 +60,7 @@ In this declaration, we have to set two properties: `$tableName` which is the en
 is the entity's schema as declared above:
 
 ```php
-use piko\DbRecord;
+use Piko\DbRecord;
 
 class Contact extends DbRecord
 {
@@ -104,17 +77,16 @@ class Contact extends DbRecord
 Contact class usage:
 
 ```php
-use piko\Piko;
+$db = $app->getComponent(PDO::class);
 
 // Create entity
-$contact = new Contact();
+$contact = new Contact($db);
 $contact->name = 'Joe';
 $contact->order = 1;
 $contact->save();
 
 echo $contact->id; // 1
 
-$db = Piko::get('db');
 $st = $db->prepare('SELECT * FROM contact');
 $st->execute();
 
@@ -140,10 +112,13 @@ print_r($st->fetchAll());
 
 ## DbRecord events
 
+[Concept of events](concepts.md#events)
+
 ### beforeSave
 
 Before saving an entity in the database, dbRecord check if the operation is possible by invoking the 
-[beforeSave](../api/Db.md#method_beforeSave) method. This method also trigger a 'beforeSave' [event](concepts.md#events).
+[beforeSave](../api/DbRecord.md#method_beforeSave) method. This method also trigger a 
+[BeforeSaveEvent](../api/BeforeSaveEvent.md).
 
 It is possible to customize this behavior in two ways:
 
@@ -168,12 +143,14 @@ class Contact extends DbRecord
 
 ```
 
-Using a callback listening the event:
+Using an event listener:
 
 ```php
-$contact = new Contact();
-$contact->on('beforeSave', function($contact) {
-    if (!$contact->name) {
+use Piko\DbRecord\Event\BeforeSaveEvent;
+//...
+$contact = new Contact($db);
+$contact->on(BeforeSaveEvent::class, function(BeforeSaveEvent $event) {
+    if (!$event->record->name) {
         return false;
     }
 });
@@ -182,13 +159,14 @@ $contact->on('beforeSave', function($contact) {
 ### beforeDelete
 
 It's possible to interact with the `beforeDelete` event in the same way than the `beforeSave` event.
-See [beforeDelete](../api/Db.md#method_beforeDelete) method.
+See [beforeDelete](../api/DbRecord.md#method_beforeDelete) method. This method also trigger a 
+[BeforeDeleteEvent](../api/BeforeDeleteEvent.md).
 
 
 ### afterSave
 
-After saving an entity in the database, dbRecord invokes the [afterSave](../api/Db.md#method_afterSave) method. 
-This method also trigger a 'afterSave' [event](concepts.md#events).
+After saving an entity in the database, dbRecord invokes the [afterSave](../api/DbRecord.md#method_afterSave) method. 
+This method also trigger an [AfterSaveEvent](../api/AfterSaveEvent.md)..
 
 It is possible to customize this behavior in two ways:
 
@@ -213,8 +191,10 @@ class Contact extends DbRecord
 Using a callback listening the event:
 
 ```php
-$contact = new Contact();
-$contact->on('afterSave', function($contact) {
+use Piko\DbRecord\Event\AfterSaveEvent;
+// ...
+$contact = new Contact($db);
+$contact->on(AfterSaveEvent::class, function(AfterSaveEvent $event) {
     // Do something particular
 });
 ```
@@ -222,5 +202,6 @@ $contact->on('afterSave', function($contact) {
 ### afterDelete
 
 It's possible to interact with the `afterDelete` event in the same way than the `afterSave` event.
-See [afterDelete](../api/Db.md#method_afterDelete) method.
+See [afterDelete](../api/DbRecord.md#method_afterDelete) method. This method also trigger an 
+[AfterDeleteEvent](../api/AfterDeleteEvent.md)..
 

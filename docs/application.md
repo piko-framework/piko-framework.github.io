@@ -1,15 +1,15 @@
 ---
 layout: default
-title: Application
+title: Modular application
 nav_order: 3
 ---
 
-# How application works
+# How a modular application works
 
 Summary:
 
 - [Introduction](application.md#intro)
-- [Workflow](application.md#workflow)
+- [Workflow overview](application.md#workflow)
 - [Entry script](application.md#entry-script)
 - [Configuration](application.md#configuration)
 - [Application](application.md#application)
@@ -22,7 +22,7 @@ Summary:
 
 <a name="intro"></a>
 
-Piko applications are organized following the 
+With Piko, it's possible to organize your code following the 
 [Model-View-Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) design pattern 
 and the MVC logic is packaged into modules.
 
@@ -45,57 +45,43 @@ public
 config.php
 ```
 
-Piko Framework uses [PSR-4](https://www.php-fig.org/psr/psr-4/) autoloading.
+Piko uses [PSR-4](https://www.php-fig.org/psr/psr-4/) autoloading.
 
 <a name="workflow"></a>
 
-## Workflow
+## Workflow overview
 
-### 1 - Routing requests
+### 1 - Routing request
 
-When application start, the first step is to convert request URI into internal route request. The internal route request is a string  that indicates to the application how to dispatch the request and follows this schema :
+When a modular Piko application start, the first step is to translate the request uri into internal route, which
+is explained in the [routing](routing.md) section of this guide.
 
-`ModuleId/ControllerId/ActionId`
+### 2 - Dispatching request
 
-Example : The request URI `/hello` may correspond to the internal route `site\default\hello` which means that the action `hello` in the controller `default` in the module `site` should be dispatched by the application.
+The next step is to dispatch the route to the appropriate controller action. An action is a method in a controller 
+suffixed with `Action`. For the action id `hello`, the controller method should be named `helloAction`. See
+[Controllers](application.md#controllers).
 
-[More information](requests.md)
+### 3 - Sending responce
 
-### 2 - Dispatching
+Finally, the controller action returns to the application the response to display.
 
-Once the application discovered the internal route (see above), the next step is to dispatch the request to the appropriate controller action.
-
-An action is a method in a controller suffixed with `Action`. For the action id `hello`, the controller method should be named `helloAction`.
-
-### 3 - Rendering
-
-The controller action returns to the application the output to display :
-
-Example for the action id `hello` :
-
-```php
-class DefaultController extends \piko\Controller
-{
-    public function helloAction()
-    {
-        return "Hello world!";
-    }
-}
-```
 
 <a name="entry-script"></a>
 
 ## Entry script
 
-Entry script is the first step to bootstrap application. It generally named `index.php` and stored in the web accessible directory.
+Entry script is the first step to bootstrap application. It generally named `index.php` and stored in the web 
+public directory.
+
 This is an example of basic bootstrapping :
 
 ```php
-use piko\Application;
+use Piko\ModularApplication;
 require '../vendor/autoload.php';
 
 $config = require '../config.php';
-(new Application($config))->run();
+(new ModularApplication($config))->run();
 ```
 
 <a name="configuration"></a>
@@ -103,24 +89,10 @@ $config = require '../config.php';
 ## Configuration
 
 In the step above, we load a configuration array from a file and apply it to the application. 
-In order to the application work, the minimal configuration is to declare a module.
-
-*config.php*:
+Here is the description of the parameters used:
 
 ```php
 return [
-    'modules' => [
-        'site' => 'app\modules\site\Module'
-    ]
-]
-```
-
-To understand the routing mechanism, see [Requests](requests.md).
-
-Also, other parameters can be set in the configuration array:
-
-```php
-[
     'basePath' => __DIR__,
     'defaultLayoutPath' => '@app/layouts',
     'defaultLayout' => 'main',
@@ -138,8 +110,6 @@ Also, other parameters can be set in the configuration array:
 ]
 ```
 
-We will see in detail each of them:
-
 **basePath** : Base path of the application. It corresponds to the  `@app` [alias](concepts.md#alias) 
 generated during the application instanciation. Default value: `''` (The entry script's directory).
 
@@ -156,32 +126,29 @@ Exceptions catched will be thrown and stop the script execution. Default value: 
 
 **modules**: Array of modules used in the application. (see [Modules](application.md#modules))
 
-**bootstrap**: Array of modules ids which participate to the application bootstrap process. (see [Modules](application.md#modules))
-
-<a name="application"></a>
-
-## Application
-
-Once initialized in the entry script, the application instance can be retrieved everywhere:
-
-```php
-use Piko\Application;
-
-$app = Application::getInstance();
-$app->setHeader('Content-Type', 'text/plain');
-echo $app->language;
-
-```
-
-[See Application API](../api/Application.md)
+**bootstrap**: Array of modules ids which participate to the application bootstrap process.
+(see [Modules](application.md#modules))
 
 <a name="controllers"></a>
 
 ## Controllers
 
-Controllers are classes derived from [\piko\Controller](api/Controller.md). They are part of [MVC](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) architecture and they are responsible for processing requests and generating responses.
+Controllerd are parts of the application that manage the flow of data. It is the glue that binds the model and 
+the view together and should be responsible for the following:
 
-Controllers are composed of *actions* methods that end users can address and request for execution. A controller can have one or multiple actions.
+- Communicating with the model
+- Communicating with the view
+- Handling user input
+- Managing the flow of data 
+ 
+Controllers should never contain any HTML code neither any SQL code.
+
+In a Piko application, controllers are classes derived from [\piko\Controller](api/Controller.md). 
+They are responsible for processing requests and generating responses.
+
+Controllers are composed of *actions* methods that end users can address and request for execution. 
+A controller can have one or multiple actions.
+
 End user address action throw [routes](requests.md#routing).
 
 Example:
@@ -229,10 +196,10 @@ Exemples:
 
 The [render method](../api/Controller.md#method_render) processes a view script.
 By default, view scripts are located in the `views` directory of the corresponding module. 
-The `views` directory contains subdirectories, named as their corresponding controller, that contain 
-scripts which can be rendered in controller's action methods.
+The `views` directory contains subdirectories, named as their corresponding controller, which contain 
+scripts that can be rendered in controller's action methods.
 
-Examble of module structure to display a list of users in the default controller of the `site` module:
+Example of module structure to display a list of users in the default controller of the `site` module:
 
 ```
 site
@@ -254,13 +221,12 @@ namespace app\modules\site\controllers;
 class DefaultController extends \piko\Controller
 {
     //...
-
     public function usersAction()
     {
-       $users = [
+        $users = [
             ['firstname' => 'John', 'lastname' => 'Douglas'],
             ['firstname' => 'Robert', 'lastname' => 'Johnson']
-       ];
+        ];
 
         return $this->render('userlist', ['users' => $users]);
     }
@@ -304,43 +270,55 @@ Use cases inside a controller:
 //...
 ```
 
-### Request methods
+### Interact with the request
 
-To interact with HTTP request methods:  [isGet](../api/Controller.md#method_isGet),
-[isPost](../api/Controller.md#method_isPost),
-[isPut](../api/Controller.md#method_isPut) 
-and [isDelete](../api/Controller.md#method_isDelete)
+To interact with HTTP request, you can use the controller's request property:
 
 ```php
 //...
     public function userAction()
     {
-        if ($this->isGet()
-            //...
-        }
-        elseif ($this->isPost()
-            //...
-        }
-        elseif ($this->isDelete()
-            //...
-        }
+       if ($this->request->getMethod() == 'POST') {
+            $post = $this->request->getParsedBody();
+       }
     }
 //...
 ```
 
+Request object comes from the package
+[httpsoft/http-server-request](https://packagist.org/packages/httpsoft/http-server-request) and implements the 
+[Psr\Http\Message\ServerRequestInterface](https://www.php-fig.org/psr/psr-7/#321-psrhttpmessageserverrequestinterface)
+
+### Interact with the response
+
+In the same way as with the request, it's possible to interact with the HTTP response:
+
+```php
+//...
+    public function rssAction()
+    {
+       $this->response = $this->response->withHeader('Content-Type', 'text/xml')
+       // ...
+    }
+//...
+```
+
+Response object comes from the package
+[httpsoft/http-server-request](https://packagist.org/packages/httpsoft/http-server-request) and implements the 
+[Psr\Http\Message\ResponseInterface](https://www.php-fig.org/psr/psr-7/#33-psrhttpmessageresponseinterface)
+
 ### AJAX
 
-To deal with AJAX requests / responses:
+To deal with AJAX requests / responses, Piko\Controller offers two helper:
 [isAjax](../api/Controller.md#method_isAjax),
-[jsonResponse](../api/Controller.md#method_jsonResponse)
-and [rawInput](../api/Controller.md#method_rawInput).
+[jsonResponse](../api/Controller.md#method_jsonResponse).
 
 ```php
 //...
     public function userSaveAction()
     {
         if ($this->isAjax())
-            $data = json_decode($this->rawInput())
+            $data = json_decode($this->request->getBody())
             return $this->jsonResponse($data);
         }
     }
@@ -351,7 +329,15 @@ and [rawInput](../api/Controller.md#method_rawInput).
 
 ## Views
 
-View scripts are written in PHP. They have access to all methods of the [\piko\View](../api/View.md) instance.
+The view is the part of the application that manages the presentation of data.
+In a MVC application, the view is the HTML layer and should be responsible for the following: 
+
+- Presenting data
+- Generating HTML
+
+The view should never contain any logic for the data layer and never contain any SQL code. 
+
+View scripts are written in PHP. They have access to all methods of the [Piko\View](../api/View.md) instance.
 By default, view scripts extension is *.php*. This can be customized in the View configuration.
 
 Changing view scripts extension in *config.php*:
@@ -360,8 +346,7 @@ Changing view scripts extension in *config.php*:
 return [
     //...
     'components' => [
-        'view' => [
-            'class' => 'piko\View',
+        'Piko\View' => [
             'extension' => 'phtml'
         ],
         //...
@@ -370,7 +355,7 @@ return [
 ```
 
 The [View::render](../api/View#method_render) method is responsible of the view script rendering. 
-This method is automatically called by the [Controller::render](../api/Controller#method_render) method as described above.
+This method is automatically called by the [Controller::render](../api/Controller.md#method_render) method as described above.
 
 ### Layout
 
@@ -388,17 +373,15 @@ Basic layout example:
 ```php
 <?php
 /** 
- * @var $this \piko\View
+ * @var $this Piko\View
  * @var $content string
  */
-use piko\Application;
-use piko\Piko;
-$app = Application::getInstance();
+use Piko;
 ?>
 <!DOCTYPE html>
-<html lang="<?= $app->language ?>">
+<html>
   <head>
-    <meta charset="<?= $app->charset ?>">
+    <meta charset="<?= $this->charset ?>">
     <title><?= $this->escape($this->title) ?></title>
     <!-- Output html tags in the head (stylesheets, scripts, ...) -->
     <?= $this->head() ?>
@@ -419,8 +402,9 @@ In a controller action method:
 
 ```php
 namespace app\modules\site\controllers;
+use Piko\Controller;
 
-class DefaultController extends \piko\Controller
+class DefaultController extends Controller
 {
     public function helloAction()
     {
@@ -434,11 +418,11 @@ For all controller action methods:
 
 ```php
 namespace app\modules\site\controllers;
+use Piko\Controller;
 
-class DefaultController extends \piko\Controller
+class DefaultController extends Controller
 {
     public $layout = false;
-
     // ...
 }
 ```
@@ -464,7 +448,7 @@ From a view script, it's possible to inject css to the layout using registerCSS 
 ```php
 <?php
 /** 
- * @var $this \piko\View
+ * @var $this Piko\View
  */
 
 $this->registerCSS('body {background-color: #ccc;}');
@@ -479,7 +463,7 @@ Same as css injection, it's possible to inject scripts to the layout using regis
 ```php
 <?php
 /** 
- * @var $this \piko\View
+ * @var $this Piko\View
  */
 
 $this->registerJs('window.onload = function() {alert("loaded!")}');
@@ -491,25 +475,28 @@ $this->registerJsFile('/js/bootstrap.min.js');
 
 Some events allow to customize the view rendering process.
 
-`beforeRender` event is triggered before the view script processing.
+[BeforeRenderEvent](../api/BeforeRenderEvent.md) event is triggered before the view script processing.
 
-`afterRender` event is triggered after the view script was processed.
+[AfterRenderEvent](../api/AfterRenderEvent.md) event is triggered after the view script was processed.
 
 
 Example of listening beforeRender and afterRender events:
 
 ```php
-use Piko\Application;
+use BeforeRenderEvent;
+use AfterRenderEvent;
 
-$view = Application::getInstance()->getView();
+/** 
+ * @var $view Piko\View
+ */
 
-$view->on('beforeRender', function(&$script, &$model) {
-    var_dump($script);
-    $model['time'] = date('H:i:s'); // Inject $time variable for all view scripts
+$view->on(BeforeRenderEvent::class, function(BeforeRenderEvent $event) {
+    var_dump($event->file);
+    $event->model['time'] = date('H:i:s'); // Inject $time variable in the view model
 });
 
-$view->on('afterRender', function(&$output) {
-    $output .= '<!--' . time() . '-->'; // Append time comment at the end of output
+$view->on(AfterRenderEvent, function(AfterRenderEvent $event) {
+    $event->output .= '<!--' . time() . '-->'; // Append time comment at the end of output
 });
 
 ```
@@ -526,8 +513,7 @@ This can be overriden using a theme.
 //...
 
 'components' => [
-    'view' => [
-        'class' => 'piko\View',
+    'Piko\View' => [
         'themeMap' => [
             '@app/modules/site/views' => '@app/themes/mytheme',
         ],
@@ -548,8 +534,7 @@ Several theme paths can be used to locate the view script.
 //...
 
 'components' => [
-    'view' => [
-        'class' => 'piko\View',
+    'Piko\View' => [
         'themeMap' => [
             '@app/modules/site/views' => [
                 '@app/themes/mychildtheme',
@@ -566,21 +551,30 @@ Several theme paths can be used to locate the view script.
 
 ## Models
 
-[\piko\Model](../api/Model.md) can be used as base class to represent a data structure (model's attributes)
+The model is the part of the application that manages the data. It is the data layer. 
+In a MVC application, the model should be responsible for the following:
+
+- Managing the data
+- Ensuring that data is valid before it is saved
+- Communicating with the database The model should never contain any logic for the presentation layer. 
+ 
+The model should never contain any HTML code.
+
+The [Piko\ModelTrait](../api/ModelTrait.md) can be used to represent a data structure (model's attributes)
 that need to be validated and mass assigned. A typical usage is to represent form data inputs.
 
 Model's attributes are declared as public properties in the inherited class.
 
-Model's attributes can be mass assigned using [bind](../api/Model.md#method_bind) method.
+Model's attributes can be mass assigned using [bind](../api/ModelTrait.md#method_bind) method.
 
-Model's attributes can be exported as array using [toArray](../api/Model.md#method_toArray) method.
+Model's attributes can be exported as array using [toArray](../api/ModelTrait.md#method_toArray) method.
 
-To check model validity, we can use the [isValid](../api/Model.md#method_isValid) public method.
+To check model validity, we can use the [isValid](../api/ModelTrait.md#method_isValid) public method.
 This method symply check if the `errors` model's property is empty.
-The inherited class has to implement the protected [validate](../api/Model.md#method_validate) method 
+The class using this trait has to implement the protected [validate](../api/ModelTrait.md#method_validate) method 
 to fill the `errors` model's property in case of error.
 
-Use case example of [\piko\Model](../api/Model.md) to represent a contact form:
+Use case example of [\piko\ModelTrait](../api/ModelTrait.md) to represent a contact form:
 
 Module structure:
 
@@ -602,8 +596,12 @@ site
 <?php
 namespace app\modules\site\models;
 
-class ContactForm extends \piko\Model
+use Piko\ModelTrait;
+
+class ContactForm
 {
+    use ModelTrait;
+
     public $email = '';
     public $subject = '';
     public $message = '';
@@ -611,15 +609,15 @@ class ContactForm extends \piko\Model
     protected function validate(): void
     {
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $this->errors['email'] = 'Email is invalid';
+            $this->setError('email', 'Email is invalid');
         }
 
         if (empty($this->subject)) {
-            $this->errors['subject'] = 'Subject is required';
+            $this->setError('subject', 'Subject is required');
         }
 
         if (empty($this->message)) {
-            $this->errors['message'] = 'Message is required';
+            $this->setError('message', 'Message is required');
         }
     }
 }
@@ -638,9 +636,10 @@ class DefaultController extends \piko\Controller
     {
         $form = new ContactForm();
         
-        if (!empty($_POST)) {
+        if ($this->request->getMethod() == 'POST') {
         
-            $form->bind($_POST);
+            $post = $this->request->getParsedBody();
+            $form->bind($post);
         
             if ($form->isValid()) {
                 // Send an email, Save in database, etc.
@@ -659,7 +658,7 @@ class DefaultController extends \piko\Controller
 ```php
 <?php
 /** 
- * @var $this piko\View
+ * @var $this Piko\View
  * @var $form app\modules\site\models\ContactForm
  */
 
@@ -709,12 +708,14 @@ Module encourage code reusability.
 
 Module declarations inherit from [\piko\Module](../api/Module.md) class
 
-A minimal module declaration:
+Example of a minimal module declaration:
 
 ```php
 namespace app\modules\site;
 
-class Module extends \piko\Module
+use Piko\Module
+
+class Blog extends Module
 {
 
 }
@@ -724,7 +725,7 @@ class Module extends \piko\Module
 An example of module structure:
 
 ```
-site
+blog
     controllers
     models
     views
@@ -746,7 +747,7 @@ module configuration.
 return [
     'modules' => [
         'site' => 'app\modules\site\Module'
-        'blog' => 'app\modules\blog\Module',
+        'blog' => 'app\modules\blog\Blog',
         'admin' => 'app\modules\admin\Module',
         'api' => [
             'class' => 'app\modules\api\Module',
@@ -790,7 +791,7 @@ class Module extends \piko\Module
 {
     public function bootstrap()
     {
-        $app = Application::getInstance();
+        $app = $this->getApplication();
         $app->language = 'fr';
     }
 
