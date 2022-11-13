@@ -44,9 +44,9 @@ Base application view.
 
 | Name | Description |
 |------|-------------|
+| public [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 | protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
 | protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
-| private [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 
 ## Methods summary
 

@@ -29,6 +29,7 @@ This class implements a modular application
 | Name | Description |
 |------|-------------|
 | public [`$basePath`](Application.md#property_basePath) | The absolute base path of the application.  |
+| public [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 | public [`$components`](Application.md#property_components) | The components container  |
 | public [`$defaultLayout`](Application.md#property_defaultLayout) | The default layout name without file extension.  |
 | public [`$defaultLayoutPath`](Application.md#property_defaultLayoutPath) | The default layout path. An alias could be used.  |
@@ -39,7 +40,6 @@ This class implements a modular application
 | protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
 | protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
 | protected [`$pipeline`](Application.md#property_pipeline) |   |
-| private [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 
 ## Methods summary
 
@@ -122,7 +122,7 @@ Or :
 ### public **__construct()**: void
 
 ```php
-public  __construct(array&lt;string,mixed&gt;  $config = []): void
+public  __construct(array&lt;string,string|array&lt;string,mixed&gt;&gt;  $config = []): void
 ```
 
 Constructor

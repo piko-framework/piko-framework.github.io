@@ -33,9 +33,9 @@ Controller is the base class for classes containing controller logic.
 
 | Name | Description |
 |------|-------------|
+| public [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 | protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
 | protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
-| private [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 
 ## Methods summary
 
@@ -44,7 +44,9 @@ Controller is the base class for classes containing controller logic.
 | public [`__construct`](#method___construct) | Constructor |
 | public [`handle`](#method_handle) |   |
 | protected [`forward`](#method_forward) | Forward the given route to another module  |
+| protected [`getView`](#method_getView) | Returns the application View component  |
 | protected [`getViewPath`](#method_getViewPath) | Returns the directory containing view files for th... |
+| protected [`init`](#method_init) | Method called at the end of the constructor. This ... |
 | protected [`isAjax`](#method_isAjax) | Check if the request is AJAX  |
 | protected [`jsonResponse`](#method_jsonResponse) | Convenient method to return a JSON response  |
 | protected [`redirect`](#method_redirect) | Set a response redirection  |
@@ -217,6 +219,30 @@ An array of params (name-value pairs) associated to the route.
 
 
 
+<a name="method_getView"></a>
+### protected **getView()**: \Piko\View|null
+
+```php
+protected  getView(): \Piko\View|null
+```
+
+Returns the application View component
+
+
+
+
+
+
+
+
+#### Return:
+**\Piko\View|null**
+
+
+-----
+
+
+
 <a name="method_getViewPath"></a>
 ### protected **getViewPath()**: string
 
@@ -237,6 +263,26 @@ viewPath directory.
 #### Return:
 **string**
 the directory containing the view files for this controller.
+
+-----
+
+
+
+<a name="method_init"></a>
+### protected **init()**: void
+
+```php
+protected  init(): void
+```
+
+Method called at the end of the constructor.
+This could be overriden in inherited classes.
+
+
+
+
+
+
 
 -----
 
@@ -319,10 +365,10 @@ The url to redirect
 
 
 <a name="method_render"></a>
-### protected **render()**: \Psr\Http\Message\ResponseInterface
+### protected **render()**: string
 
 ```php
-protected  render(string  $viewName, array  $data = []): \Psr\Http\Message\ResponseInterface
+protected  render(string  $viewName, array  $data = []): string
 ```
 
 Render a view.
@@ -342,7 +388,7 @@ An array of data (name-value pairs) to transmit to the view.
 
 
 #### Return:
-**\Psr\Http\Message\ResponseInterface**
+**string**
 
 
 -----

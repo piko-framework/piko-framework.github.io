@@ -21,7 +21,7 @@ An instance using this trait can attach dynamically custom methods to itself.
 
 | Name | Description |
 |------|-------------|
-| private [`$behaviors`](#property_behaviors) | Behaviors container.  |
+| public [`$behaviors`](#property_behaviors) | Behaviors container.  |
 
 
 ## Methods summary
@@ -40,7 +40,7 @@ An instance using this trait can attach dynamically custom methods to itself.
 
 
 <a name="property_behaviors"></a>
-### private **$behaviors** : callable[]
+### public **$behaviors** : callable[]
 Behaviors container.
 
 

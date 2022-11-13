@@ -35,9 +35,9 @@ The main application class
 
 | Name | Description |
 |------|-------------|
+| public [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 | protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
 | protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
-| private [`$behaviors`](BehaviorTrait.md#property_behaviors) | Behaviors container.  |
 
 ## Methods summary
 
@@ -154,7 +154,7 @@ The aliases container.
 ### public **__construct()**: void
 
 ```php
-public  __construct(array&lt;string,mixed&gt;  $config = []): void
+public  __construct(array&lt;string,string|array&lt;string,mixed&gt;&gt;  $config = []): void
 ```
 
 Constructor

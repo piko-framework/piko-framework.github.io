@@ -110,7 +110,7 @@ The layout directory of the module.
 
 
 <a name="property_modules"></a>
-### public **$modules** : (\Piko\Module|string|array&lt;string,mixed&gt;)[]
+### public **$modules** : (\Piko\Module|class-string|array&lt;class-string,mixed&gt;)[]
 Sub modules configuration
 
 
