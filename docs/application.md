@@ -143,7 +143,7 @@ the view together and should be responsible for the following:
  
 Controllers should never contain any HTML code neither any SQL code.
 
-In a Piko application, controllers are classes derived from [\piko\Controller](api/Controller.md). 
+In a Piko application, controllers are classes derived from [\Piko\Controller](api/Controller.md). 
 They are responsible for processing requests and generating responses.
 
 Controllers are composed of *actions* methods that end users can address and request for execution. 
@@ -156,7 +156,7 @@ Example:
 ```php
 namespace app\modules\site\controllers;
 
-class DefaultController extends \piko\Controller
+class DefaultController extends \Piko\Controller
 {
     /**
      * The corresponding route to access this action is site/default/hello
@@ -218,7 +218,7 @@ site
 <?php
 namespace app\modules\site\controllers;
 
-class DefaultController extends \piko\Controller
+class DefaultController extends \Piko\Controller
 {
     //...
     public function usersAction()
@@ -574,7 +574,7 @@ This method symply check if the `errors` model's property is empty.
 The class using this trait has to implement the protected [validate](../api/ModelTrait.md#method_validate) method 
 to fill the `errors` model's property in case of error.
 
-Use case example of [\piko\ModelTrait](../api/ModelTrait.md) to represent a contact form:
+Use case example of [\Piko\ModelTrait](../api/ModelTrait.md) to represent a contact form:
 
 Module structure:
 
@@ -630,7 +630,7 @@ namespace app\modules\site\controllers;
 
 use app\modules\site\models\ContactForm;
 
-class DefaultController extends \piko\Controller
+class DefaultController extends \Piko\Controller
 {
     public function contactAction()
     {
@@ -706,7 +706,7 @@ The main application process asks to the module to run a controller action reque
 
 Module encourage code reusability.
 
-Module declarations inherit from [\piko\Module](../api/Module.md) class
+Module declarations inherit from [\Piko\Module](../api/Module.md) class
 
 Example of a minimal module declaration:
 
@@ -785,9 +785,9 @@ return [
 <?php
 namespace app\modules\site;
 
-use piko\Application;
+use Piko\Application;
 
-class Module extends \piko\Module
+class Module extends \Piko\Module
 {
     public function bootstrap()
     {
@@ -845,9 +845,9 @@ In the parent module class:
 <?php
 namespace app\modules\site;
 
-use piko\Application;
+use Piko\Application;
 
-class Module extends \piko\Module
+class Module extends \Piko\Module
 {
     public $modules = [
         'admin' => 'app\modules\site\admin\Module'

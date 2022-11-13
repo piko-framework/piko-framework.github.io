@@ -104,10 +104,9 @@ Example:
 <?php
 namespace app\modules\site\controllers;
 
-use piko\Piko;
-use app\modules\site\models\User;
+use app\modules\site\models\UserIdentity;
 
-class DefaultController extends \piko\Controller
+class DefaultController extends \Piko\Controller
 {
     //...
 
@@ -120,7 +119,7 @@ class DefaultController extends \piko\Controller
 
             $userIdentity = User::findByUsername($post['username']);
 
-            if ($userIdentity instanceof User) {
+            if ($userIdentity instanceof UserIdentity) {
                 if ($userIdentity->password == $post['password']) {
                     $app = $this->module->getApplication();
                     $user = $app->getComponent('Piko\User');

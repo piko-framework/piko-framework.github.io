@@ -125,7 +125,7 @@ It is possible to customize this behavior in two ways:
 Override beforeSave method in the inherited class:
 
 ```php
-use piko\DbRecord;
+use Piko\DbRecord;
 
 class Contact extends DbRecord
 {
@@ -173,7 +173,7 @@ It is possible to customize this behavior in two ways:
 Override afterSave method in the inherited class:
 
 ```php
-use piko\DbRecord;
+use Piko\DbRecord;
 
 class Contact extends DbRecord
 {

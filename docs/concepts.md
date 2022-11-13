@@ -17,7 +17,7 @@ Alias are a convenient way to retrieve paths in the application. They are prefix
 `@web` is the uri base path.
 
 Use [Piko::getAlias()](../api/Piko.md#method_getAlias) to retrieve a path or 
-[piko::setAlias()](../api/Piko.md#method_setAlias) to register a path.
+[Piko::setAlias()](../api/Piko.md#method_setAlias) to register a path.
 
 Example using getAlias() and setAlias(): 
 

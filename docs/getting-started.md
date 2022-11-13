@@ -41,7 +41,7 @@ and edit the file with this code :
 <?php
 namespace app\modules\site\controllers;
 
-class HelloController extends \piko\Controller
+class HelloController extends \Piko\Controller
 {
     public function worldAction()
     {
