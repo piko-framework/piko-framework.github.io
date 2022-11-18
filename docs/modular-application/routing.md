@@ -1,27 +1,28 @@
 ---
 layout: default
 title: Routing
-nav_order: 4
+parent: Modular application
+nav_order: 1
 ---
 
 # Routing
 
-This section explains routing mechanisms into a [ModularApplication](../api/ModularApplication.md).
+This section explains routing mechanisms into a [ModularApplication](../../api/ModularApplication.md).
 
 A route can be seen like a request that have to be dispatched to a controller action.
 
 A route is a string identifier corresponding to a module, a controller and an action,
-which is a [controller](application.md#controllers)'s method suffixed by `Action`. 
+which is a [controller](controllers.md)'s method suffixed by `Action`.
 A route is structured like this :
 
 `<moduleId>[/<subModuleId>]/<controllerId>/<actionId>`.
 
-Example: The request URI `/hello` can correspond to the route `site/default/hello` which means that the application 
+Example: The request URI `/hello` can correspond to the route `site/default/hello` which means that the application
 will dispatch the route to the method `helloAction` in the controller `DefaultController` in the module `site`.
 
 ## Configuration
 
-Routes configuration consumed by [Piko\Router](api/Router.md) consists only to an associative array where keys are 
+Routes configuration consumed by [Piko\Router](../../api/Router.md) consists only to an associative array where keys are
 uri paths and values are their corresponding routes.
 
 if the uri path scheme is structured like a route (moduleId/controllerId/acionId), it doesn't need configuration.
@@ -50,8 +51,8 @@ return [
 
 ## Request parameters
 
-It is possible to retrieve parameters from URI. In the configuration, you can specify 
-parameters in the URI prefixed by a colon character `:`. 
+It is possible to retrieve parameters from URI. In the configuration, you can specify
+parameters in the URI prefixed by a colon character `:`.
 These parameters can be then retrieved in controller's action methods.
 
 For instance, to retrieve an username from the URI:
@@ -114,8 +115,8 @@ With this example, the uri request `/some/time` will return something like *12:3
 
 ## Retrieve URL from route
 
-[Piko\Router](../api/Router.md) offers the ability to reverse a route to its uri using the
-[getUrl](../api/Router.md#method_getUrl) method:
+[Piko\Router](../../api/Router.md) offers the ability to reverse a route to its uri using the
+[getUrl](../../api/Router.md#method_getUrl) method:
 
 ```php
 
@@ -135,7 +136,8 @@ echo $router->getUrl('user/default/view', ['username' => 'johnny'];
 
 ### Inside a controller or view script
 
-Piko\Controller have a [getUrl](../api/Controller.md#method_getUrl) method, which is a proxy to Router the getUrl().
+Piko\Controller have a getUrl method, implemented as a [behavior](../concepts.md#behaviors). It is a proxy to
+[Router::getUrl](../../api/Router.md#method_getUrl).
 
-The Controller automatically inject this method as [behavior](concepts.md#behaviors) in the Piko\View. So it's possible to call 
+The Controller automatically inject this method as [behavior](../concepts.md#behaviors) in the Piko\View. So it's also possible to call
 `$this->getUrl($route)` inside view scripts.

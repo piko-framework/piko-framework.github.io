@@ -9,6 +9,9 @@ nav_order: 3
 To build a simple Web application, it's possible to use the
 [FastApplication](../api/FastApplication.md) class, which is a route handlers container.
 
+[FastApplication::listen](../api/FastApplication.md#method_listen) is used to register a route handler.
+
+This is a basic example of FastApplication:
 
 ```php
 use Piko\FastApplication;
