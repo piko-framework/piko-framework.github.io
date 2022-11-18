@@ -125,7 +125,7 @@ The module that this controller belongs to.
 
 
 <a name="property_view"></a>
-### protected **$view** : \Piko\View
+### protected **$view** : \Piko\View\ViewInterface
 
 
 
@@ -220,10 +220,10 @@ An array of params (name-value pairs) associated to the route.
 
 
 <a name="method_getView"></a>
-### protected **getView()**: \Piko\View|null
+### protected **getView()**: \Piko\View\ViewInterface|null
 
 ```php
-protected  getView(): \Piko\View|null
+protected  getView(): \Piko\View\ViewInterface|null
 ```
 
 Returns the application View component
@@ -236,7 +236,7 @@ Returns the application View component
 
 
 #### Return:
-**\Piko\View|null**
+**\Piko\View\ViewInterface|null**
 
 
 -----

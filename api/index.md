@@ -25,6 +25,7 @@ nav_order: 20
 | [\Piko\AssetBundle](AssetBundle.md) | AssetBundle represents a collection of CSS files and JS files to publish inside the public path. |
 | [\Piko\Controller](Controller.md) | Controller is the base class for classes containing controller logic. |
 | [\Piko\DbRecord](DbRecord.md) | DbRecord represents a database table&#039;s row and implementsthe Active Record pattern. |
+| [\Piko\FastApplication](FastApplication.md) | This class implements a fast and simple route handlers application |
 | [\Piko\HttpException](HttpException.md) | HttpException convert exception code to http status header. |
 | [\Piko\I18n](I18n.md) | Internationalization class |
 | [\Piko\ModularApplication](ModularApplication.md) | This class implements a modular application |

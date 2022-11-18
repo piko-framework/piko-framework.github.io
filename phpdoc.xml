@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- 
-To build the API doc run 'phpdoc' on the command line 
+<!--
+To build the API doc run 'phpdoc' on the command line
 (see https://docs.phpdoc.org/guide/getting-started/installing.html)
 -->
 
@@ -23,6 +23,7 @@ To build the API doc run 'phpdoc' on the command line
             </source>
             <ignore>
                 <path>piko/src/ModularApplication/*</path>
+                <path>piko/src/FastApplication/*</path>
                 <path>router/src/Router/Edge.php</path>
                 <path>router/src/Router/Node.php</path>
                 <path>router/src/Router/RadixTrie.php</path>
