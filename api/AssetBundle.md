@@ -50,7 +50,7 @@ AssetBundle represents a collection of CSS files and JS files to publish inside 
 
 | Name | Description |
 |------|-------------|
-| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`on`](/EventHandlerTrait.md#method_on) | Registers an event listener.  |
 | public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----

@@ -71,7 +71,7 @@ Base application view.
 | public [`__call`](/BehaviorTrait.md#method___call) | Magic method to call a behavior.  |
 | public [`attachBehavior`](/BehaviorTrait.md#method_attachBehavior) | Attach a behavior to the class instance.  |
 | public [`detachBehavior`](/BehaviorTrait.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`on`](/EventHandlerTrait.md#method_on) | Registers an event listener.  |
 | public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----

@@ -21,6 +21,7 @@ AfterActionEvent is an event triggered after action method was called
 
 | Name | Description |
 |------|-------------|
+| public [`$actionId`](#property_actionId) | The action id  |
 | public [`$controller`](#property_controller) |   |
 | public [`$response`](#property_response) | The action method response  |
 
@@ -36,6 +37,15 @@ AfterActionEvent is an event triggered after action method was called
 
 
 ## Properties
+
+
+<a name="property_actionId"></a>
+### public **$actionId** : string
+The action id
+
+
+
+
 
 
 <a name="property_controller"></a>
@@ -65,7 +75,7 @@ The action method response
 ### public **__construct()**: mixed
 
 ```php
-public  __construct(\Piko\Controller  $controller, \Psr\Http\Message\ResponseInterface  $response): mixed
+public  __construct(\Piko\Controller  $controller, string  $actionId, \Psr\Http\Message\ResponseInterface  $response): mixed
 ```
 
 
@@ -74,6 +84,8 @@ public  __construct(\Piko\Controller  $controller, \Psr\Http\Message\ResponseInt
 #### Parameters
 **$controller** :
 A controller instance
+
+**$actionId** :
 
 **$response** :
 The action method response

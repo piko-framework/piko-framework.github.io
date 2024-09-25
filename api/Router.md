@@ -52,7 +52,7 @@ Router class.
 
 | Name | Description |
 |------|-------------|
-| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`on`](/EventHandlerTrait.md#method_on) | Registers an event listener.  |
 | public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----
@@ -90,7 +90,7 @@ Http protocol used (http/https)
 
 
 <a name="property_cacheHandlers"></a>
-### protected **$cacheHandlers** : array[]
+### protected **$cacheHandlers** : array&lt;string,string[]&gt;
 Internal cache for routes handlers
 
 
@@ -99,7 +99,7 @@ Internal cache for routes handlers
 
 
 <a name="property_fullyDynamicRoutes"></a>
-### protected **$fullyDynamicRoutes** : string[]
+### protected **$fullyDynamicRoutes** : array&lt;string,mixed&gt;
 Name-value pair route to handler correspondance.
 This contains only routes composed with params. Ex:
 `'/:controller/:action' => ':controller/:action'`
@@ -118,7 +118,7 @@ The radix trie storage utility
 
 
 <a name="property_routes"></a>
-### protected **$routes** : string[]
+### protected **$routes** : array&lt;string,mixed&gt;
 Name-value pair route to handler correspondance.
 Each key corresponds to a route. Each value corresponds to a route handler.
 Routes and handlers can contain parameters. Ex:
@@ -129,7 +129,7 @@ Routes and handlers can contain parameters. Ex:
 
 
 <a name="property_staticRoutes"></a>
-### protected **$staticRoutes** : string[]
+### protected **$staticRoutes** : array&lt;string,mixed&gt;
 Name-value pair route to handler correspondance.
 This contains only routes with non params.
 

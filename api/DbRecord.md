@@ -52,16 +52,18 @@ the Active Record pattern.
 | public [`__isset`](#method___isset) | Magick method to check if attribute is defined in ... |
 | public [`__set`](#method___set) | Magick method to set row&#039;s data as class attribute... |
 | public [`__unset`](#method___unset) | Magick method to unset attribute in row&#039;s data.  |
-| public [`bind`](#method_bind) | Override ModelTrait::bind()  |
 | public [`delete`](#method_delete) | Delete this record.  |
 | public [`load`](#method_load) | Load row data.  |
+| public [`quoteIdentifier`](#method_quoteIdentifier) | Quote table or column name  |
 | public [`save`](#method_save) | Save this record into the table.  |
-| public [`toArray`](#method_toArray) | Override ModelTrait::toArray()  |
 | protected [`afterDelete`](#method_afterDelete) | Method called after a delete action.  |
 | protected [`afterSave`](#method_afterSave) | Method called after a save action.  |
 | protected [`beforeDelete`](#method_beforeDelete) | Method called before a delete action.  |
 | protected [`beforeSave`](#method_beforeSave) | Method called before a save action.  |
 | protected [`checkColumn`](#method_checkColumn) | Check if column name is defined in the table schem... |
+| protected [`getAttributes`](#method_getAttributes) | Retrieve the attributes representing the record in... |
+| protected [`initializeSchema`](#method_initializeSchema) | Initialize the schema for the database table. This... |
+| private [`getSchemaType`](#method_getSchemaType) |   |
 
 ## Inherited Methods
 
@@ -70,7 +72,7 @@ the Active Record pattern.
 | public [`bind`](/ModelTrait.md#method_bind) | Bind the data to the model attribubes.  |
 | public [`getErrors`](/ModelTrait.md#method_getErrors) | Return the errors hash container  |
 | public [`isValid`](/ModelTrait.md#method_isValid) | Check if the model is valid  |
-| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`on`](/EventHandlerTrait.md#method_on) | Registers an event listener.  |
 | public [`toArray`](/ModelTrait.md#method_toArray) | Get the model data as an associative array.  |
 | public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 | protected [`getAttributes`](/ModelTrait.md#method_getAttributes) | Get the public properties reprenting the data mode... |
@@ -291,30 +293,6 @@ The attribute's name.
 
 
 
-<a name="method_bind"></a>
-### public **bind()**: void
-
-```php
-public  bind(array&lt;string,string|int|bool&gt;  $data): void
-```
-
-Override ModelTrait::bind()
-
-
-
-#### Parameters
-**$data** :
-
-
-
-
-
-
-
------
-
-
-
 <a name="method_delete"></a>
 ### public **delete()**: bool
 
@@ -371,6 +349,34 @@ The value of the row primary key.
 
 
 
+<a name="method_quoteIdentifier"></a>
+### public **quoteIdentifier()**: string
+
+```php
+public  quoteIdentifier(string  $identifier): string
+```
+
+Quote table or column name
+
+
+
+#### Parameters
+**$identifier** :
+
+
+
+
+
+
+
+#### Return:
+**string**
+
+
+-----
+
+
+
 <a name="method_save"></a>
 ### public **save()**: bool
 
@@ -391,30 +397,6 @@ Save this record into the table.
 
 #### Return:
 **bool**
-
-
------
-
-
-
-<a name="method_toArray"></a>
-### public **toArray()**: array
-
-```php
-public  toArray(): array
-```
-
-Override ModelTrait::toArray()
-
-
-
-
-
-
-
-
-#### Return:
-**array**
 
 
 -----
@@ -535,5 +517,80 @@ Check if column name is defined in the table schema.
 
 **see**  \Piko\DbRecord::$schema
 
+
+
+-----
+
+
+
+<a name="method_getAttributes"></a>
+### protected **getAttributes()**: array&lt;string,mixed&gt;
+
+```php
+protected  getAttributes(): array&lt;string,mixed&gt;
+```
+
+Retrieve the attributes representing the record in the database.
+This method returns an associative array where each key corresponds to a column name
+as defined in the schema, and each value is the respective column's value from the
+current instance's data. This can be particularly useful for debugging or when you need
+to serialize the record for storage or transmission.
+
+
+
+
+
+
+
+#### Return:
+**array&lt;string,mixed&gt;**
+An associative array where keys are column names and values are column values.
+
+-----
+
+
+
+<a name="method_initializeSchema"></a>
+### protected **initializeSchema()**: void
+
+```php
+protected  initializeSchema(): void
+```
+
+Initialize the schema for the database table.
+This method uses reflection to inspect the current class for properties that have the `FieldAttribute` attribute.
+It then builds the schema array, which describes the structure of the table, using these properties.
+Additionally, it sets the table name if a `TableAttribute` is present on the class and identifies
+the primary key based on field attributes.
+
+
+
+
+
+
+
+-----
+
+
+
+<a name="method_getSchemaType"></a>
+### private **getSchemaType()**: int
+
+```php
+private  getSchemaType(string  $type): int
+```
+
+
+
+#### Parameters
+**$type** :
+
+
+
+
+
+
+#### Return:
+**int**
 
 

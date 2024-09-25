@@ -33,10 +33,9 @@ This class implements a modular application
 | public [`$components`](Application.md#property_components) | The components container  |
 | public [`$defaultLayout`](Application.md#property_defaultLayout) | The default layout name without file extension.  |
 | public [`$defaultLayoutPath`](Application.md#property_defaultLayoutPath) | The default layout path. An alias could be used.  |
+| public [`$errorHandler`](Application.md#property_errorHandler) |   |
 | public [`$errorRoute`](Application.md#property_errorRoute) | The Error route to display exceptions in a friendl... |
 | public [`$language`](Application.md#property_language) | The language that is meant to be used for end user... |
-| protected [`$aliases`](Application.md#property_aliases) | The aliases container.  |
-| protected [`$errorHandler`](Application.md#property_errorHandler) |   |
 | protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
 | protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
 | protected [`$pipeline`](Application.md#property_pipeline) |   |
@@ -60,7 +59,7 @@ This class implements a modular application
 | public [`detachBehavior`](/BehaviorTrait.md#method_detachBehavior) | Detach a behavior.  |
 | public [`getComponent`](/Application.md#method_getComponent) | Retrieve a unique instance of a registered compone... |
 | public [`handle`](/Application.md#method_handle) | {@inheritDoc}  |
-| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`on`](/EventHandlerTrait.md#method_on) | Registers an event listener.  |
 | public [`pipe`](/Application.md#method_pipe) | Add a middleware in the application pipeline queue... |
 | public [`run`](/Application.md#method_run) | Run the application.  |
 | public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |

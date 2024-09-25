@@ -21,6 +21,7 @@ BeforeActionEvent is an event triggered before to call action method
 
 | Name | Description |
 |------|-------------|
+| public [`$actionId`](#property_actionId) | The action id  |
 | public [`$controller`](#property_controller) |   |
 | public [`$params`](#property_params) | The action parameters  |
 
@@ -36,6 +37,15 @@ BeforeActionEvent is an event triggered before to call action method
 
 
 ## Properties
+
+
+<a name="property_actionId"></a>
+### public **$actionId** : string
+The action id
+
+
+
+
 
 
 <a name="property_controller"></a>
@@ -65,7 +75,7 @@ The action parameters
 ### public **__construct()**: mixed
 
 ```php
-public  __construct(\Piko\Controller  $controller, array&lt;string,mixed&gt;  $params = []): mixed
+public  __construct(\Piko\Controller  $controller, string  $actionId, array&lt;string,mixed&gt;  $params = []): mixed
 ```
 
 
@@ -74,6 +84,8 @@ public  __construct(\Piko\Controller  $controller, array&lt;string,mixed&gt;  $p
 #### Parameters
 **$controller** :
 A controller instance
+
+**$actionId** :
 
 **$params**  (default: []):
 The action parameters

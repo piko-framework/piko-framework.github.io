@@ -25,10 +25,9 @@ The main application class
 | public [`$components`](#property_components) | The components container  |
 | public [`$defaultLayout`](#property_defaultLayout) | The default layout name without file extension.  |
 | public [`$defaultLayoutPath`](#property_defaultLayoutPath) | The default layout path. An alias could be used.  |
+| public [`$errorHandler`](#property_errorHandler) |   |
 | public [`$errorRoute`](#property_errorRoute) | The Error route to display exceptions in a friendl... |
 | public [`$language`](#property_language) | The language that is meant to be used for end user... |
-| protected [`$aliases`](#property_aliases) | The aliases container.  |
-| protected [`$errorHandler`](#property_errorHandler) |   |
 | protected [`$pipeline`](#property_pipeline) |   |
 
 ## Inherited Properties
@@ -56,7 +55,7 @@ The main application class
 | public [`__call`](/BehaviorTrait.md#method___call) | Magic method to call a behavior.  |
 | public [`attachBehavior`](/BehaviorTrait.md#method_attachBehavior) | Attach a behavior to the class instance.  |
 | public [`detachBehavior`](/BehaviorTrait.md#method_detachBehavior) | Detach a behavior.  |
-| public [`on`](/EventHandlerTrait.md#method_on) |   |
+| public [`on`](/EventHandlerTrait.md#method_on) | Registers an event listener.  |
 | public [`trigger`](/EventHandlerTrait.md#method_trigger) | Trigger an event that may be listen by event liste... |
 
 -----
@@ -101,6 +100,14 @@ The default layout path. An alias could be used.
 
 
 
+<a name="property_errorHandler"></a>
+### public **$errorHandler** : \Psr\Http\Server\RequestHandlerInterface
+
+
+
+
+
+
 <a name="property_errorRoute"></a>
 ### public **$errorRoute** : string
 The Error route to display exceptions in a friendly way.
@@ -113,23 +120,6 @@ If not set, Exceptions catched will be thrown and stop the script execution.
 <a name="property_language"></a>
 ### public **$language** : string
 The language that is meant to be used for end users.
-
-
-
-
-
-
-<a name="property_aliases"></a>
-### protected **$aliases** : array&lt;string,string&gt;
-The aliases container.
-
-
-
-
-
-
-<a name="property_errorHandler"></a>
-### protected **$errorHandler** : \Psr\Http\Server\RequestHandlerInterface
 
 
 

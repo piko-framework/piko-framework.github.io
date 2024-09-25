@@ -30,7 +30,7 @@ it can dispatches events and listen to them.
 
 | Name | Description |
 |------|-------------|
-| public [`on`](#method_on) |   |
+| public [`on`](#method_on) | Registers an event listener.  |
 | public [`trigger`](#method_trigger) | Trigger an event that may be listen by event liste... |
 
 
@@ -41,7 +41,7 @@ it can dispatches events and listen to them.
 
 
 <a name="property_eventDispatcher"></a>
-### protected **$eventDispatcher** : \Psr\EventDispatcher\EventDispatcherInterface
+### protected **$eventDispatcher** : ?\Psr\EventDispatcher\EventDispatcherInterface
 
 
 
@@ -49,7 +49,7 @@ it can dispatches events and listen to them.
 
 
 <a name="property_listenerProvider"></a>
-### protected **$listenerProvider** : \Piko\ListenerProvider
+### protected **$listenerProvider** : ?\Piko\ListenerProvider
 
 
 
@@ -66,17 +66,22 @@ it can dispatches events and listen to them.
 ### public **on()**: mixed
 
 ```php
-public  on(mixed  $eventClassName, callable  $callback, ?int  $priority = null): mixed
+public  on(string  $eventClassName, callable  $callback, int|null  $priority = null): mixed
 ```
+
+Registers an event listener.
 
 
 
 #### Parameters
 **$eventClassName** :
+The class name of the event to listen for.
 
 **$callback** :
+The callback to execute when the event is dispatched.
 
 **$priority**  (default: null):
+Optional priority for the listener (higher means earlier execution).
 
 
 

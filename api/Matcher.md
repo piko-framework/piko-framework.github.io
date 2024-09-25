@@ -51,7 +51,7 @@ This class represents a search match.
 
 
 <a name="property_params"></a>
-### public **$params** : string[]
+### public **$params** : array&lt;string|int,string&gt;
 
 
 
