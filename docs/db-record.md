@@ -6,14 +6,27 @@ nav_order: 7
 
 # DbRecord
 
-[DbRecord](../api/DbRecord.md) is a lightweight [active record](https://en.wikipedia.org/wiki/Active_record_pattern) 
+[DbRecord](../api/DbRecord.md) is a lightweight [active record](https://en.wikipedia.org/wiki/Active_record_pattern)
 implementation built on top of PDO.
 
-An active record is an object that represents a database record. It can be used to create / update / delete entities 
+An active record is an object that represents a database record. It can be used to create / update / delete entities
 in db tables without writing any sql requests.
 
-Moreover, inherited class represents a model entity where instance of it can be used in a controller 
+Moreover, inherited class represents a model entity where instance of it can be used in a controller
 (See [Controllers](application.md#controllers)) or in a view script (See [Views](application.md#views)).
+
+
+## Table of Contents
+
+1. [Installation](#installation)
+2. [Configuration](#configuration)
+3. [Defining Models](#defining-models)
+4. [Usage Examples](#usage-examples)
+5. [DbRecord Events](#dbrecord-events)
+   - [beforeSave Event](#beforesave-event)
+   - [beforeDelete Event](#beforedelete-event)
+   - [afterSave Event](#aftersave-event)
+   - [afterDelete Event](#afterdelete-event)
 
 ## installation
 
@@ -23,7 +36,9 @@ composer require piko/db-record
 
 This command will install the [DbRecord](../api/DbRecord.md) components.
 
-The component needs a [PDO](https://www.php.net/manual/fr/book.pdo.php) connexion. 
+## Configuration
+
+The component requires a [PDO](https://www.php.net/manual/fr/book.pdo.php) connection.
 Ensure that a PDO component is registered in the application [configuration](application.md#configuration).
 
 Example of Mysql configuration:
@@ -44,7 +59,16 @@ return [
 
 ```
 
-Suppose we have a table in our database created with :
+Nonetheless, the component can function independently outside of a Piko application.
+In such cases, you can establish a PDO connection as follows:
+
+```php
+$db = new PDO('mysql:host=localhost;dbname=yourdb', 'dbpassword', 'dbuser');
+```
+
+## Defining Models
+
+Suppose we have a table to store contacts in our database created with :
 
 ```sql
 CREATE TABLE contact (
@@ -54,10 +78,36 @@ CREATE TABLE contact (
 )
 ```
 
-To represent the model entity of the contact table, we have to declare a class `Contact` that inherit from 
-[DbRecord](../api/DbRecord.md).
-In this declaration, we have to set two properties: `$tableName` which is the entity's table name and `$schema` which 
-is the entity's schema as declared above:
+To represent the model entity of the contact table, declare a class `Contact` that inherits from
+[Piko\DbRecord](../api/DbRecord.md).
+
+
+Use the, [Piko\DbRecord\TableAttribute](../api/TableAttribute.md),
+and [Piko\DbRecord\FieldAttribute](../api/FieldAttribute.md) classes to define your model:
+
+### Using Attributes
+
+```php
+use Piko\DbRecord;
+use Piko\DbRecord\TableAttribute;
+use Piko\DbRecord\FieldAttribute;
+
+#[TableAttribute(tableName:'contact')]
+class Contact extends DbRecord
+{
+    #[FieldAttribute(primaryKey: true)]
+    public ?int $id = null;
+
+    #[FieldAttribute]
+    public $name = null;
+
+    #[FieldAttribute]
+    public ?int $order = null;
+}
+```
+### Using Properties
+
+Alternatively set two properties `$tableName` and `$schema`:
 
 ```php
 use Piko\DbRecord;
@@ -74,63 +124,86 @@ class Contact extends DbRecord
 }
 ```
 
-Contact class usage:
+## Usage Examples
+
+Get a PDO connexion before to instanciate models.
+
+Inside a Piko application:
 
 ```php
 $db = $app->getComponent(PDO::class);
+```
 
-// Create entity
+Outside a Piko application:
+
+```php
+$db = new PDO('mysql:host=localhost;dbname=yourdb', 'dbpassword', 'dbuser');
+```
+
+### Creating and Saving Entities
+
+```php
 $contact = new Contact($db);
 $contact->name = 'Joe';
 $contact->order = 1;
 $contact->save();
 
-echo $contact->id; // 1
+echo $contact->id; // Outputs the generated ID for Joe
+```
 
+### Fetching Entities
+
+```php
 $st = $db->prepare('SELECT * FROM contact');
 $st->execute();
 
 // Returns an array of Contact instances
-$rows = $st->fetchAll(PDO::FETCH_CLASS, 'Contact'); 
+$rows = $st->fetchAll(PDO::FETCH_CLASS, 'Contact');
 
 print_r($rows);
+```
 
-// Update entity
-$contact = new Contact(1); // Loads entity with id = 1
+### Updating Entities
+
+```php
+$contact = new Contact($db);
+$contact->load(1); // Loads entity with id = 1
 echo $contact->name; // Joe
 $contact->name = 'John';
 $contact->save();
 
-$contact = new Contact(1);
+$contact = new Contact($db);
+$contact->load(1);
 echo $contact->name; // John
-
-// Delete entity
-$contact->delete();
-
-print_r($st->fetchAll());
 ```
 
-## DbRecord events
+### Deleting entities
+
+```php
+$contact = new Contact($db);
+$contact->load(1);
+$contact->delete();
+```
+
+## DbRecord Events
 
 [Concept of events](concepts.md#events)
 
-### beforeSave
+### beforeSave Event
 
-Before saving an entity in the database, dbRecord check if the operation is possible by invoking the 
-[beforeSave](../api/DbRecord.md#method_beforeSave) method. This method also trigger a 
+Before saving an entity in the database, dbRecord check if the operation is possible by invoking the
+[beforeSave](../api/DbRecord.md#method_beforeSave) method. This method also trigger a
 [BeforeSaveEvent](../api/BeforeSaveEvent.md).
 
-It is possible to customize this behavior in two ways:
+You can customize this behavior by overriding the `beforeSave` method or using an event listener:
 
-Override beforeSave method in the inherited class:
+#### Overriding beforeSave Method
 
 ```php
 use Piko\DbRecord;
 
 class Contact extends DbRecord
 {
-    //...
-
     protected function beforeSave(): bool
     {
         if (!$this->name) {
@@ -143,7 +216,7 @@ class Contact extends DbRecord
 
 ```
 
-Using an event listener:
+#### Using an event listener
 
 ```php
 use Piko\DbRecord\Event\BeforeSaveEvent;
@@ -156,16 +229,16 @@ $contact->on(BeforeSaveEvent::class, function(BeforeSaveEvent $event) {
 });
 ```
 
-### beforeDelete
+### beforeDelete Event
 
-It's possible to interact with the `beforeDelete` event in the same way than the `beforeSave` event.
-See [beforeDelete](../api/DbRecord.md#method_beforeDelete) method. This method also trigger a 
+Interact with the `beforeDelete` event similarly to `beforeSave` event.
+See [beforeDelete](../api/DbRecord.md#method_beforeDelete) method. This method also trigger a
 [BeforeDeleteEvent](../api/BeforeDeleteEvent.md).
 
 
-### afterSave
+### afterSave Event
 
-After saving an entity in the database, dbRecord invokes the [afterSave](../api/DbRecord.md#method_afterSave) method. 
+After saving an entity in the database, dbRecord invokes the [afterSave](../api/DbRecord.md#method_afterSave) method.
 This method also trigger an [AfterSaveEvent](../api/AfterSaveEvent.md)..
 
 It is possible to customize this behavior in two ways:
@@ -199,9 +272,9 @@ $contact->on(AfterSaveEvent::class, function(AfterSaveEvent $event) {
 });
 ```
 
-### afterDelete
+### afterDelete Event
 
-It's possible to interact with the `afterDelete` event in the same way than the `afterSave` event.
-See [afterDelete](../api/DbRecord.md#method_afterDelete) method. This method also trigger an 
+Interact with `afterDelete` event similarly to `afterSave` event.
+See [afterDelete](../api/DbRecord.md#method_afterDelete) method. This method also trigger an
 [AfterDeleteEvent](../api/AfterDeleteEvent.md)..
 

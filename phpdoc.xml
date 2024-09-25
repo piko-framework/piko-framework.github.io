@@ -15,7 +15,7 @@ To build the API doc run 'phpdoc' on the command line
             <source dsn=".piko-packages">
               <path>asset-bundle/src</path>
               <path>core/src</path>
-              <path>db/src</path>
+              <path>db-record/src</path>
               <path>i18n/src</path>
               <path>piko/src</path>
               <path>router/src</path>
@@ -32,4 +32,3 @@ To build the API doc run 'phpdoc' on the command line
     </version>
     <template name="_phpdoc/templates/markdown" />
 </phpdocumentor>
-
