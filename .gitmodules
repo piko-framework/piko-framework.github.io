@@ -10,9 +10,9 @@
 [submodule ".piko-packages/i18n"]
 	path = .piko-packages/i18n
 	url = https://github.com/piko-framework/i18n.git
-[submodule ".piko-packages/db"]
-	path = .piko-packages/db
-	url = https://github.com/piko-framework/db.git
+[submodule ".piko-packages/db-record"]
+	path = .piko-packages/db-record
+	url = https://github.com/piko-framework/db-record.git
 [submodule ".piko-packages/user"]
 	path = .piko-packages/user
 	url = https://github.com/piko-framework/user.git
