@@ -1,12 +1,12 @@
 ---
 layout: default
-title: TableAttribute
+title: Table
 parent: API
 ---
 
 
 
-# \Piko\DbRecord\TableAttribute
+# \Piko\DbRecord\Attribute\Table
 
 
 
@@ -19,7 +19,7 @@ parent: API
 
 | Name | Description |
 |------|-------------|
-| public [`$tableName`](#property_tableName) |   |
+| public [`$name`](#property_name) |   |
 
 
 ## Methods summary
@@ -35,8 +35,8 @@ parent: API
 ## Properties
 
 
-<a name="property_tableName"></a>
-### public **$tableName** : string
+<a name="property_name"></a>
+### public **$name** : string
 
 
 
@@ -52,7 +52,7 @@ parent: API
 ### public **__construct()**: mixed
 
 ```php
-public  __construct(string  $tableName): mixed
+public  __construct(string  $name): mixed
 ```
 
 Constructor for TableAttribute class.
@@ -60,7 +60,7 @@ Constructor for TableAttribute class.
 
 
 #### Parameters
-**$tableName** :
+**$name** :
 The name of the database table associated with the class.
 
 

@@ -1,12 +1,12 @@
 ---
 layout: default
-title: FieldAttribute
+title: Column
 parent: API
 ---
 
 
 
-# \Piko\DbRecord\FieldAttribute
+# \Piko\DbRecord\Attribute\Column
 
 
 
@@ -19,7 +19,7 @@ parent: API
 
 | Name | Description |
 |------|-------------|
-| public [`$fieldName`](#property_fieldName) |   |
+| public [`$name`](#property_name) |   |
 | public [`$primaryKey`](#property_primaryKey) |   |
 
 
@@ -36,8 +36,8 @@ parent: API
 ## Properties
 
 
-<a name="property_fieldName"></a>
-### public **$fieldName** : ?string
+<a name="property_name"></a>
+### public **$name** : ?string
 
 
 
@@ -60,10 +60,10 @@ parent: API
 ### public **__construct()**: mixed
 
 ```php
-public  __construct(bool  $primaryKey = false, string|null  $fieldName = null): mixed
+public  __construct(bool  $primaryKey = false, string|null  $name = null): mixed
 ```
 
-Constructor for the FieldAttribute class.
+Constructor for the Column class.
 
 
 
@@ -71,7 +71,7 @@ Constructor for the FieldAttribute class.
 **$primaryKey**  (default: false):
 Indicates if the field is a primary key. Default is false.
 
-**$fieldName**  (default: null):
+**$name**  (default: null):
 The name of the field. Default is null.
 
 

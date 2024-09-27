@@ -82,26 +82,26 @@ To represent the model entity of the contact table, declare a class `Contact` th
 [Piko\DbRecord](../api/DbRecord.md).
 
 
-Use the, [Piko\DbRecord\TableAttribute](../api/TableAttribute.md),
-and [Piko\DbRecord\FieldAttribute](../api/FieldAttribute.md) classes to define your model:
+Use the, [Piko\DbRecord\Attribute\Table](../api/Table.md),
+and [Piko\DbRecord\Attribute\Column](../api/Column.md) classes to define your model:
 
 ### Using Attributes
 
 ```php
 use Piko\DbRecord;
-use Piko\DbRecord\TableAttribute;
-use Piko\DbRecord\FieldAttribute;
+use Piko\DbRecord\Attribute\Table;
+use Piko\DbRecord\Attribute\Column;
 
-#[TableAttribute(tableName:'contact')]
+#[Table(name:'contact')]
 class Contact extends DbRecord
 {
-    #[FieldAttribute(primaryKey: true)]
+    #[Column(primaryKey: true)]
     public ?int $id = null;
 
-    #[FieldAttribute]
+    #[Column]
     public $name = null;
 
-    #[FieldAttribute]
+    #[Column]
     public ?int $order = null;
 }
 ```
