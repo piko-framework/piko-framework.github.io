@@ -140,7 +140,7 @@ Outside a Piko application:
 $db = new PDO('mysql:host=localhost;dbname=yourdb', 'dbpassword', 'dbuser');
 ```
 
-### Creating and Saving Entities
+### Creating and Saving Entities
 
 ```php
 $contact = new Contact($db);
@@ -151,14 +151,14 @@ $contact->save();
 echo $contact->id; // Outputs the generated ID for Joe
 ```
 
-### Fetching Entities
+### Fetching Entities
 
 ```php
 $st = $db->prepare('SELECT * FROM contact');
 $st->execute();
 
 // Returns an array of Contact instances
-$rows = $st->fetchAll(PDO::FETCH_CLASS, 'Contact');
+$rows = $st->fetchAll(PDO::FETCH_CLASS, 'Contact', [$db]);
 
 print_r($rows);
 ```
