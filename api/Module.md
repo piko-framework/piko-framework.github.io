@@ -43,12 +43,14 @@ to d... |
 | Name | Description |
 |------|-------------|
 | public [`__construct`](#method___construct) | Constructor |
+| public [`createObject`](#method_createObject) | Create an object with constructor dependencies res... |
 | public [`getApplication`](#method_getApplication) |   |
 | public [`getBasePath`](#method_getBasePath) | Returns the root directory of the module.  |
 | public [`getModule`](#method_getModule) | Get a sub module of this module  |
 | public [`handle`](#method_handle) | {@inheritDoc}  |
 | public [`setApplication`](#method_setApplication) |   |
 | protected [`createController`](#method_createController) | Create a controller  |
+| private [`resolveConstructorArgument`](#method_resolveConstructorArgument) | Resolve one constructor argument from overrides or... |
 
 ## Inherited Methods
 
@@ -162,6 +164,39 @@ public  __construct(array&lt;string,mixed&gt;  $config = []): mixed
 
 #### Return:
 **mixed**
+
+
+-----
+
+
+
+<a name="method_createObject"></a>
+### public **createObject()**: object
+
+```php
+public  createObject(class-string  $class, array&lt;string,mixed&gt;  $overrides = []): object
+```
+
+Create an object with constructor dependencies resolved from registered components.
+
+
+
+#### Parameters
+**$class** :
+The class to instantiate.
+
+**$overrides**  (default: []):
+Constructor argument overrides indexed by parameter name.
+
+
+
+
+**throws**  \RuntimeExceptionIf class is not found or mandatory dependency is not resolvable.
+
+
+
+#### Return:
+**object**
 
 
 -----
@@ -316,5 +351,39 @@ A controller ID
 
 #### Return:
 **\Piko\Controller**
+
+
+-----
+
+
+
+<a name="method_resolveConstructorArgument"></a>
+### private **resolveConstructorArgument()**: mixed
+
+```php
+private  resolveConstructorArgument(\ReflectionParameter  $param, string  $class, array&lt;string,mixed&gt;  $overrides): mixed
+```
+
+Resolve one constructor argument from overrides or application components.
+
+
+
+#### Parameters
+**$param** :
+
+**$class** :
+
+**$overrides** :
+
+
+
+
+
+**throws**  \RuntimeException
+
+
+
+#### Return:
+**mixed**
 
 

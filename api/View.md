@@ -266,7 +266,7 @@ public  __construct(array&lt;string,mixed&gt;  $config = []): mixed
 ### public **escape()**: string
 
 ```php
-public  escape(string  $string): string
+public  escape(string|null  $string): string
 ```
 
 Escape HTML special characters.

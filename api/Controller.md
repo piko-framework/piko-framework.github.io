@@ -23,8 +23,8 @@ Controller is the base class for classes containing controller logic.
 |------|-------------|
 | public [`$id`](#property_id) | The controller identifier.  |
 | public [`$layout`](#property_layout) | The name of the layout to be applied to this contr... |
+| public [`$module`](#property_module) | The module that this controller belongs to.  |
 | public [`$viewPath`](#property_viewPath) | The root directory that contains view files for th... |
-| protected [`$module`](#property_module) | The module that this controller belongs to.  |
 | protected [`$request`](#property_request) |   |
 | protected [`$response`](#property_response) |   |
 | protected [`$view`](#property_view) |   |
@@ -41,12 +41,12 @@ Controller is the base class for classes containing controller logic.
 
 | Name | Description |
 |------|-------------|
-| public [`__construct`](#method___construct) | Constructor |
+| public [`getUrl`](#method_getUrl) | Converts a given modular route into its correspond... |
 | public [`handle`](#method_handle) |   |
+| protected [`create`](#method_create) | Create an object and resolve constructor dependenc... |
 | protected [`forward`](#method_forward) | Forward the given route to another module  |
 | protected [`getView`](#method_getView) | Returns the application View component  |
 | protected [`getViewPath`](#method_getViewPath) | Returns the directory containing view files for th... |
-| protected [`init`](#method_init) | Method called at the end of the constructor. This ... |
 | protected [`isAjax`](#method_isAjax) | Check if the request is AJAX  |
 | protected [`jsonResponse`](#method_jsonResponse) | Convenient method to return a JSON response  |
 | protected [`redirect`](#method_redirect) | Set a response redirection  |
@@ -90,18 +90,18 @@ If false, no layout will be applied.
 
 
 
+<a name="property_module"></a>
+### public **$module** : \Piko\Module
+The module that this controller belongs to.
+
+
+
+
+
+
 <a name="property_viewPath"></a>
 ### public **$viewPath** : string
 The root directory that contains view files for this controller.
-
-
-
-
-
-
-<a name="property_module"></a>
-### protected **$module** : \Piko\Module
-The module that this controller belongs to.
 
 
 
@@ -138,17 +138,33 @@ The module that this controller belongs to.
 
 
 
-<a name="method___construct"></a>
-### public **__construct()**: mixed
+<a name="method_getUrl"></a>
+### public **getUrl()**: string
 
 ```php
-public  __construct(\Piko\Module  $module): mixed
+public  getUrl(string  $route, string[]  $params = [], bool  $absolute = false): string
 ```
 
+Converts a given modular route into its corresponding URL.
+This method is useful for generating URLs dynamically, based on the specified
+route and optional parameters. The route should follow the format:
+{moduleId}/{ControllerId}/{ActionId}.
 
 
 #### Parameters
-**$module** :
+**$route** :
+The modular route in the format {moduleId}/{ControllerId}/{ActionId}.
+This string determines which module, controller, and action to target.
+
+**$params**  (default: []):
+An optional associative array of query parameters to append
+to the generated URL. Each key-value pair represents a parameter
+name and its corresponding value.
+
+**$absolute**  (default: false):
+An optional boolean flag indicating whether the generated URL should be
+absolute (including protocol and host) or relative. Defaults to false,
+meaning a relative URL will be returned.
 
 
 
@@ -156,8 +172,8 @@ public  __construct(\Piko\Module  $module): mixed
 
 
 #### Return:
-**mixed**
-
+**string**
+The resulting URL that corresponds to the provided route and parameters.
 
 -----
 
@@ -182,6 +198,37 @@ public  handle(\Psr\Http\Message\ServerRequestInterface  $request): \Psr\Http\Me
 
 #### Return:
 **\Psr\Http\Message\ResponseInterface**
+
+
+-----
+
+
+
+<a name="method_create"></a>
+### protected **create()**: object
+
+```php
+protected  create(class-string  $class, array&lt;string,mixed&gt;  $overrides = []): object
+```
+
+Create an object and resolve constructor dependencies from application components.
+
+
+
+#### Parameters
+**$class** :
+
+
+**$overrides**  (default: []):
+Constructor argument overrides indexed by parameter name.
+
+
+
+
+
+
+#### Return:
+**object**
 
 
 -----
@@ -268,26 +315,6 @@ the directory containing the view files for this controller.
 
 
 
-<a name="method_init"></a>
-### protected **init()**: void
-
-```php
-protected  init(): void
-```
-
-Method called at the end of the constructor.
-This could be overriden in inherited classes.
-
-
-
-
-
-
-
------
-
-
-
 <a name="method_isAjax"></a>
 ### protected **isAjax()**: bool
 
@@ -341,10 +368,10 @@ Convenient method to return a JSON response
 
 
 <a name="method_redirect"></a>
-### protected **redirect()**: void
+### protected **redirect()**: \Psr\Http\Message\ResponseInterface
 
 ```php
-protected  redirect(string  $url): void
+protected  redirect(string  $url): \Psr\Http\Message\ResponseInterface
 ```
 
 Set a response redirection
@@ -358,6 +385,10 @@ The url to redirect
 
 
 
+
+
+#### Return:
+**\Psr\Http\Message\ResponseInterface**
 
 
 -----
