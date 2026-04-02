@@ -7,23 +7,20 @@ nav_order: 2
 
 # Controllers
 
-Controllerd are parts of the application that manage the flow of data. It is the glue that binds the model and
-the view together and should be responsible for the following:
+Controllers manage application flow between models, views, and HTTP input/output.
+In a Piko application, a controller is a class that extends [Piko\Controller](../../api/Controller.md).
 
-- Communicating with the model
-- Communicating with the view
-- Handling user input
-- Managing the flow of data
+A controller should be responsible for:
 
-Controllers should never contain any HTML code neither any SQL code.
+- Coordinating business logic with models/services
+- Preparing data for views or API responses
+- Handling user input and route/query parameters
+- Returning an HTTP response (directly or through helper methods)
 
-In a Piko application, controllers are classes derived from [Piko\Controller](../../api/Controller.md).
-They are responsible for processing requests and generating responses.
+Controllers should not contain SQL queries or HTML markup directly.
 
-Controllers are composed of *actions* methods that end users can address and request for execution.
-A controller can have one or multiple actions.
-
-End user address action throw [routes](routing.md).
+Controllers expose one or more action methods.
+Each action is reachable through routing.
 
 Example:
 
@@ -33,7 +30,7 @@ namespace app\modules\site\controllers;
 class DefaultController extends \Piko\Controller
 {
     /**
-     * The corresponding route to access this action is site/default/hello
+     * Route: site/default/hello
      */
     public function helloAction()
     {
@@ -44,10 +41,10 @@ class DefaultController extends \Piko\Controller
 
 ### Controller class naming
 
-Controller class naming uses Camel Case convention.
-The first part of the name is the controler id and the last part is the word `Controller`.
+Controller classes use CamelCase.
+The class name is based on the controller ID, suffixed by `Controller`.
 
-Exemples:
+Examples:
 
 | controller id | class name |
 |------------- |------------|
@@ -56,24 +53,65 @@ Exemples:
 
 ### Action method naming
 
-Action method naming also usesCamel Case convention but the first part of the name is the action Id in lower case
-and the last part is the word `Action`.
+Action methods use camelCase and end with `Action`.
+The action ID maps to the method name.
 
-Exemples:
+Examples:
 
-| ControllerId | class name |
+| action id | method name |
 |------------- |------------|
 | export | exportAction |
 | export-article | exportArticleAction |
+
+### Dependency injection
+
+When a controller is instantiated by a module, constructor arguments are resolved automatically from application
+components (configured in the app container).
+
+```php
+namespace app\modules\products\controllers;
+
+use PDO;
+use Piko\User;
+
+class ProduitsController extends \Piko\Controller
+{
+    public function __construct(private User $user, private PDO $db)
+    {
+    }
+}
+```
+
+### Creating objects from a controller
+
+If you need to instantiate a model/service that also has dependencies, use the controller helper
+`create()` instead of `new`.
+This delegates to the module object factory and resolves constructor dependencies the same way as controllers.
+
+```php
+public function deleteAction(int $id)
+{
+    /** @var \app\modules\products\models\Produit $model */
+    $model = $this->create(\app\modules\products\models\Produit::class);
+    $model->load($id);
+
+    // ...
+}
+```
+
+You can also override specific constructor arguments:
+
+```php
+$service = $this->create(MyService::class, ['timeout' => 30]);
+```
 
 ### View rendering
 
 The [render method](../../api/Controller.md#method_render) processes a view script.
 By default, view scripts are located in the `views` directory of the corresponding module.
-The `views` directory contains subdirectories, named as their corresponding controller, which contain
-scripts that can be rendered in controller's action methods.
+The `views` directory contains one subdirectory per controller.
 
-Example of module structure to display a list of users in the default controller of the `site` module:
+Example module structure for `site/default/users`:
 
 ```
 site
@@ -94,7 +132,6 @@ namespace app\modules\site\controllers;
 
 class DefaultController extends \Piko\Controller
 {
-    //...
     public function usersAction()
     {
         $users = [
@@ -122,41 +159,47 @@ class DefaultController extends \Piko\Controller
 
 ### Forward and redirect
 
-There are methods [getUrl](../../api/Controller.md#method_getUrl), [forward](../../api/Controller.md#method_forward)
-and [redirect](../../api/Controller.md#method_redirect).
-`getUrl` creates an URL from a route, applying rules given in the router configuration. `redirect`
-indicates to the app to redirect to another internal or external URL. `forward` tells the application
-to dispatch another route (it can be, for instance, another action in another controller in another module).
+Useful helpers:
+
+- [getUrl](../../api/Controller.md#method_getUrl): build a URL from a route.
+- [redirect](../../api/Controller.md#method_redirect): return a redirect to an internal or external URL.
+- [forward](../../api/Controller.md#method_forward): dispatch another route internally.
 
 Use cases inside a controller:
 
 ```php
-//...
-    public function saveAction()
-    {
-        $this->redirect($this->getUrl('site/default/user', ['username' => 'Bill']));
-    }
+public function saveAction()
+{
+    return $this->redirect($this->getUrl('site/default/user', ['username' => 'Bill']));
+}
 
-    public function validateAction()
-    {
-        $this->forward('site/default/user', ['username' => 'Bill']);
-    }
-//...
+public function validateAction()
+{
+    return $this->forward('site/default/user', ['username' => 'Bill']);
+}
 ```
 
-### Interact with the request
+### Working with request parameters
 
-To interact with HTTP request, you can use the controller's request property:
+Action parameters are mapped by name from route parameters and query parameters.
+Basic scalar conversion is applied for `int`, `float`, and `bool`.
 
 ```php
-//...
-    public function userAction()
-    {
-       if ($this->request->getMethod() == 'POST') {
-            $post = $this->request->getParsedBody();
-       }
+public function showAction(int $id, bool $preview = false)
+{
+    // $id and $preview are mapped from request parameters
+}
+```
+
+To access the full PSR-7 request, use `$this->request`:
+
+```php
+public function userAction()
+{
+    if ($this->request->getMethod() === 'POST') {
+        $post = $this->request->getParsedBody();
     }
-//...
+}
 ```
 
 Request object comes from the package
@@ -168,13 +211,11 @@ Request object comes from the package
 In the same way as with the request, it's possible to interact with the HTTP response:
 
 ```php
-//...
-    public function rssAction()
-    {
-       $this->response = $this->response->withHeader('Content-Type', 'text/xml')
-       // ...
-    }
-//...
+public function rssAction()
+{
+    $this->response = $this->response->withHeader('Content-Type', 'text/xml');
+    // ...
+}
 ```
 
 Response object comes from the package
@@ -183,18 +224,18 @@ Response object comes from the package
 
 ### AJAX
 
-To deal with AJAX requests / responses, Piko\Controller offers two helper:
+To work with AJAX requests/responses, `Piko\Controller` provides:
 [isAjax](../../api/Controller.md#method_isAjax),
 [jsonResponse](../../api/Controller.md#method_jsonResponse).
 
 ```php
-//...
-    public function userSaveAction()
-    {
-        if ($this->isAjax())
-            $data = json_decode($this->request->getBody())
-            return $this->jsonResponse($data);
-        }
+public function userSaveAction()
+{
+    if ($this->isAjax()) {
+        $data = json_decode((string) $this->request->getBody(), true);
+        return $this->jsonResponse($data);
     }
-//...
+
+    return $this->jsonResponse(['error' => 'Bad request'])->withStatus(400);
+}
 ```
