@@ -51,7 +51,6 @@ the Active Record pattern.
 | public [`__get`](#method___get) | Magick method to access rows&#039;s data as class attri... |
 | public [`__isset`](#method___isset) | Magick method to check if attribute is defined in ... |
 | public [`__set`](#method___set) | Magick method to set row&#039;s data as class attribute... |
-| public [`__unset`](#method___unset) | Magick method to unset attribute in row&#039;s data.  |
 | public [`delete`](#method_delete) | Delete this record.  |
 | public [`load`](#method_load) | Load row data.  |
 | public [`quoteIdentifier`](#method_quoteIdentifier) | Quote table or column name  |
@@ -69,7 +68,7 @@ the Active Record pattern.
 
 | Name | Description |
 |------|-------------|
-| public [`bind`](/ModelTrait.md#method_bind) | Bind the data to the model attribubes.  |
+| public [`bind`](/ModelTrait.md#method_bind) | Bind the data to the model attributes.  |
 | public [`getErrors`](/ModelTrait.md#method_getErrors) | Return the errors hash container  |
 | public [`isValid`](/ModelTrait.md#method_isValid) | Check if the model is valid  |
 | public [`on`](/EventHandlerTrait.md#method_on) | Registers an event listener.  |
@@ -78,6 +77,8 @@ the Active Record pattern.
 | protected [`getAttributes`](/ModelTrait.md#method_getAttributes) | Get the public properties reprenting the data mode... |
 | protected [`setError`](/ModelTrait.md#method_setError) | Set an error that will be appended to the errors c... |
 | protected [`validate`](/ModelTrait.md#method_validate) | Validate this model (Should be extended). Inherite... |
+| private [`castBooleanValue`](/ModelTrait.md#method_castBooleanValue) | Cast a value to a boolean using common form repres... |
+| private [`castValueForProperty`](/ModelTrait.md#method_castValueForProperty) | Cast a bound value according to the declared prope... |
 
 -----
 
@@ -211,13 +212,13 @@ The attribute's value.
 
 
 <a name="method___isset"></a>
-### public **__isset()**: mixed
+### public **__isset()**: bool
 
 ```php
-public  __isset(string  $attribute): mixed
+public  __isset(string  $attribute): bool
 ```
 
-Magick method to check if attribute is defined in row's data.
+Magick method to check if attribute is defined in the table schema.
 
 
 
@@ -231,7 +232,7 @@ The attribute's name.
 
 
 #### Return:
-**mixed**
+**bool**
 
 
 -----
@@ -259,34 +260,6 @@ The attribute's value.
 
 
 
-
-
------
-
-
-
-<a name="method___unset"></a>
-### public **__unset()**: mixed
-
-```php
-public  __unset(string  $attribute): mixed
-```
-
-Magick method to unset attribute in row's data.
-
-
-
-#### Parameters
-**$attribute** :
-The attribute's name.
-
-
-
-
-
-
-#### Return:
-**mixed**
 
 
 -----

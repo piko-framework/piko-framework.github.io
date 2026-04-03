@@ -28,13 +28,15 @@ Base model trait.
 
 | Name | Description |
 |------|-------------|
-| public [`bind`](#method_bind) | Bind the data to the model attribubes.  |
+| public [`bind`](#method_bind) | Bind the data to the model attributes.  |
 | public [`getErrors`](#method_getErrors) | Return the errors hash container  |
 | public [`isValid`](#method_isValid) | Check if the model is valid  |
 | public [`toArray`](#method_toArray) | Get the model data as an associative array.  |
 | protected [`getAttributes`](#method_getAttributes) | Get the public properties reprenting the data mode... |
 | protected [`setError`](#method_setError) | Set an error that will be appended to the errors c... |
 | protected [`validate`](#method_validate) | Validate this model (Should be extended). Inherite... |
+| private [`castBooleanValue`](#method_castBooleanValue) | Cast a value to a boolean using common form repres... |
+| private [`castValueForProperty`](#method_castValueForProperty) | Cast a bound value according to the declared prope... |
 
 
 -----
@@ -65,7 +67,7 @@ Errors hash container
 public  bind(array  $data): void
 ```
 
-Bind the data to the model attribubes.
+Bind the data to the model attributes.
 
 
 
@@ -227,5 +229,64 @@ Inherited method should fill the errors array using the setError method if the m
 
 **codeCoverageIgnore**  
 
+
+
+-----
+
+
+
+<a name="method_castBooleanValue"></a>
+### private **castBooleanValue()**: bool
+
+```php
+private  castBooleanValue(mixed  $value): bool
+```
+
+Cast a value to a boolean using common form representations.
+
+
+
+#### Parameters
+**$value** :
+
+
+
+
+
+
+
+#### Return:
+**bool**
+
+
+-----
+
+
+
+<a name="method_castValueForProperty"></a>
+### private **castValueForProperty()**: mixed
+
+```php
+private  castValueForProperty(\ReflectionProperty  $property, mixed  $value): mixed
+```
+
+Cast a bound value according to the declared property type.
+
+
+
+#### Parameters
+**$property** :
+
+
+**$value** :
+
+
+
+
+
+
+
+#### Return:
+**mixed**
 
 
