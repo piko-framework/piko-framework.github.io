@@ -6,36 +6,91 @@ nav_order: 2
 
 # Getting Started
 
-To quickly test or to quickly start a new Piko based project, the recommended way is to use the [Piko project skeletton](https://github.com/piko-framework/piko-project).
+The fastest way to create a new application with the Piko framework is to use the
+[official Piko project skeleton](https://github.com/piko-framework/piko-project).
 
-## Piko project skeletton installation
+This getting started guide shows how to build a **modular application** based on
+`Piko\ModularApplication`. For an overview of the modular architecture, see
+[Modular application](modular-application/).
 
-If you don't have Composer installed on your system, you may install it by following the instructions
-at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
+This guide walks you through:
 
-Then install your project template using the following command:
+1. Installing the Piko project skeleton
+2. Running the application locally
+3. Creating a simple **Hello World** page using a controller and a view
+
+## Prerequisites
+
+Before you start, make sure you have:
+
+- **PHP** >= 8.0 (as required by the project skeleton)
+- **Composer** (PHP dependency manager)
+
+If Composer is not installed on your system, follow the instructions at
+[getcomposer.org](https://getcomposer.org/doc/00-intro.md#installation-nix).
+
+## Install the Piko project skeleton
+
+Create a new project from the Piko skeleton using Composer:
 
 ```bash
 composer create-project piko/project yourprojectname
 ```
 
-### Run your app
+This command will:
 
-Once the project installed (see above), you can run it using the PHP built-in web server :
+- Download the `piko/project` template
+- Install its dependencies (including `piko/framework` and `piko/user`)
+- Set up a PSR-4 namespace `app\\` for your application code
 
-```bash
-cd yourprojectname && php -S localhost:8080 -t web
+The resulting structure will look like this (simplified):
+
+```text
+yourprojectname/
+├── config/
+├── modules/
+│   └── site/
+│       ├── controllers/
+│       ├── layouts/
+│       ├── models/
+│       └── views/
+└── web/
+    └── index.php
 ```
 
-You should see the interface bellow in your Web browser if you go to [http://localhost:8080/](http://localhost:8080/)
+## Run the application
+
+From the project root, start the PHP built-in web server and set the `web/` directory
+as the document root:
+
+```bash
+cd yourprojectname
+php -S localhost:8080 -t web
+```
+
+Then open [http://localhost:8080/](http://localhost:8080/) in your browser.
+
+You should see a page similar to this:
 
 ![Piko project snapshot](piko-project-snapshot.jpg)
 
-## Hello world example
+> **Note**: For production deployments, you would typically configure a real web
+> server (Apache, Nginx, etc.) to serve the `web/` directory as the document root.
 
-Once the project created (see above) create a new controller file in `modules/site/controllers` named `HelloController.php`.
+## Hello World example
 
-and edit the file with this code :
+In this section you will:
+
+1. Create a new controller
+2. Access it through a URL
+3. Add a custom route
+4. Render the response using a view file instead of inline HTML
+
+### 1. Create a controller
+
+Inside your project, create a new controller file:
+
+**File:** `modules/site/controllers/HelloController.php`
 
 ```php
 <?php
@@ -45,49 +100,134 @@ class HelloController extends \Piko\Controller
 {
     public function worldAction()
     {
-        return "<h1>Hello world!</h1>";
+        return '<h1>Hello world!</h1>';
     }
 }
-
 ```
 
-Then open the URL : [http://localhost:8080/site/hello/world](http://localhost:8080/site/hello/world)
+The important points here are:
 
-You should see `Hello world!' in your browser.
+- The namespace `app\modules\site\controllers` matches the skeleton's
+  PSR-4 configuration (`"app\\": ""` in `composer.json`).
+- `HelloController` extends `\Piko\Controller`.
+- The action method name `worldAction()` defines the **action ID** `world`.
 
-The URI `/site/hello/world` corresponds by default to the module `site`, the controller `hello` and the action `world`.
+### 2. Access the controller via URL
 
-It's possible to customize the URI by editing the file config/routes.php and add a new route like this :
+With the built-in server still running, open this URL in your browser:
+
+[http://localhost:8080/site/hello/world](http://localhost:8080/site/hello/world)
+
+You should see `Hello world!` rendered in the browser (inside the default layout).
+
+By default, a URL of the form:
+
+```text
+/moduleId/controllerId/actionId
+```
+
+is mapped as follows:
+
+- **Module**: `moduleId`
+- **Controller**: `controllerId` → `Controller` class name is
+  `ControllerIdController` (e.g. `hello` → `HelloController`)
+- **Action**: `actionId` → method name is `actionIdAction`
+  (e.g. `world` → `worldAction`)
+
+So the URI `/site/hello/world` corresponds to:
+
+- Module: `site`
+- Controller: `HelloController`
+- Action: `worldAction`
+
+### 3. Define a custom route (optional, but recommended)
+
+Instead of exposing the full module/controller/action path in the URL, you can
+define a custom, shorter route.
+
+Edit the route configuration:
+
+**File:** `config/routes.php`
+
+Add a new entry to the returned array:
 
 ```php
+<?php
+
 return [
     '/' => 'site/default/index',
-    // ...
-    '/hello-world' => 'site/hello/world'
+    '/page/:page' => 'site/default/page',
+    '/login' => 'site/default/login',
+    '/logout' => 'site/default/logout',
+    '/contact' => 'site/default/contact',
+
+    // Custom route for the Hello controller
+    '/hello-world' => 'site/hello/world',
 ];
 ```
 
-You will obtain the same result than above with this URL : [http://localhost:8080/hello-world](http://localhost:8080/hello-world)
+Now the URL:
 
-Rather than generate html code directly in the controller, it's possible to use a separate file.
+[http://localhost:8080/hello-world](http://localhost:8080/hello-world)
 
-Create a new file `world.php` in `modules/site/views/hello` (create before the directory hello) with this content :
+will produce the **same result** as
+[http://localhost:8080/site/hello/world](http://localhost:8080/site/hello/world).
 
-```
-<h1>Hello World!</h1>
-```
+The router maps `/hello-world` to the internal route string `site/hello/world`,
+which is then resolved to the `HelloController::worldAction()` method of the
+`site` module.
 
-In `modules/site/controllers/HelloController.php` we can rewrite the method `worldAction` like this :
+### 4. Use a view file instead of inline HTML
+
+Returning inline HTML from the controller works, but in most cases you will want
+separate view files.
+
+Create a new view file:
+
+**Directory:** `modules/site/views/hello` (create the `hello` directory if it
+does not exist)
+
+**File:** `modules/site/views/hello/world.php`
 
 ```php
+<h1>Hello world!</h1>
+```
+
+Now update your controller to render this view instead of returning raw HTML:
+
+**File:** `modules/site/controllers/HelloController.php`
+
+```php
+<?php
+namespace app\modules\site\controllers;
+
+class HelloController extends \Piko\Controller
+{
     public function worldAction()
     {
         return $this->render('world');
     }
+}
 ```
 
-This will render the content of the file `modules/site/views/hello/world.php`.
+What happens here:
 
-------
+- `$this->render('world')` looks for a view file named `world.php` in the
+  controller's view directory.
+- For `HelloController`, the view path resolves to
+  `modules/site/views/hello` (derived from the controller ID `hello`).
+- The rendered view content is then wrapped into the module/application layout
+  (by default `modules/site/layouts/main.php`).
 
-[How application works](application.md){: .btn .btn-orange }
+You now have a basic **MVC flow**:
+
+1. The browser requests `/hello-world`.
+2. The router matches it to the internal route `site/hello/world`.
+3. The `site` module creates `HelloController` and calls `worldAction()`.
+4. The controller renders the `world` view.
+5. The application wraps the view with the default layout and returns the
+   HTTP response.
+
+---
+
+[How application works](modular-application/index.md){: .btn .btn-orange }

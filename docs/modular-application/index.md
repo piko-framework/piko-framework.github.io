@@ -7,77 +7,65 @@ nav_order: 3
 
 # Modular application
 
-This section explains how a modular application works.
+A modular application organizes a Piko project into modules. Each module groups its own controllers, models, and views, which makes the codebase easier to maintain and reuse.
 
-With Piko, it's possible to organize your code following the
-[Model-View-Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) design pattern
-and the MVC logic is packaged into modules that compose the application.
+Piko follows the [Model-View-Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) pattern and uses [PSR-4](https://www.php-fig.org/psr/psr-4/) autoloading.
 
-This design encourages code re-usability and modularity.
+Example project structure:
 
-Example of application structure :
-
-```
-modules
-  - moduleA
-    - controllers
-    - models
-    - views
-  - moduleB
-    - controllers
-    - models
-    - views
-public
-  - css
-  - js
+```text
+modules/
+  moduleA/
+    controllers/
+    models/
+    views/
+  moduleB/
+    controllers/
+    models/
+    views/
+public/
+  css/
+  js/
   index.php
 config.php
 ```
 
-Piko uses [PSR-4](https://www.php-fig.org/psr/psr-4/) autoloading.
+## Request lifecycle
 
-## Workflow overview
+### 1. Route the request
 
-### 1 - Routing request
+When a modular application receives a request, the incoming URI is translated into an internal route. See [Routing](routing.md).
 
-When a modular Piko application start, the first step is to translate the request uri into internal route, which
-is explained in the [routing](routing.md) section of this guide.
+### 2. Dispatch the route
 
-### 2 - Dispatching request
+The router forwards the route to the appropriate module, controller, and action. An action is a controller method whose name ends with `Action`. For example, the action ID `hello` maps to `helloAction()`. See [Controllers](controllers.md).
 
-The next step is to dispatch the route to the appropriate controller action. An action is a method in a controller
-suffixed with `Action`. For the action id `hello`, the controller method should be named `helloAction`. See
-[Controllers](controllers.md).
+### 3. Return the response
 
-### 3 - Sending responce
-
-Finally, the controller action returns to the application the response to display.
-
+The controller action returns the response body or a `ResponseInterface` instance. The application then emits the response.
 
 ## Entry script
 
-Entry script is the first step to bootstrap application. It generally named `index.php` and stored in the web
-public directory.
-
-This is an example of basic bootstrapping :
+The entry script is usually `public/index.php`.
 
 ```php
+<?php
+
 use Piko\ModularApplication;
+
 require '../vendor/autoload.php';
 
 $config = require '../config.php';
 (new ModularApplication($config))->run();
 ```
 
-<a id="configuration"></a>
-
 ## Configuration
 
-In the step above, we load a configuration array from a file and apply it to the application.
-Here is the description of the parameters used:
+A modular application is configured with an associative array passed to `ModularApplication`.
 
 ```php
-// config.php
+<?php
+
 return [
     'basePath' => __DIR__,
     'defaultLayoutPath' => '@app/layouts',
@@ -85,37 +73,64 @@ return [
     'errorRoute' => 'site/default/error',
     'language' => 'fr',
     'components' => [
-      //...
+        // ...
     ],
     'modules' => [
-      //...
+        // ...
     ],
     'bootstrap' => [
-      //...
-    ]
-]
+        // ...
+    ],
+];
 ```
 
-**basePath** : Base path of the application. It corresponds to the  `@app` [alias](../concepts.md#alias)
-generated during the application instanciation. Default value: `''` (The entry script's directory).
+### `basePath`
 
-**defaultLayoutPath** : Absolute path where view layouts are stored. An alias can be used. Default value: `@app/layouts`.
+Base path of the application. It becomes the `@app` [alias](../concepts.md#alias).
 
-**defaultLayout** : The default layout name without file extension *php*. Default value: `main`.
+Default: the entry script directory.
 
-**errorRoute** : The Error route to display exceptions in a friendly way. If empty,
-Exceptions catched will be thrown and stop the script execution. Default value: `''`.
+### `defaultLayoutPath`
 
-**language** : The language used in the application. Default value: `'en'`.
+Directory containing application layouts. An alias can be used.
 
-**components**: Array of components used in the application. (see [Component](../concepts.md#component))
+Default: `@app/layouts`.
 
-**modules**: Array of modules used in the application. (see [Modules](modules.md))
+### `defaultLayout`
 
-**bootstrap**: Array of modules ids which participate to the application bootstrap process.
-(see [Modules](modules.md))
+Default layout name without the `.php` extension.
 
-## Read more on modular application:
+Default: `main`.
+
+### `errorRoute`
+
+Route used to render uncaught exceptions in a friendly way.
+
+If empty, exceptions are rethrown.
+
+Default: `''`.
+
+### `language`
+
+Application language.
+
+Default: `en`.
+
+### `components`
+
+List of application components. See [Component](../concepts.md#component).
+
+### `modules`
+
+List of modules used by the application. See [Modules](modules.md).
+
+### `bootstrap`
+
+List of module IDs that must be bootstrapped during application startup.
+
+See [Modules](modules.md).
+
+## Read more
 
 - [Routing](routing.md)
 - [Controllers](controllers.md)

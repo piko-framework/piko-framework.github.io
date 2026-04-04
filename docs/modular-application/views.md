@@ -5,86 +5,88 @@ parent: Modular application
 nav_order: 3
 ---
 
-## Views
+# Views
 
-The view is the part of the application that manages the presentation of data.
-In a MVC application, the view is the HTML layer and should be responsible for the following:
+A view is the presentation layer of a Piko application. It is responsible for generating HTML from data passed by controllers.
 
-- Presenting data
-- Generating HTML
+View scripts are plain PHP files. Inside a view script, `$this` refers to the [`Piko\View`](../../api/View.md) instance, so you can call view methods directly.
 
-The view should never contain any logic for the data layer and never contain any SQL code.
-
-View scripts are written in PHP. They have access to all methods of the [Piko\View](../../api/View.md) instance.
-By default, view scripts extension is *.php*. This can be customized in the View configuration.
-
-Changing view scripts extension in *config.php*:
+By default, view files use the `.php` extension. You can change the extension in the `Piko\View` component configuration.
 
 ```php
+<?php
+
 return [
-    //...
     'components' => [
         'Piko\View' => [
-            'extension' => 'phtml'
+            'extension' => 'phtml',
         ],
-        //...
     ],
 ];
 ```
 
-The [View::render](../../api/View#method_render) method is responsible of the view script rendering.
-This method is automatically called by the [Controller::render](../../api/Controller.md#method_render) method as described above.
+`View::render()` renders a view file and is usually called by `Controller::render()`. See [`Controller::render()`](../../api/Controller.md#method_render).
 
-### Layout
+## Layouts
 
-In a Piko Framework application, view rendering can be divided into two steps. The first step is managed by a
-controller action method as described above : a view script is rendered and the output is returned to the application
-dispatching process.
-The second step consists to inject this output (the `$content` variable) into a parent script (the layout).
-The layout manage global ui elements like header and footer.
+Rendering is usually done in two steps:
 
-Layouts will be found depending to the `layouPath` and `layout` module properties.
-By default, `defaultLayouPath` and `defaultLayout` application properties will be used (See [Configuration](index.md#configuration)).
+1. the controller renders a view script
+2. the result is injected into a layout as `$content`
 
-Basic layout example:
+Layouts are responsible for shared UI such as headers, footers, and scripts.
+
+The layout used by a controller is resolved as follows:
+
+- if the controller's `layout` property is `false`, layout rendering is disabled
+- if the controller's `layout` property is `null`, the application's `defaultLayout` is used
+- otherwise, the controller's `layout` value is used
+
+The layout directory is resolved as follows:
+
+- the controller's module `layoutPath`, if set
+- otherwise the application's `defaultLayoutPath`
+
+Example layout:
 
 ```php
 <?php
 /**
- * @var $this Piko\View
- * @var $content string
+ * @var Piko\View $this
+ * @var string $content
  */
-use Piko;
+
+// Piko is available as the global helper class.
 ?>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="<?= $this->charset ?>">
-    <title><?= $this->escape($this->title) ?></title>
-    <!-- Output html tags in the head (stylesheets, scripts, ...) -->
-    <?= $this->head() ?>
-    <link href="<?= Piko::getAlias('@web/css/site.css') ?>" rel="stylesheet">
-  </head>
-<body>
-  <!-- Action controller output (first step rendering) -->
-  <?= $content ?>
-  <!-- Output at the end of the body (scripts...) -->
-  <?= $this->endBody() ?>
-</body>
+    <head>
+        <meta charset="<?= $this->charset ?>">
+        <title><?= $this->escape($this->title) ?></title>
+        <?= $this->head() ?>
+        <link rel="stylesheet" href="<?= \Piko::getAlias('@web/css/site.css') ?>">
+    </head>
+    <body>
+        <?= $content ?>
+        <?= $this->endBody() ?>
+    </body>
 </html>
 ```
 
-#### Turn off layout rendering
+### Disabling layout rendering
 
-In a controller action method:
+Disable layout rendering in a controller action:
 
 ```php
+<?php
+
 namespace app\modules\site\controllers;
+
 use Piko\Controller;
 
 class DefaultController extends Controller
 {
-    public function helloAction()
+    public function helloAction(): string
     {
         $this->layout = false;
 
@@ -92,20 +94,23 @@ class DefaultController extends Controller
     }
 }
 ```
-For all controller action methods:
+
+Disable layout rendering for all actions in a controller:
 
 ```php
+<?php
+
 namespace app\modules\site\controllers;
+
 use Piko\Controller;
 
 class DefaultController extends Controller
 {
     public $layout = false;
-    // ...
 }
 ```
 
-For all controllers in the module:
+Disable layout rendering for all controllers in the module:
 
 ```php
 // config.php
@@ -119,108 +124,102 @@ For all controllers in the module:
 // ...
 ```
 
-### CSS injection
+## Accessing URLs from a view
 
-From a view script, it's possible to inject css to the layout using registerCSS and registerCSSFile methods :
+`Piko\Controller::getUrl()` is attached to the default `Piko\View` instance as a behavior, so you can generate URLs directly from a view script.
+
+```php
+<a href="<?= $this->getUrl('user/default/view', ['id' => 42]) ?>">Open profile</a>
+```
+
+## Registering CSS and JavaScript
+
+You can add assets from a view script and let the layout render them.
 
 ```php
 <?php
-/**
- * @var $this Piko\View
- */
 
-$this->registerCSS('body {background-color: #ccc;}');
+$this->registerCSS('body { background-color: #ccc; }');
 $this->registerCSSFile('/css/bootstrap.min.css');
-?>
+$this->registerJs('window.onload = function () { alert("loaded!"); }');
+$this->registerJsFile('/js/bootstrap.min.js');
 ```
 
-### Scripts injection
+- [`registerCSS()`](../../api/View.md#method_registerCSS) adds inline CSS to the `<head>`
+- [`registerCSSFile()`](../../api/View.md#method_registerCSSFile) adds a stylesheet URL to the `<head>`
+- [`registerJs()`](../../api/View.md#method_registerJs) adds inline JavaScript to the layout position you choose
+- [`registerJsFile()`](../../api/View.md#method_registerJsFile) adds a script URL to the chosen layout position
 
-Same as css injection, it's possible to inject scripts to the layout using registerJs and registerJsFile methods :
+## Events
+
+The view triggers events during rendering and when building the layout sections.
+
+Rendering events:
+
+- [`BeforeRenderEvent`](../../api/BeforeRenderEvent.md)
+- [`AfterRenderEvent`](../../api/AfterRenderEvent.md)
+
+Layout events:
+
+- `BeforeHeadEvent`
+- `AfterHeadEvent`
+- `BeforeEndBodyEvent`
+- `AfterEndBodyEvent`
+
+Example:
+
+```php
+use Piko\View\Event\BeforeRenderEvent;
+use Piko\View\Event\AfterRenderEvent;
+
+/** @var Piko\View $view */
+
+$view->on(BeforeRenderEvent::class, function (BeforeRenderEvent $event) {
+    $event->model['time'] = date('H:i:s');
+});
+
+$view->on(AfterRenderEvent::class, function (AfterRenderEvent $event) {
+    $event->output .= '<!-- ' . time() . ' -->';
+});
+```
+
+## View theming
+
+By default, controller views are loaded from the module `views` directory.
+
+You can override a view path with the `themeMap` configuration of `Piko\View`.
 
 ```php
 <?php
-/**
- * @var $this Piko\View
- */
 
-$this->registerJs('window.onload = function() {alert("loaded!")}');
-$this->registerJsFile('/js/bootstrap.min.js');
-?>
-```
-
-### Events
-
-Some events allow to customize the view rendering process.
-
-[BeforeRenderEvent](../../api/BeforeRenderEvent.md) event is triggered before the view script processing.
-
-[AfterRenderEvent](../../api/AfterRenderEvent.md) event is triggered after the view script was processed.
-
-
-Example of listening beforeRender and afterRender events:
-
-```php
-use BeforeRenderEvent;
-use AfterRenderEvent;
-
-/**
- * @var $view Piko\View
- */
-
-$view->on(BeforeRenderEvent::class, function(BeforeRenderEvent $event) {
-    var_dump($event->file);
-    $event->model['time'] = date('H:i:s'); // Inject $time variable in the view model
-});
-
-$view->on(AfterRenderEvent, function(AfterRenderEvent $event) {
-    $event->output .= '<!--' . time() . '-->'; // Append time comment at the end of output
-});
-
-```
-
-### View theming
-
-By default, view rendering process inside controllers looks for view scripts located in the module `views` directory.
-
-This can be overriden using a theme.
-
-*config.php*:
-
-```php
-//...
-
-'components' => [
-    'Piko\View' => [
-        'themeMap' => [
-            '@app/modules/site/views' => '@app/themes/mytheme',
-        ],
-    ],
-]
-
-//...
-```
-
-In this example, if a view script is found in `@app/themes/mytheme` it will be used in the rendering process.
-Otherwise, the rendering process falls back to the path `'@app/modules/site/views'` to locate the script.
-
-Several theme paths can be used to locate the view script.
-
-*config.php*:
-
-```php
-//...
-
-'components' => [
-    'Piko\View' => [
-        'themeMap' => [
-            '@app/modules/site/views' => [
-                '@app/themes/mychildtheme',
-                '@app/themes/myparenttheme',
+return [
+    'components' => [
+        'Piko\View' => [
+            'themeMap' => [
+                '@app/modules/site/views' => '@app/themes/mytheme',
             ],
         ],
     ],
-]
+];
+```
 
-//...
+If a matching file exists in the theme directory, it is used instead of the original file.
+
+You can also define multiple theme directories. They are checked in order until a matching file is found.
+
+```php
+<?php
+
+return [
+    'components' => [
+        'Piko\View' => [
+            'themeMap' => [
+                '@app/modules/site/views' => [
+                    '@app/themes/mychildtheme',
+                    '@app/themes/myparenttheme',
+                ],
+            ],
+        ],
+    ],
+];
 ```
