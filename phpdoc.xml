@@ -28,6 +28,8 @@ To build the API doc run 'phpdoc' on the command line
                 <path>router/src/Router/Node.php</path>
                 <path>router/src/Router/RadixTrie.php</path>
             </ignore>
+            <visibility>public</visibility>
+            <visibility>protected</visibility>
         </api>
     </version>
     <template name="_phpdoc/templates/markdown" />

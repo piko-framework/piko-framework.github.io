@@ -29,7 +29,7 @@ to d... |
 | public [`$layoutPath`](#property_layoutPath) | The layout directory of the module.  |
 | public [`$modules`](#property_modules) | Sub modules configuration  |
 | protected [`$application`](#property_application) |   |
-| private [`$basePath`](#property_basePath) | The root directory of the module.  |
+| protected [`$objectFactory`](#property_objectFactory) | The object factory used to instantiate objects wit... |
 
 ## Inherited Properties
 
@@ -50,7 +50,6 @@ to d... |
 | public [`handle`](#method_handle) | {@inheritDoc}  |
 | public [`setApplication`](#method_setApplication) |   |
 | protected [`createController`](#method_createController) | Create a controller  |
-| private [`resolveConstructorArgument`](#method_resolveConstructorArgument) | Resolve one constructor argument from overrides or... |
 
 ## Inherited Methods
 
@@ -128,10 +127,11 @@ Sub modules configuration
 
 
 
-<a name="property_basePath"></a>
-### private **$basePath** : string
-The root directory of the module.
-
+<a name="property_objectFactory"></a>
+### protected **$objectFactory** : ?\Piko\Di\ObjectFactoryInterface
+The object factory used to instantiate objects with dependency resolution.
+Defaults to a factory backed by an empty container and is replaced by the
+application's factory once setApplication() is called.
 
 
 
@@ -177,7 +177,7 @@ public  __construct(array&lt;string,mixed&gt;  $config = []): mixed
 public  createObject(class-string  $class, array&lt;string,mixed&gt;  $overrides = []): object
 ```
 
-Create an object with constructor dependencies resolved from registered components.
+Create an object with constructor dependencies resolved by the application object factory.
 
 
 
@@ -351,39 +351,5 @@ A controller ID
 
 #### Return:
 **\Piko\Controller**
-
-
------
-
-
-
-<a name="method_resolveConstructorArgument"></a>
-### private **resolveConstructorArgument()**: mixed
-
-```php
-private  resolveConstructorArgument(\ReflectionParameter  $param, string  $class, array&lt;string,mixed&gt;  $overrides): mixed
-```
-
-Resolve one constructor argument from overrides or application components.
-
-
-
-#### Parameters
-**$param** :
-
-**$class** :
-
-**$overrides** :
-
-
-
-
-
-**throws**  \RuntimeException
-
-
-
-#### Return:
-**mixed**
 
 

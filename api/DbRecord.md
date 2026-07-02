@@ -62,7 +62,6 @@ the Active Record pattern.
 | protected [`checkColumn`](#method_checkColumn) | Check if column name is defined in the table schem... |
 | protected [`getAttributes`](#method_getAttributes) | Retrieve the attributes representing the record in... |
 | protected [`initializeSchema`](#method_initializeSchema) | Initialize the schema for the database table. This... |
-| private [`getSchemaType`](#method_getSchemaType) |   |
 
 ## Inherited Methods
 
@@ -77,8 +76,6 @@ the Active Record pattern.
 | protected [`getAttributes`](/ModelTrait.md#method_getAttributes) | Get the public properties reprenting the data mode... |
 | protected [`setError`](/ModelTrait.md#method_setError) | Set an error that will be appended to the errors c... |
 | protected [`validate`](/ModelTrait.md#method_validate) | Validate this model (Should be extended). Inherite... |
-| private [`castBooleanValue`](/ModelTrait.md#method_castBooleanValue) | Cast a value to a boolean using common form repres... |
-| private [`castValueForProperty`](/ModelTrait.md#method_castValueForProperty) | Cast a bound value according to the declared prope... |
 
 -----
 
@@ -540,30 +537,5 @@ the primary key based on field attributes.
 
 
 
-
-
------
-
-
-
-<a name="method_getSchemaType"></a>
-### private **getSchemaType()**: int
-
-```php
-private  getSchemaType(string  $type): int
-```
-
-
-
-#### Parameters
-**$type** :
-
-
-
-
-
-
-#### Return:
-**int**
 
 

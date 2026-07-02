@@ -28,6 +28,8 @@ The main application class
 | public [`$errorHandler`](#property_errorHandler) |   |
 | public [`$errorRoute`](#property_errorRoute) | The Error route to display exceptions in a friendl... |
 | public [`$language`](#property_language) | The language that is meant to be used for end user... |
+| protected [`$container`](#property_container) | The dependency injection container. The applicatio... |
+| protected [`$objectFactory`](#property_objectFactory) | The factory used to instantiate objects with const... |
 | protected [`$pipeline`](#property_pipeline) |   |
 
 ## Inherited Properties
@@ -44,6 +46,8 @@ The main application class
 |------|-------------|
 | public [`__construct`](#method___construct) | Constructor |
 | public [`getComponent`](#method_getComponent) | Retrieve a unique instance of a registered compone... |
+| public [`getContainer`](#method_getContainer) | Return the dependency injection container.  |
+| public [`getObjectFactory`](#method_getObjectFactory) | Return the object factory used to instantiate obje... |
 | public [`handle`](#method_handle) | {@inheritDoc}  |
 | public [`pipe`](#method_pipe) | Add a middleware in the application pipeline queue... |
 | public [`run`](#method_run) | Run the application.  |
@@ -126,6 +130,25 @@ The language that is meant to be used for end users.
 
 
 
+<a name="property_container"></a>
+### protected **$container** : \Psr\Container\ContainerInterface
+The dependency injection container. The application no longer resolves
+components itself: it delegates to this PSR-11 container.
+
+
+
+
+
+
+<a name="property_objectFactory"></a>
+### protected **$objectFactory** : \Piko\Di\ObjectFactoryInterface
+The factory used to instantiate objects with constructor dependency resolution.
+
+
+
+
+
+
 <a name="property_pipeline"></a>
 ### protected **$pipeline** : \SplQueue&lt;\Psr\Http\Server\MiddlewareInterface&gt;
 
@@ -188,6 +211,54 @@ The component class
 
 #### Return:
 **object**
+
+
+-----
+
+
+
+<a name="method_getContainer"></a>
+### public **getContainer()**: \Psr\Container\ContainerInterface
+
+```php
+public  getContainer(): \Psr\Container\ContainerInterface
+```
+
+Return the dependency injection container.
+
+
+
+
+
+
+
+
+#### Return:
+**\Psr\Container\ContainerInterface**
+
+
+-----
+
+
+
+<a name="method_getObjectFactory"></a>
+### public **getObjectFactory()**: \Piko\Di\ObjectFactoryInterface
+
+```php
+public  getObjectFactory(): \Piko\Di\ObjectFactoryInterface
+```
+
+Return the object factory used to instantiate objects with dependency resolution.
+
+
+
+
+
+
+
+
+#### Return:
+**\Piko\Di\ObjectFactoryInterface**
 
 
 -----

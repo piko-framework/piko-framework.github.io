@@ -36,8 +36,10 @@ This class implements a modular application
 | public [`$errorHandler`](Application.md#property_errorHandler) |   |
 | public [`$errorRoute`](Application.md#property_errorRoute) | The Error route to display exceptions in a friendl... |
 | public [`$language`](Application.md#property_language) | The language that is meant to be used for end user... |
+| protected [`$container`](Application.md#property_container) | The dependency injection container. The applicatio... |
 | protected [`$eventDispatcher`](EventHandlerTrait.md#property_eventDispatcher) |   |
 | protected [`$listenerProvider`](EventHandlerTrait.md#property_listenerProvider) |   |
+| protected [`$objectFactory`](Application.md#property_objectFactory) | The factory used to instantiate objects with const... |
 | protected [`$pipeline`](Application.md#property_pipeline) |   |
 
 ## Methods summary
@@ -58,6 +60,8 @@ This class implements a modular application
 | public [`attachBehavior`](/BehaviorTrait.md#method_attachBehavior) | Attach a behavior to the class instance.  |
 | public [`detachBehavior`](/BehaviorTrait.md#method_detachBehavior) | Detach a behavior.  |
 | public [`getComponent`](/Application.md#method_getComponent) | Retrieve a unique instance of a registered compone... |
+| public [`getContainer`](/Application.md#method_getContainer) | Return the dependency injection container.  |
+| public [`getObjectFactory`](/Application.md#method_getObjectFactory) | Return the object factory used to instantiate obje... |
 | public [`handle`](/Application.md#method_handle) | {@inheritDoc}  |
 | public [`on`](/EventHandlerTrait.md#method_on) | Registers an event listener.  |
 | public [`pipe`](/Application.md#method_pipe) | Add a middleware in the application pipeline queue... |

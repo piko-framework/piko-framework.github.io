@@ -35,8 +35,6 @@ Base model trait.
 | protected [`getAttributes`](#method_getAttributes) | Get the public properties reprenting the data mode... |
 | protected [`setError`](#method_setError) | Set an error that will be appended to the errors c... |
 | protected [`validate`](#method_validate) | Validate this model (Should be extended). Inherite... |
-| private [`castBooleanValue`](#method_castBooleanValue) | Cast a value to a boolean using common form repres... |
-| private [`castValueForProperty`](#method_castValueForProperty) | Cast a bound value according to the declared prope... |
 
 
 -----
@@ -229,64 +227,5 @@ Inherited method should fill the errors array using the setError method if the m
 
 **codeCoverageIgnore**  
 
-
-
------
-
-
-
-<a name="method_castBooleanValue"></a>
-### private **castBooleanValue()**: bool
-
-```php
-private  castBooleanValue(mixed  $value): bool
-```
-
-Cast a value to a boolean using common form representations.
-
-
-
-#### Parameters
-**$value** :
-
-
-
-
-
-
-
-#### Return:
-**bool**
-
-
------
-
-
-
-<a name="method_castValueForProperty"></a>
-### private **castValueForProperty()**: mixed
-
-```php
-private  castValueForProperty(\ReflectionProperty  $property, mixed  $value): mixed
-```
-
-Cast a bound value according to the declared property type.
-
-
-
-#### Parameters
-**$property** :
-
-
-**$value** :
-
-
-
-
-
-
-
-#### Return:
-**mixed**
 
 

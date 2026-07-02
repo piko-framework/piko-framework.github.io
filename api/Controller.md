@@ -25,6 +25,8 @@ Controller is the base class for classes containing controller logic.
 | public [`$layout`](#property_layout) | The name of the layout to be applied to this contr... |
 | public [`$module`](#property_module) | The module that this controller belongs to.  |
 | public [`$viewPath`](#property_viewPath) | The root directory that contains view files for th... |
+| protected [`$container`](#property_container) | The dependency injection container, injected by Mo... |
+| protected [`$objectFactory`](#property_objectFactory) | The object factory, injected by Module::createCont... |
 | protected [`$request`](#property_request) |   |
 | protected [`$response`](#property_response) |   |
 | protected [`$view`](#property_view) |   |
@@ -43,16 +45,18 @@ Controller is the base class for classes containing controller logic.
 |------|-------------|
 | public [`getUrl`](#method_getUrl) | Converts a given modular route into its correspond... |
 | public [`handle`](#method_handle) |   |
+| public [`setContainer`](#method_setContainer) | Set the dependency injection container used by thi... |
+| public [`setObjectFactory`](#method_setObjectFactory) | Set the object factory used by this controller.  |
 | protected [`create`](#method_create) | Create an object and resolve constructor dependenc... |
 | protected [`forward`](#method_forward) | Forward the given route to another module  |
+| protected [`getContainer`](#method_getContainer) | Return the dependency injection container. Falls b... |
+| protected [`getObjectFactory`](#method_getObjectFactory) | Return the object factory. Falls back to the appli... |
 | protected [`getView`](#method_getView) | Returns the application View component  |
 | protected [`getViewPath`](#method_getViewPath) | Returns the directory containing view files for th... |
 | protected [`isAjax`](#method_isAjax) | Check if the request is AJAX  |
 | protected [`jsonResponse`](#method_jsonResponse) | Convenient method to return a JSON response  |
 | protected [`redirect`](#method_redirect) | Set a response redirection  |
 | protected [`render`](#method_render) | Render a view.  |
-| private [`getMethodArguments`](#method_getMethodArguments) |   |
-| private [`runAction`](#method_runAction) | Runs an action within this controller with the spe... |
 
 ## Inherited Methods
 
@@ -102,6 +106,24 @@ The module that this controller belongs to.
 <a name="property_viewPath"></a>
 ### public **$viewPath** : string
 The root directory that contains view files for this controller.
+
+
+
+
+
+
+<a name="property_container"></a>
+### protected **$container** : ?\Psr\Container\ContainerInterface
+The dependency injection container, injected by Module::createController().
+
+
+
+
+
+
+<a name="property_objectFactory"></a>
+### protected **$objectFactory** : ?\Piko\Di\ObjectFactoryInterface
+The object factory, injected by Module::createController().
 
 
 
@@ -204,6 +226,54 @@ public  handle(\Psr\Http\Message\ServerRequestInterface  $request): \Psr\Http\Me
 
 
 
+<a name="method_setContainer"></a>
+### public **setContainer()**: void
+
+```php
+public  setContainer(\Psr\Container\ContainerInterface  $container): void
+```
+
+Set the dependency injection container used by this controller.
+
+
+
+#### Parameters
+**$container** :
+
+
+
+
+
+
+
+-----
+
+
+
+<a name="method_setObjectFactory"></a>
+### public **setObjectFactory()**: void
+
+```php
+public  setObjectFactory(\Piko\Di\ObjectFactoryInterface  $objectFactory): void
+```
+
+Set the object factory used by this controller.
+
+
+
+#### Parameters
+**$objectFactory** :
+
+
+
+
+
+
+
+-----
+
+
+
 <a name="method_create"></a>
 ### protected **create()**: object
 
@@ -260,6 +330,56 @@ An array of params (name-value pairs) associated to the route.
 
 #### Return:
 **string**
+
+
+-----
+
+
+
+<a name="method_getContainer"></a>
+### protected **getContainer()**: \Psr\Container\ContainerInterface
+
+```php
+protected  getContainer(): \Psr\Container\ContainerInterface
+```
+
+Return the dependency injection container.
+Falls back to the application container when the controller was not created
+through Module::createController() (e.g. instantiated manually).
+
+
+
+
+
+
+
+#### Return:
+**\Psr\Container\ContainerInterface**
+
+
+-----
+
+
+
+<a name="method_getObjectFactory"></a>
+### protected **getObjectFactory()**: \Piko\Di\ObjectFactoryInterface
+
+```php
+protected  getObjectFactory(): \Piko\Di\ObjectFactoryInterface
+```
+
+Return the object factory.
+Falls back to the application object factory when the controller was not created
+through Module::createController().
+
+
+
+
+
+
+
+#### Return:
+**\Piko\Di\ObjectFactoryInterface**
 
 
 -----
@@ -421,67 +541,4 @@ An array of data (name-value pairs) to transmit to the view.
 #### Return:
 **string**
 
-
------
-
-
-
-<a name="method_getMethodArguments"></a>
-### private **getMethodArguments()**: array
-
-```php
-private  getMethodArguments(string  $methodName, array  $data = []): array
-```
-
-
-
-
-#### Parameters
-**$methodName** :
-The method to analyse
-
-**$data**  (default: []):
-A key-value paired array to bind into the method arguments.
-
-
-
-
-
-
-#### Return:
-**array**
-
-
------
-
-
-
-<a name="method_runAction"></a>
-### private **runAction()**: \Psr\Http\Message\ResponseInterface
-
-```php
-private  runAction(string  $id, array  $params = []): \Psr\Http\Message\ResponseInterface
-```
-
-Runs an action within this controller with the specified action ID.
-
-
-
-#### Parameters
-**$id** :
-the ID of the action to be executed.
-
-**$params**  (default: []):
-An array of request parameters.
-
-
-
-
-**throws**  \RuntimeExceptionif the requested action ID cannot be resolved into an action successfully.
-
-
-
-#### Return:
-**\Psr\Http\Message\ResponseInterface**
-the result of the action.
 
