@@ -6,7 +6,14 @@ nav_order: 5
 
 # Concepts
 
-<a name="alias"></a>
+## Summary
+
+- [Aliases](#aliases)
+- [Components](#components)
+- [Events](#events)
+- [Behaviors](#behaviors)
+- [Middleware](#middleware)
+- [Dependency injection](#dependency-injection)
 
 ## Aliases
 
@@ -48,9 +55,6 @@ Piko::setAlias('@lib', '/usr/local/share/lib');
 echo Piko::getAlias('@lib/pdf/manual.pdf');
 // /usr/local/share/lib/pdf/manual.pdf
 ```
-
-
-<a name="component"></a>
 
 ## Components
 
@@ -139,9 +143,6 @@ non-builtin class type-hint will be resolved from the components container
 (using the class name as the key). This is how dependency injection is
 implemented in Piko.
 
-
-<a name="events"></a>
-
 ## Events
 
 Piko supports dispatching and listening for events via the
@@ -213,9 +214,6 @@ Internally, `EventHandlerTrait` relies on the
 package, which is a [PSR-14](https://www.php-fig.org/psr/psr-14/) compliant
 implementation.
 
-
-<a name="behaviors"></a>
-
 ## Behaviors
 
 The [`Piko\BehaviorTrait`](../api/BehaviorTrait.md) can be used to inject
@@ -248,9 +246,6 @@ $c->disconnect(); // I am disconnected!
 registered behavior, the associated callback is executed. See the
 [API reference](../api/BehaviorTrait.md) for details on
 `detachBehavior()` and supported callback forms.
-
-
-<a name="middleware"></a>
 
 ## Middleware
 
@@ -338,4 +333,146 @@ $config = require __DIR__ . '/../config.php';
 $app = new ModularApplication($config);
 $app->pipe(new CorsMiddleware()); // executes before RoutingMiddleware
 $app->run();
+```
+## Dependency injection
+
+Piko resolves its dependencies through a [PSR-11](https://www.php-fig.org/psr/psr-11) container.
+The [Application](../api/Application.md) **is not** the container itself: it *holds* one and delegates resolution to it.
+Two collaborators are involved, both replaceable through configuration:
+
+- a **container** (`Psr\Container\ContainerInterface`) that returns **shared** services by id,
+- an **object factory** ([Piko\Di\ObjectFactoryInterface]({% link api/ObjectFactoryInterface.md %})) that creates **fresh** objects, resolving
+  their constructor dependencies from the container (autowiring) with optional runtime overrides.
+
+### Components (default container)
+
+When no `container` is configured, [Application](../api/Application.md) builds a default [Piko\Di\ComponentContainer]({% link api/ComponentContainer.md %}) backed
+by the `components` registry. Components are resolved lazily and memoized (lazy singletons): a component
+is only instantiated the first time it is requested. A component may be declared as a ready-made object,
+a factory closure, or an array definition (`class` / `construct`):
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Piko\ModularApplication;
+use Piko\Router;
+use Piko\View;
+
+$app = new ModularApplication([
+    'basePath' => __DIR__,
+    'components' => [
+        View::class => new View(),                      // ready-made instance
+        Router::class => fn() => new Router(),          // lazy factory closure
+        PDO::class => ['construct' => ['sqlite::memory:']], // array definition
+    ],
+    'modules' => [
+        'site' => 'app\\modules\\site\\Module',
+    ],
+]);
+
+// Retrieve a shared component:
+$router = $app->getComponent(Router::class); // same instance on each call
+```
+
+### `get()` vs `create()`
+
+These are two distinct operations, and Piko keeps them separate:
+
+- **`get()`** (via [Application::getComponent()](../api/Application.md#method_getComponent) or [Application::getContainer()->get()](../api/Application.md#method_getContainer)) returns the **shared** instance
+registered under an id.
+- **`create()`** (via [Application::getObjectFactory()->create()](../api/Application.md#method_getObjectFactory), [Controller::create()](../api/Controller.md#method_create) or [Module::createObject()](../api/Module.md#method_createObject)) returns a **new** instance every
+  time, autowiring its constructor dependencies from the container and accepting per-call overrides.
+
+Inside a controller, use [create()](../api/Controller.md#method_create) for objects you want built fresh (models, commands, DTOs…):
+
+```php
+// MyModel needs a PDO instance in its constructor:
+// class MyModel { public function __construct(PDO $db, int $id) {} }
+
+$model = $this->create(MyModel::class, ['id' => 12]);
+// -> PDO is injected from the container, `id` is provided as an override,
+//    and a brand new MyModel is returned on every call.
+```
+
+### Using a third-party PSR-11 container (PHP-DI, League\Container…)
+
+Provide the `container` configuration key with a container instance or a callable receiving the
+application. Compose it with [ComponentContainer]({% link api/ComponentContainer.md %}) so the built-in components (Router, View…) stay
+available as a fallback:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use DI\ContainerBuilder;
+use Piko\Di\ComponentContainer;
+use Piko\ModularApplication;
+use Piko\Router;
+
+$app = new ModularApplication([
+    'basePath' => __DIR__,
+    'container' => function (\Piko\Application $app) {
+        $builder = new ContainerBuilder();
+        $builder->addDefinitions([
+            App\Service\UserService::class => DI\autowire(),
+        ]);
+
+        // Let the third-party container read Piko components when an entry is missing.
+        $builder->wrapContainer(new ComponentContainer($app->components));
+
+        return $builder->build();
+    },
+    'components' => [
+        Router::class => fn() => new Router(),
+    ],
+    'modules' => [
+        'site' => 'app\\modules\\site\\Module',
+    ],
+]);
+```
+
+With League\Container the composition uses delegation instead:
+
+```php
+$container = new League\Container\Container();
+$container->add(App\Service\UserService::class)->setShared(true);
+$container->delegate(new Piko\Di\ComponentContainer($app->components));
+```
+
+### Delegating autowiring to the container
+
+[ObjectFactoryInterface::create()]({% link api/ObjectFactoryInterface.md %}#method_create) is the equivalent of PHP-DI's `make()`: a *fresh instance with
+parameter overrides*, which is **not** part of PSR-11 (`get()` only returns shared entries). The default
+[Piko\Di\ObjectFactory]({% link api/ObjectFactory.md %}) performs reflection-based autowiring on top of any PSR-11 container, so `create()`
+works even with the default container. If you use a container that already autowires, plug your own
+factory through the `objectFactory` configuration key to reuse its resolution:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use DI\FactoryInterface;
+use Piko\Di\ObjectFactoryInterface;
+
+final class PhpDiObjectFactory implements ObjectFactoryInterface
+{
+    public function __construct(private FactoryInterface $factory)
+    {
+    }
+
+    public function create(string $class, array $overrides = []): object
+    {
+        return $this->factory->make($class, $overrides);
+    }
+}
+
+$app = new ModularApplication([
+    'container'     => fn() => /* build your PHP-DI container */,
+    'objectFactory' => fn(\Piko\Application $app) => new PhpDiObjectFactory($app->getContainer()),
+    // ...
+]);
 ```
